@@ -8,20 +8,6 @@ import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 
-const MAX_CHARS = 280;
-
-function getCollapsedPoints(points) {
-  let count = 0;
-  const visible = [];
-  for (const p of points) {
-    if (count + p.length > MAX_CHARS) break;
-    visible.push(p);
-    count += p.length;
-  }
-  if (visible.length === 0) visible.push(points[0]);
-  return visible;
-}
-
 const Modal = ({ experience, onClose }) => (
   <AnimatePresence>
     <motion.div
@@ -59,7 +45,7 @@ const Modal = ({ experience, onClose }) => (
               key={`modal-point-${index}`}
               className="text-white-100 text-[14px] tracking-wide leading-relaxed"
             >
-              {point}
+              {point.full}
             </li>
           ))}
         </ul>
@@ -70,8 +56,6 @@ const Modal = ({ experience, onClose }) => (
 
 const ExperienceCard = ({ experience }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const collapsedPoints = getCollapsedPoints(experience.points);
-  const hasMore = collapsedPoints.length < experience.points.length;
 
   return (
     <>
@@ -98,24 +82,22 @@ const ExperienceCard = ({ experience }) => {
         </div>
 
         <ul className="mt-5 list-disc ml-5 space-y-2">
-          {collapsedPoints.map((point, index) => (
+          {experience.points.filter(p => p.featured !== false).map((point, index) => (
             <li
               key={`experience-point-${index}`}
               className="text-white-100 text-[14px] pl-1 tracking-wider"
             >
-              {point}
+              {point.short}
             </li>
           ))}
         </ul>
 
-        {hasMore && (
-          <button
-            onClick={() => setModalOpen(true)}
-            className="mt-4 text-[13px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 hover:opacity-80 transition-opacity cursor-pointer"
-          >
-            View full experience details →
-          </button>
-        )}
+        <button
+          onClick={() => setModalOpen(true)}
+          className="mt-4 text-[13px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 hover:opacity-80 transition-opacity cursor-pointer"
+        >
+          View full experience details →
+        </button>
       </VerticalTimelineElement>
 
       {modalOpen && (
