@@ -112,43 +112,70 @@ import {
     },
   ];
   
-  const experiences = [
-    {
-      title: "Front-end Developer Intern",
-      company_name: "UOB",
-      icon: UOB,
-      iconBg: "#383E56",
-      date: "May 2023 - July 2023",
-      points: [
-        "Developed, reviewed code and fixed bugs for UOB’s Infinity Digital Bank Global Soft Token (web and mobile) application using Agile Ways of Working", 
-        "Collaborated with a team of 7 front-end developers to implement 40 changes in UI/UX to ensure compliance with user stories using ReactJS framework, HTML and CSS.",
-        "Participated in Agile ceremonies, Daily Stand Up meetings, sprint closures and product demos."
-        
-      ],
-    },
-    {
-      title: "Research Intern",
-      company_name: "Optimum Solutions",
-      icon: optimum,
-      iconBg: "#E6DEDD",
-      date: "July 2019 - Aug 2019",
-      points: [
-        "Researched and discovered 700 prospective stakeholders across 7 banks and financial institutions." ,
-        "Conceptualized and presented findings to 3 seniors at highest level of management to facilitate widening of consumer base.",
-      ],
-    },
-    {
-      title: "Research Intern",
-      company_name: "Optimum Solutions",
-      icon: optimum,
-      iconBg: "#E6DEDD",
-      date: "July 2019 - Aug 2019",
-      points: [
-        "Researched and discovered 700 prospective stakeholders across 7 banks and financial institutions." ,
-        "Conceptualized and presented findings to 3 seniors at highest level of management to facilitate widening of consumer base.",
-      ],      
-    }
-  ];
+const experiences = [
+  {
+    title: "Senior Associate Consultant",
+    company_name: "KPMG Digital Village",
+    icon: backend,
+    iconBg: "#383E56",
+    date: "Nov 2024 - Present",
+    points: [
+      "Led the geospatial data workstream for an AI-powered climate and disaster risk intelligence platform for Asia-Pacific's largest multilateral development bank, delivering a successful showcase to 5,000+ attendees that generated 60+ partnership leads and 3 signed MoUs with national governments.",
+      "Served as AI Product Lead on CLARA, an end-to-end credit risk screening platform for ADB's Private Sector Operations Department, owning functional requirements, UAT, and LLM prompt engineering across 6 modules integrated with Moody's Analytics API and Evalueserve.",
+      "Designed and implemented a pre-retrieval LLM intent classification guardrail as part of a Responsible AI framework, closing identified hallucination and out-of-scope query failure modes across 38 structured test cases.",
+      "Engaged 40+ senior stakeholders across government ministries, MDB departments, and consultancies through solution demos and visioning workshops, securing buy-in and embedding the platform into the client's 2025-2028 digital resilience strategy.",
+    ],
+  },
+  {
+    title: "Business Analyst",
+    company_name: "Anacle Systems",
+    icon: backend,
+    iconBg: "#E6DEDD",
+    date: "Jul 2024 - Nov 2024",
+    points: [
+      "Led stakeholder engagement and requirements gathering for Singapore's largest real estate statutory board client, redesigning business processes and translating them into technical specifications for enterprise inventory and key management systems.",
+      "Conducted UAT and SIT across 120+ users, identifying and resolving critical workflow gaps that resulted in enhanced software features and contributed to an SGD 400,000 revenue increase.",
+      "Supported commercial proposal development by estimating tech infrastructure and man-hour costs, contributing to pricing inputs for high-value software module quotations.",
+      "Redesigned UI naming conventions based on UAT feedback, improving usability clarity across multiple enterprise system modules.",
+    ],
+  },
+  {
+    title: "SMB Strategy and Planning Intern",
+    company_name: "Grab (GrabAds)",
+    icon: backend,
+    iconBg: "#383E56",
+    date: "Jan 2023 - May 2023",
+    points: [
+      "Identified an opportunity to improve keyword pricing efficiency for GrabFood ads by analysing demand tier patterns across 10,000+ food search queries using SQL, informing a revised pricing classification model.",
+      "Developed a data-driven keyword bidding strategy that projected +US$41,000 per month in ad revenue uplift, directly supporting GrabAds monetization targets.",
+      "Synthesised customer behaviour insights across Indonesia, Malaysia, and Thailand markets, contributing to strategic plans adopted by CRM, analytics, and marketing teams.",
+      "Produced merchant-facing content including a monthly newsletter and a Grab Ramadan press release published on Kompas, a Tier 1 media outlet in Indonesia.",
+    ],
+  },
+  {
+    title: "Associate Consultant",
+    company_name: "Thrive Social Consulting (Conjunct Consulting)",
+    icon: backend,
+    iconBg: "#E6DEDD",
+    date: "Feb 2022 - Dec 2022",
+    points: [
+      "Identified a gap in IT volunteerism awareness among university students through 60+ stakeholder interviews and surveys, providing the evidence base for a targeted marketing strategy.",
+      "Developed and delivered a marketing campaign proposal for a target audience of 5,000 university students, culminating in a pitch presentation directly to the CEO.",
+    ],
+  },
+  {
+    title: "Research Scholar",
+    company_name: "Stanford University x NTU",
+    icon: backend,
+    iconBg: "#383E56",
+    date: "Jan 2020 - Nov 2022",
+    points: [
+      "Initiated and co-authored a UN-contributed research publication developing statistical models to estimate natural disaster risk with 81% accuracy, utilising regression and kriging techniques for spatial data analysis in R and QGIS.",
+      "Contributed to a multi-hazard disaster risk assessment spanning 220 hazard scenarios including flooding, tsunami, wind, and seismic risk, supporting vulnerability and exposure analysis for resilience planning.",
+      "Awarded the NTU CY1400 Outstanding Research Award with a grade of A for independent research excellence.",
+    ],
+  },
+];
   
   const projects = [
     {
