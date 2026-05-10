@@ -123,6 +123,17 @@ import {
         "Conceptualized and presented findings to 3 seniors at highest level of management to facilitate widening of consumer base.",
       ],
     },
+    {
+      title: "Research Intern",
+      company_name: "Optimum Solutions",
+      icon: optimum,
+      iconBg: "#E6DEDD",
+      date: "July 2019 - Aug 2019",
+      points: [
+        "Researched and discovered 700 prospective stakeholders across 7 banks and financial institutions." ,
+        "Conceptualized and presented findings to 3 seniors at highest level of management to facilitate widening of consumer base.",
+      ],      
+    }
   ];
   
   const projects = [
