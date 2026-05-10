@@ -198,7 +198,7 @@ const experiences = [
       ],
       image: mealnus,
       source_code_link: "https://github.com/Seibell/MealNUS-without-springboot",
-      video: "/navigator-demo.mov",
+      video: "/navigator-demo-compressed.mp4",
     },
     {
       name: "Climate-AI — Real-Time Disaster Intelligence & Visualization",
@@ -220,7 +220,7 @@ const experiences = [
       ],
       image: bitcoin,
       source_code_link: "https://github.com/ImAshuaige/IS3107_Project_Group22",
-      video: "/climate-full-vid.mov",
+      video: "/climate-full-vid-compressed.mp4",
     },
     {
       name: "Car Rental Management System",
