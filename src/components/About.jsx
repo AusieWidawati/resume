@@ -23,7 +23,7 @@ const ServiceCard = ({ index, title, icon, description }) => {
           {!show && <img src={icon} alt={title} className= "w-16 h-16 object-contain" />}
           <h3 className={!show ? "text-white text-[20px] font-bp;d text-center" : "text-[0px]"}>{title}</h3>
           {show &&
-            <div className="object-contain w-full h-[140px]" >
+            <div className="object-contain w-full" >
               <motion.p animate={show ? { opacity: 100 } : { opacity: 0 }}>
                 <div className="text-white text-[15px] font-bp;d text-center">
                   {description}
@@ -46,10 +46,11 @@ const About = () => {
       </motion.div>
 
       <motion.p variants={fadeIn("", "", 0.1, 1)}
-        className="mt-4 text-secondary text-[20px] max-w-3xl leading-[30px]">
-        I am a student at the <span className="font-bold">National University of Singapore</span>, studying
-        <span className="font-bold"> Information Systems</span>. I have a passion for solving business problems with a technical approach,
-        which I hope to utilize to get into <span className="font-semibold"> Product Management</span>. <br></br> <br></br> Here are a few of the roles I have explored within my course and through my work experiences.
+      className="mt-4 text-secondary text-[20px] max-w-3xl leading-[30px]">
+      I'm an <span className="font-semibold">AI product manager and strategy consultant</span>, and a graduate of the <span className="font-semibold">INSEAD</span> Master in Management programme. I ship enterprise AI platforms, drive digital transformation, and think commercially — from pricing strategy to deal evaluation.<br></br><br></br>
+      I own products end-to-end. From requirements to UAT to stakeholder management, I turn complex business problems into systems that work.<br></br><br></br>
+      Beyond my day job, I run  <a href="https://www.linkedin.com/company/friendswhoshare/posts/" target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:opacity-75 transition-opacity">Friends Who Share</a>, an AI and tech startup community connecting builders, thinkers, and investors in Singapore.<br></br><br></br>
+      I'm currently open to opportunities in <span className="font-semibold">product management, strategy consulting, and venture capital</span> or investment adjacent roles.<br></br><br></br>
       </motion.p>
 
       <div className="mt-20 flex flex-wrap gap-10">

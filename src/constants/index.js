@@ -2,6 +2,7 @@ import {
     mobile,
     backend,
     web,
+    creator,
     html,
     css,
     reactjs,
@@ -32,6 +33,18 @@ import {
       title: "Projects",
     },
     {
+      id: "investment",
+      title: "Investment",
+    },
+    {
+      id: "community",
+      title: "Community",
+    },
+    {
+      id: "research",
+      title: "Research",
+    },
+    {
       id: "education",
       title: "Education",
     },
@@ -43,19 +56,24 @@ import {
   
   const services = [
     {
-      title: "Web Developer",
+      title: "AI Product Builder",
       icon: web,
-      description:"I delved into the design and construction of websites while creating web applications for projects",
+      description: "I build enterprise AI platforms that work in the real world. From RAG pipelines to LLM prompt engineering to UAT, I own the full product lifecycle and bridge the gap between business needs and technical delivery.",
     },
     {
-      title: "ReactJS Developer",
+      title: "Investment Thinker",
       icon: mobile,
-      description:"I worked with ReactJS during my internship to enhance a web and mobile application",
+      description: "Trained in finance and strategy at INSEAD, I evaluate opportunities with a commercial lens. From pricing models to deal screening, I understand how products create, capture, and compound value.",
     },
     {
-      title: "Backend Developer",
+      title: "Venture Community Builder",
       icon: backend,
-      description:"I explored the communication between database, servers and apps while creating full-stack web applications",
+      description: "I founded Friends Who Share, an AI and tech startup community in Singapore connecting founders, builders, and investors. I believe the best ideas emerge when the right people are in the same room.",
+    },
+    {
+      title: "Geospatial Researcher",
+      icon: backend,
+      description: "I've modelled risk across 50+ hazard scenarios spanning floods, tsunamis, wind, and seismic events. My research background in spatial analytics and climate risk informs how I think about data, uncertaintys.",
     },
   ];
   
@@ -198,4 +216,121 @@ import {
     },
   ];
   
-  export { services, technologies, experiences, projects };
+  const investmentProjects = [
+    {
+      name: "Enterprise AI Investment Memo",
+      description:
+        "A structured investment thesis evaluating the AI infrastructure stack — from foundation model providers to tooling, orchestration, and deployment layers. Covers competitive moats, revenue models, and value capture dynamics.",
+      tags: [
+        { name: "ai-infrastructure", color: "blue-text-gradient" },
+        { name: "venture", color: "green-text-gradient" },
+        { name: "thesis", color: "pink-text-gradient" },
+      ],
+      image: web,
+      source_code_link: "#",
+    },
+    {
+      name: "Climate Resilience Fund Analysis",
+      description:
+        "Sector analysis of climate adaptation assets including nature-based solutions, resilient infrastructure, and parametric insurance. Includes DCF models and risk-adjusted return comparisons across asset classes.",
+      tags: [
+        { name: "climate-tech", color: "blue-text-gradient" },
+        { name: "dcf-model", color: "green-text-gradient" },
+        { name: "esg", color: "pink-text-gradient" },
+      ],
+      image: creator,
+      source_code_link: "#",
+    },
+    {
+      name: "Development Finance Model",
+      description:
+        "Financial model for a blended finance structure targeting SME lending in Southeast Asia. Covers waterfall mechanics, first-loss tranche sizing, and concessional capital deployment for a DFI-style vehicle.",
+      tags: [
+        { name: "development-finance", color: "blue-text-gradient" },
+        { name: "excel-model", color: "green-text-gradient" },
+        { name: "emerging-markets", color: "pink-text-gradient" },
+      ],
+      image: mobile,
+      source_code_link: "#",
+    },
+  ];
+
+  const communityItems = [
+    {
+      name: "Women in Product Singapore",
+      description:
+        "Volunteer and event co-organizer. Supporting the growth of women in product management across Singapore through community events, mentorship, and professional development initiatives.",
+      tags: [
+        { name: "product", color: "blue-text-gradient" },
+        { name: "community", color: "green-text-gradient" },
+        { name: "singapore", color: "pink-text-gradient" },
+      ],
+      image: creator,
+      source_code_link: "#",
+    },
+    {
+      name: "FinTech Genesis Hackathon",
+      description:
+        "Co-organizer of the FinTech Genesis Hackathon, a collaboration between StashAway and Women in Product Singapore. Brought together builders, designers, and domain experts to tackle fintech product challenges.",
+      tags: [
+        { name: "fintech", color: "blue-text-gradient" },
+        { name: "hackathon", color: "green-text-gradient" },
+        { name: "co-organizer", color: "pink-text-gradient" },
+      ],
+      image: web,
+      source_code_link: "#",
+    },
+    {
+      name: "Balik Kampoeng",
+      description:
+        "Mental Health Division Officer supporting Indonesian migrant workers in Singapore. Involved in outreach, welfare programming, and coordinating mental health support services for the migrant community.",
+      tags: [
+        { name: "mental-health", color: "blue-text-gradient" },
+        { name: "ngo", color: "green-text-gradient" },
+        { name: "social-impact", color: "pink-text-gradient" },
+      ],
+      image: mobile,
+      source_code_link: "#",
+    },
+    {
+      name: "INSEAD Alumni Forum",
+      description:
+        "Active participant in the INSEAD alumni network and consulting recruitment ecosystem across Singapore. Engaged in knowledge-sharing, peer mentorship, and connecting with the global INSEAD community.",
+      tags: [
+        { name: "insead", color: "blue-text-gradient" },
+        { name: "alumni", color: "green-text-gradient" },
+        { name: "strategy", color: "pink-text-gradient" },
+      ],
+      image: backend,
+      source_code_link: "#",
+    },
+  ];
+
+  const researchProjects = [
+    {
+      name: "Tonga Multi-Hazard Disaster Risk Assessment",
+      description:
+        "Contributed to hazard modeling, vulnerability analysis, and exposure quantification across 220 scenarios spanning floods, tsunamis, wind, and seismic events. Supported resilience planning and infrastructure decision-making for a Pacific island nation facing compounding climate and seismic risks.",
+      tags: [
+        { name: "geospatial", color: "blue-text-gradient" },
+        { name: "climate-risk", color: "green-text-gradient" },
+        { name: "ntu-stanford", color: "pink-text-gradient" },
+      ],
+      image: creator,
+      source_code_link: "#",
+    },
+    {
+      name: "Multi-Hazard Risk Modeling Framework",
+      description:
+        "Developed and applied a multi-hazard spatial modeling framework as part of the NTU–Stanford collaboration. Integrated geospatial datasets, statistical vulnerability functions, and probabilistic loss estimation methods across 50+ hazard scenarios.",
+      tags: [
+        { name: "spatial-analytics", color: "blue-text-gradient" },
+        { name: "probabilistic-modeling", color: "green-text-gradient" },
+        { name: "disaster-risk", color: "pink-text-gradient" },
+      ],
+      image: backend,
+      source_code_link: "#",
+    },
+  ];
+
+  export { services, technologies, experiences, projects, investmentProjects, communityItems, researchProjects };
