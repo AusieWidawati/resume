@@ -179,7 +179,7 @@ const experiences = [
   
   const projects = [
     {
-      name: "MealNUS",
+      name: "Navigator — Enterprise Generative AI Knowledge Engine",
       description:
         "Web-based platform for NUS students, staff and faculty to purchase pre-portioned mealboxes for fast, easy and healthy cooking. MealNUS admins have a dedicated inventory management web-based platform for easier tracking of orders",
       tags: [
@@ -198,9 +198,10 @@ const experiences = [
       ],
       image: mealnus,
       source_code_link: "https://github.com/Seibell/MealNUS-without-springboot",
+      video: "/navigator-demo.mov",
     },
     {
-      name: "Bitcoin Analysis",
+      name: "Climate-AI — Real-Time Disaster Intelligence & Visualization",
       description:
         "An ETL pipeline that aims to uncover, analyze and predicts trends between Bitcoin prices and the volume and quality of tweets posted about this crypto-currency. Through the use of various machine learning models, dashboards were created to display the findings.",
       tags: [
@@ -219,6 +220,7 @@ const experiences = [
       ],
       image: bitcoin,
       source_code_link: "https://github.com/ImAshuaige/IS3107_Project_Group22",
+      video: "/climate-full-vid.mov",
     },
     {
       name: "Car Rental Management System",
