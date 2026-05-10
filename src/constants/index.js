@@ -199,6 +199,28 @@ const experiences = [
       image: mealnus,
       source_code_link: "https://github.com/Seibell/MealNUS-without-springboot",
       video: `${import.meta.env.BASE_URL}navigator-demo-compressed.mp4`,
+      details: {
+        duration: "Add date range",
+        status: "Completed",
+        demoLink: null,
+        overview: "Add your project overview here — what problem it solves, who it's for, and why it matters.",
+        keyFeatures: [
+          { title: "Feature One", description: "Describe this feature and why it matters." },
+          { title: "Feature Two", description: "Describe this feature and why it matters." },
+        ],
+        techStack: ["React", "Java", "REST API"],
+        challenges: [
+          { title: "Challenge One", description: "Describe the challenge and what you learned." },
+          { title: "Challenge Two", description: "Describe the challenge and what you learned." },
+        ],
+        outcome: {
+          description: "Describe the overall outcome and impact of this project.",
+          metrics: [
+            { value: "—", label: "Metric label" },
+            { value: "—", label: "Metric label" },
+          ],
+        },
+      },
     },
     {
       name: "Climate-AI — Real-Time Disaster Intelligence & Visualization",
@@ -221,6 +243,28 @@ const experiences = [
       image: bitcoin,
       source_code_link: "https://github.com/ImAshuaige/IS3107_Project_Group22",
       video: `${import.meta.env.BASE_URL}climate-full-vid-compressed.mp4`,
+      details: {
+        duration: "Add date range",
+        status: "Completed",
+        demoLink: null,
+        overview: "Add your project overview here — what problem it solves, who it's for, and why it matters.",
+        keyFeatures: [
+          { title: "Feature One", description: "Describe this feature and why it matters." },
+          { title: "Feature Two", description: "Describe this feature and why it matters." },
+        ],
+        techStack: ["PostgreSQL", "Apache Airflow", "Python"],
+        challenges: [
+          { title: "Challenge One", description: "Describe the challenge and what you learned." },
+          { title: "Challenge Two", description: "Describe the challenge and what you learned." },
+        ],
+        outcome: {
+          description: "Describe the overall outcome and impact of this project.",
+          metrics: [
+            { value: "—", label: "Metric label" },
+            { value: "—", label: "Metric label" },
+          ],
+        },
+      },
     },
     {
       name: "Car Rental Management System",
@@ -238,6 +282,28 @@ const experiences = [
       ],
       image: carms,
       source_code_link: "https://github.com/ImAshuaige/CarManagementSystem",
+      details: {
+        duration: "Add date range",
+        status: "Completed",
+        demoLink: null,
+        overview: "Add your project overview here — what problem it solves, who it's for, and why it matters.",
+        keyFeatures: [
+          { title: "Feature One", description: "Describe this feature and why it matters." },
+          { title: "Feature Two", description: "Describe this feature and why it matters." },
+        ],
+        techStack: ["Java", "REST API"],
+        challenges: [
+          { title: "Challenge One", description: "Describe the challenge and what you learned." },
+          { title: "Challenge Two", description: "Describe the challenge and what you learned." },
+        ],
+        outcome: {
+          description: "Describe the overall outcome and impact of this project.",
+          metrics: [
+            { value: "—", label: "Metric label" },
+            { value: "—", label: "Metric label" },
+          ],
+        },
+      },
     },
   ];
   

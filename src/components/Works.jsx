@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Tilt } from "react-tilt";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -71,6 +72,7 @@ const VideoModal = ({ video, name, onClose }) => {
 const ProjectCard = ({ index, name, description, tags, image, source_code_link, video }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const videoRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     if (videoRef.current) { videoRef.current.play(); }
@@ -139,6 +141,18 @@ const ProjectCard = ({ index, name, description, tags, image, source_code_link, 
                 #{tag.name}
               </p>
             ))}
+          </div>
+
+          <div className="mt-5 pt-4 border-t border-white/5">
+            <button
+              onClick={() => navigate(`/project/${index}`)}
+              className="flex items-center gap-1.5 text-[13px] text-[#915eff] hover:text-white transition-colors font-medium"
+            >
+              Details
+              <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </Tilt>
       </motion.div>
