@@ -2,7 +2,7 @@
   "name": "portfolio",
   "private": false,
   "version": "0.0.0",
-  "homepage": "https://Ausieas.github.io/myportfolio",
+  "homepage": "https://ausiewidawati.github.io/resume/",
   "type": "module",
   "scripts": {
     "dev": "vite",
