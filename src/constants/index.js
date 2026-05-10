@@ -45,10 +45,6 @@ import {
       title: "Research",
     },
     {
-      id: "education",
-      title: "Education",
-    },
-    {
       id: "contact",
       title: "Contact",
     },
