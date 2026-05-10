@@ -2,8 +2,8 @@ import { BrowserRouter } from 'react-router-dom';
 import {About, Contact, Experience, Education, Hero, Navbar, Tech, Works, Investment, Community, Research, StarsCanvas} from './components';
 
 const Divider = () => (
-  <div className="w-full px-8 md:px-16">
-    <div className="h-[2px] w-full bg-gradient-to-r from-pink-500 to-purple-600 rounded-full opacity-60" />
+  <div className="w-full px-8 md:px-24 py-2">
+    <div className="section-divider" />
   </div>
 );
 
