@@ -5,7 +5,7 @@ import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { menu, close } from "../assets";
 
-const Navbar = () => {
+const Navbar = ({ leading = null }) => {
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -39,33 +39,35 @@ const Navbar = () => {
       }`}
     >
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-        <Link
-          to="/"
-          className="flex items-center gap-2 group"
-          onClick={() => { setActive(""); window.scrollTo(0, 0); }}
-        >
-          <span className="text-[18px] font-bold text-white tracking-tight">
-            Ausie
-          </span>
-          <span className="hidden sm:inline text-[18px] font-light text-white/40 tracking-tight">
-            / Portfolio
-          </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-[#915EFF] group-hover:scale-150 transition-transform duration-300" />
-        </Link>
+        {leading ?? (
+          <Link
+            to="/"
+            className="flex items-center gap-2 group"
+            onClick={() => { setActive(""); window.scrollTo(0, 0); }}
+          >
+            <span className="text-[18px] font-bold text-white tracking-tight">
+              Ausie
+            </span>
+            <span className="hidden sm:inline text-[18px] font-light text-white/40 tracking-tight">
+              / Portfolio
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#915EFF] group-hover:scale-150 transition-transform duration-300" />
+          </Link>
+        )}
 
         {/* Desktop links */}
         <ul className="list-none hidden sm:flex flex-row gap-8">
           {navLinks.map((nav) => (
             <li key={nav.id}>
-              <a
-                href={`#${nav.id}`}
+              <Link
+                to={{ pathname: "/", hash: nav.id }}
                 onClick={() => setActive(nav.title)}
                 className={`nav-link text-[15px] font-medium transition-colors duration-200 ${
                   active === nav.title ? "text-white active" : "text-white/50 hover:text-white"
                 }`}
               >
                 {nav.title}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -88,15 +90,15 @@ const Navbar = () => {
             <ul className="list-none flex flex-col gap-4">
               {navLinks.map((nav) => (
                 <li key={nav.id}>
-                  <a
-                    href={`#${nav.id}`}
+                  <Link
+                    to={{ pathname: "/", hash: nav.id }}
                     onClick={() => { setToggle(false); setActive(nav.title); }}
                     className={`text-[15px] font-medium transition-colors ${
                       active === nav.title ? "text-white" : "text-white/50"
                     }`}
                   >
                     {nav.title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

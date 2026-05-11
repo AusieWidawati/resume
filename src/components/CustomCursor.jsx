@@ -5,7 +5,7 @@ import {
 } from 'framer-motion';
 
 /**
- * CustomCursor — layered hearts, pink radial lines, sparkles (smooth motion).
+ * CustomCursor — layered hearts + sparkles (smooth motion).
  * Render once near the app root (e.g. inside BrowserRouter in App.jsx).
  */
 const PINK = '#ff6ec7';
@@ -13,28 +13,28 @@ const HOT_PINK = '#ff3cac';
 const PURPLE = '#c77dff';
 const LILAC = '#e9d5ff';
 
-/** Softer springs = smoother follow (less twitchy than high stiffness). */
+/** Tuned for quick follow with minimal overshoot (smooth, slightly snappy). */
 const SPRING_MAIN = {
   type: 'spring',
-  stiffness: 420,
-  damping: 38,
-  mass: 0.55,
+  stiffness: 540,
+  damping: 46,
+  mass: 0.48,
   restDelta: 0.0005,
   restSpeed: 0.0005,
 };
 const SPRING_MID = {
   type: 'spring',
-  stiffness: 260,
-  damping: 32,
-  mass: 0.52,
+  stiffness: 340,
+  damping: 40,
+  mass: 0.46,
   restDelta: 0.0005,
   restSpeed: 0.0005,
 };
 const SPRING_OUTER = {
   type: 'spring',
-  stiffness: 160,
-  damping: 28,
-  mass: 0.48,
+  stiffness: 210,
+  damping: 34,
+  mass: 0.44,
   restDelta: 0.0005,
   restSpeed: 0.0005,
 };
@@ -42,8 +42,6 @@ const SPRING_OUTER = {
 /** Material-style heart, viewBox 0 0 24 24 */
 const HEART_PATH =
   'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z';
-
-const RAY_COUNT = 12;
 
 const SPARKLE_OFFSETS = [
   { x: 28, y: -22, s: 1, delay: 0 },
@@ -204,67 +202,6 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Pink radial lines */}
-      <motion.div
-        style={{ ...baseFixed, zIndex: 9988 }}
-        animate={{
-          x: mousePosition.x,
-          y: mousePosition.y,
-        }}
-        transition={SPRING_MID}
-      >
-        <div
-          className="absolute"
-          style={{
-            left: '50%',
-            top: '50%',
-            width: 0,
-            height: 0,
-            transform: 'translate(-50%, -50%)',
-          }}
-        >
-          {Array.from({ length: RAY_COUNT }).map((_, i) => {
-            const deg = (360 / RAY_COUNT) * i;
-            const len = isHovering ? 78 : 62;
-            return (
-              <motion.div
-                key={i}
-                className="absolute rounded-full"
-                style={{
-                  left: 0,
-                  top: '50%',
-                  width: len,
-                  height: 2,
-                  marginTop: -1,
-                  transformOrigin: '0 50%',
-                  background: `linear-gradient(90deg, ${HOT_PINK} 0%, ${PINK} 35%, rgba(199,125,255,0.35) 70%, transparent 100%)`,
-                  boxShadow: `0 0 10px ${PINK}55`,
-                  transform: `rotate(${deg}deg)`,
-                }}
-                animate={
-                  reduceMotion
-                    ? { opacity: 0.45 }
-                    : {
-                        opacity: [0.35, 0.85, 0.4],
-                        scaleX: [0.92, 1.08, 0.92],
-                      }
-                }
-                transition={
-                  reduceMotion
-                    ? { duration: 0.2 }
-                    : {
-                        duration: 1.25 + i * 0.06,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: i * 0.04,
-                      }
-                }
-              />
-            );
-          })}
-        </div>
-      </motion.div>
-
       {/* Outer glow heart (soft stroke) */}
       <motion.div
         style={{ ...baseFixed, zIndex: 9994 }}

@@ -4,7 +4,7 @@ import ProjectDetail from './components/ProjectDetail';
 import { CustomCursor } from './components/CustomCursor';
 
 const Divider = () => (
-  <div className="w-full px-8 md:px-24 py-2">
+  <div className="relative z-0 w-full px-8 md:px-24 py-10 md:py-14">
     <div className="section-divider" />
   </div>
 );

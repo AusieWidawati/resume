@@ -3,6 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { projects } from "../constants";
 import { github } from "../assets";
+import Navbar from "./Navbar";
+
+const challengeAnchorId = (title) =>
+  `challenge-${title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`;
 
 // ── Section heading with left blue bar ──────────────────────────────
 const SectionHeading = ({ children }) => (
@@ -54,7 +58,6 @@ const MetricCard = ({ value, label }) => (
       {value}
     </p>
     <p className="text-gray-300 text-[13px] font-medium leading-snug">{label}</p>
-    <p className="text-gray-600 text-[11px] mt-1">Achievement</p>
   </div>
 );
 
@@ -160,6 +163,12 @@ const ProjectDetail = () => {
   const [activeSection, setActiveSection] = useState("overview");
   const project = projects[parseInt(id)];
 
+  // Always land at the top of the subpage (where the hero video sits)
+  // when the route opens, regardless of the parent page's scroll position.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [id]);
+
   useEffect(() => {
     if (!project) return;
     const ids = ["overview", "keyFeatures", "techStack", "challenges", "outcome"];
@@ -206,7 +215,7 @@ const ProjectDetail = () => {
       label: "Challenges & Learnings",
       subItems:
         details?.challenges?.map((c) => ({
-          id: `challenge-${c.title.toLowerCase().replace(/\s+/g, "-")}`,
+          id: challengeAnchorId(c.title),
           label: c.title,
         })) || [],
     },
@@ -216,40 +225,29 @@ const ProjectDetail = () => {
   return (
     <div className="min-h-screen text-white" style={{ background: "#0a0a0f" }}>
 
-      {/* ── Navbar ── */}
-      <nav
-        className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-4"
-        style={{
-          background: "rgba(10,10,15,0.88)",
-          backdropFilter: "blur(12px)",
-          borderBottom: "1px solid rgba(255,255,255,0.05)",
-        }}
-      >
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-[14px] transition-colors group"
-          style={{ color: "#9ca3af" }}
-        >
-          <svg
-            width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"
-            className="group-hover:-translate-x-0.5 transition-transform"
+      <Navbar
+        leading={
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-[15px] font-medium transition-colors group text-white/50 hover:text-white"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M12 5l-7 7 7 7" />
-          </svg>
-          Projects
-        </button>
-
-        <div className="hidden sm:flex items-center gap-6 text-[14px]" style={{ color: "#9ca3af" }}>
-          {["Home", "About", "Projects", "Experience", "Contact"].map((label) => {
-            const href = label === "Home" ? "/" : `/#${label.toLowerCase()}`;
-            return (
-              <a key={label} href={href} className="hover:text-white transition-colors">
-                {label}
-              </a>
-            );
-          })}
-        </div>
-      </nav>
+            <svg
+              width="16"
+              height="16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              className="group-hover:-translate-x-0.5 transition-transform shrink-0"
+              aria-hidden
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5M12 5l-7 7 7 7" />
+            </svg>
+            Projects
+          </button>
+        }
+      />
 
       {/* ── Hero / Title + Media ── */}
       <div className="pt-20" style={{ background: "#0d0d16" }}>
@@ -270,6 +268,11 @@ const ProjectDetail = () => {
             <h1 className="text-[36px] sm:text-[46px] font-black text-white leading-tight">
               {name}
             </h1>
+            {details?.tagline && (
+              <p className="mt-3 max-w-3xl text-[15px] font-medium leading-relaxed text-[#c4b5fd] sm:text-[16px]">
+                {details.tagline}
+              </p>
+            )}
           </motion.div>
 
           <motion.div
@@ -365,12 +368,19 @@ const ProjectDetail = () => {
             </div>
 
             {/* Overview */}
-            {details?.overview && (
+            {(details?.overview || details?.context) && (
               <section id="overview" className="mb-14 scroll-mt-28">
                 <SectionHeading>Overview</SectionHeading>
-                <p className="text-[15px] leading-[28px]" style={{ color: "#9ca3af" }}>
-                  {details.overview}
-                </p>
+                {details.context && (
+                  <p className="mb-4 text-[14px] leading-[26px] text-gray-500 italic border-l-2 border-[#915EFF]/40 pl-4">
+                    {details.context}
+                  </p>
+                )}
+                {details.overview && (
+                  <p className="text-[15px] leading-[28px]" style={{ color: "#9ca3af" }}>
+                    {details.overview}
+                  </p>
+                )}
               </section>
             )}
 
@@ -413,13 +423,25 @@ const ProjectDetail = () => {
                 {details.challenges.map((c) => (
                   <div
                     key={c.title}
-                    id={`challenge-${c.title.toLowerCase().replace(/\s+/g, "-")}`}
+                    id={challengeAnchorId(c.title)}
                     className="mb-7 scroll-mt-28"
                   >
                     <h3 className="text-white font-semibold text-[17px] mb-2">{c.title}</h3>
                     <p className="text-[14px] leading-[26px]" style={{ color: "#9ca3af" }}>
                       {c.description}
                     </p>
+                    {c.solution && (
+                      <div
+                        className="mt-3 rounded-lg border border-[#915EFF]/20 bg-[#915EFF]/[0.06] px-4 py-3"
+                      >
+                        <p className="text-[11px] font-bold uppercase tracking-wider text-[#c4b5fd]">
+                          Approach
+                        </p>
+                        <p className="mt-1 text-[14px] leading-[24px] text-gray-300">
+                          {c.solution}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 ))}
               </section>
@@ -439,6 +461,27 @@ const ProjectDetail = () => {
                     {details.outcome.metrics.map((m) => (
                       <MetricCard key={m.label} {...m} />
                     ))}
+                  </div>
+                )}
+                {details.outcome.achievements?.length > 0 && (
+                  <div className="mt-8">
+                    <p className="mb-3 text-[11px] font-bold uppercase tracking-wider text-[#c4b5fd]">
+                      Highlights
+                    </p>
+                    <ul className="m-0 list-none space-y-2 p-0">
+                      {details.outcome.achievements.map((line) => (
+                        <li
+                          key={line}
+                          className="flex gap-2 text-[14px] leading-[24px] text-gray-400"
+                        >
+                          <span
+                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#3b82f6]"
+                            aria-hidden
+                          />
+                          {line}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
               </section>

@@ -15,6 +15,10 @@ import kpmg from "./kpmg.png";
 import stanford from "./stanford.png";
 import inseadLogo from "./logo-insead.jpg";
 import ausieFws from "./ausie fws.png";
+import fwsGroupPic from "./fws group pic.JPG";
+import balineseDance from "./balinese dance.jpeg";
+import superAi from "./super ai.jpeg";
+import peVcInsead from "./pe vc insead.jpeg";
 import mealnus from "./mealnus.png";
 import bitcoin from "./bitcoin.png";
 import carms from "./carms.jpg";
@@ -63,6 +67,10 @@ export {
   stanford,
   inseadLogo,
   ausieFws,
+  fwsGroupPic,
+  balineseDance,
+  superAi,
+  peVcInsead,
   mealnus,
   bitcoin,
   carms,

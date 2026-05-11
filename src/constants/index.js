@@ -10,9 +10,6 @@ import {
     mongodb,
     git,
     optimum,
-    mealnus,
-    bitcoin,
-    carms,
     UOB,
     mysql,
     rlanguage,
@@ -290,128 +287,406 @@ const experiences = [
   
   const projects = [
     {
+      id: "navigator",
       name: "Navigator — Enterprise Generative AI Knowledge Engine",
+      featured: true,
       description:
-        "Web-based platform for NUS students, staff and faculty to purchase pre-portioned mealboxes for fast, easy and healthy cooking. MealNUS admins have a dedicated inventory management web-based platform for easier tracking of orders",
+        "A secure, enterprise-grade AI knowledge platform built on Retrieval-Augmented Generation (RAG) and agentic reasoning to deliver accurate, contextual answers from internal data sources.",
       tags: [
-        {
-          name: "react",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "java",
-          color: "green-text-gradient",
-        },
-        {
-          name: "restapi",
-          color: "pink-text-gradient",
-        },
+        { name: "Next.js", color: "blue-text-gradient" },
+        { name: "TypeScript", color: "green-text-gradient" },
+        { name: "LangChain", color: "pink-text-gradient" },
       ],
-      image: mealnus,
-      source_code_link: "https://github.com/Seibell/MealNUS-without-springboot",
+      image: web,
       video: `${import.meta.env.BASE_URL}navigator-demo-compressed.mp4`,
       details: {
-        duration: "Add date range",
+        duration: "Jan 2024 – Sep 2024",
         status: "Completed",
-        demoLink: null,
-        overview: "Add your project overview here — what problem it solves, who it's for, and why it matters.",
+        demoLink:
+          "https://holjnbrlgb237wxe.public.blob.vercel-storage.com/videos/navigator-demo.mov",
+        tagline: "Secure knowledge discovery for enterprises",
+        context:
+          "Built within a Big Four AI innovation programme for financial and consulting clients, with emphasis on compliance, data privacy, and cloud-hosted deployment.",
+        overview:
+          "Navigator is a confidential generative AI engine for enterprises, designed to give teams instant access to organizational intelligence through natural language. It combines RAG, vector search, and agentic task execution so responses stay grounded in verified internal data.",
         keyFeatures: [
-          { title: "Feature One", description: "Describe this feature and why it matters." },
-          { title: "Feature Two", description: "Describe this feature and why it matters." },
+          {
+            title: "Intelligent RAG pipelines",
+            description:
+              "Multi-layer retrieval using vector stores, metadata filters, and contextual embeddings for accurate, domain-specific answers within governance boundaries.",
+          },
+          {
+            title: "Agentic task execution",
+            description:
+              "Action-oriented agents that summarize reports, draft terms of reference, and run contextual follow-ups directly from chat.",
+          },
+          {
+            title: "Enterprise data connectors",
+            description:
+              "Ingestion pipelines for collaboration platforms, PDFs, and databases — with updates and version-aware document tracking.",
+          },
+          {
+            title: "Governed hybrid search",
+            description:
+              "Private-first retrieval with optional expansion through approved external APIs, aligned to enterprise data policies.",
+          },
+          {
+            title: "Enterprise SSO",
+            description:
+              "Cloud directory authentication with role-based access and multi-tenant support.",
+          },
         ],
-        techStack: ["React", "Java", "REST API"],
+        techStack: [
+          "Next.js",
+          "TypeScript",
+          "LangChain",
+          "Azure AI Services",
+          "PostgreSQL",
+          "Redis",
+          "OpenAI API",
+        ],
         challenges: [
-          { title: "Challenge One", description: "Describe the challenge and what you learned." },
-          { title: "Challenge Two", description: "Describe the challenge and what you learned." },
+          {
+            title: "Data governance & privacy",
+            description:
+              "Strict privacy across document stores and collaboration sources while meeting enterprise security bar.",
+            solution:
+              "Private networking, encryption in transit and at rest, least-privilege access, and auditable retrieval paths.",
+          },
+          {
+            title: "Vector retrieval at scale",
+            description:
+              "Balancing precision and latency with large embedding corpora and frequent queries.",
+            solution:
+              "Hybrid retrieval, semantic chunking, and caching for hot queries; tuned relevance for domain corpora.",
+          },
+          {
+            title: "Multi-tenant scalability",
+            description:
+              "Isolating data and configuration per client without sacrificing performance.",
+            solution:
+              "Tenant-aware partitioning, isolated indexes, and elastic compute for peak loads.",
+          },
+          {
+            title: "Keeping knowledge current",
+            description:
+              "Documents change often; stale retrieval hurts trust.",
+            solution:
+              "Event-driven re-indexing, incremental updates, and validation hooks on high-churn content.",
+          },
         ],
         outcome: {
-          description: "Describe the overall outcome and impact of this project.",
+          description:
+            "Navigator improved how teams find and act on internal knowledge — cutting time spent hunting documents and drafting first-pass summaries across several engagements.",
           metrics: [
-            { value: "—", label: "Metric label" },
-            { value: "—", label: "Metric label" },
+            { value: "~40%", label: "Faster turnaround on research & reporting tasks (client teams)" },
+            { value: "0", label: "Security incidents post go-live (pilots)" },
+          ],
+          achievements: [
+            "Featured in an internal AI showcase (Singapore)",
+            "Piloted with finance and consulting stakeholders",
           ],
         },
       },
     },
     {
+      id: "climate-ai",
       name: "Climate-AI — Real-Time Disaster Intelligence & Visualization",
+      featured: true,
       description:
-        "An ETL pipeline that aims to uncover, analyze and predicts trends between Bitcoin prices and the volume and quality of tweets posted about this crypto-currency. Through the use of various machine learning models, dashboards were created to display the findings.",
+        "A real-time AI platform merging digital twin concepts, geospatial analytics, and generative reasoning to support disaster awareness and sustainability planning.",
       tags: [
-        {
-          name: "PostgreSQL",
-          color: "blue-text-gradient",
-        },
-        {
-          name: "airflow",
-          color: "green-text-gradient",
-        },
-        {
-          name: "python",
-          color: "pink-text-gradient",
-        },
+        { name: "Next.js", color: "blue-text-gradient" },
+        { name: "TypeScript", color: "green-text-gradient" },
+        { name: "Python", color: "pink-text-gradient" },
       ],
-      image: bitcoin,
-      source_code_link: "https://github.com/ImAshuaige/IS3107_Project_Group22",
+      image: creator,
       video: `${import.meta.env.BASE_URL}climate-full-vid-compressed.mp4`,
       details: {
-        duration: "Add date range",
+        duration: "Mar 2024 – Aug 2024",
         status: "Completed",
-        demoLink: null,
-        overview: "Add your project overview here — what problem it solves, who it's for, and why it matters.",
+        demoLink:
+          "https://holjnbrlgb237wxe.public.blob.vercel-storage.com/videos/climate-full-vid.mov",
+        tagline: "AI for real-time climate and risk intelligence",
+        context:
+          "Developed as part of an innovation initiative on AI for sustainability and operational resilience.",
+        overview:
+          "Climate-AI provides a generative, map-driven interface for real-time disaster intelligence. It overlays geospatial feeds with predictive and narrative insight powered by LLMs — so analysts can explore scenarios visually and in conversation.",
         keyFeatures: [
-          { title: "Feature One", description: "Describe this feature and why it matters." },
-          { title: "Feature Two", description: "Describe this feature and why it matters." },
+          {
+            title: "Digital twin–style visualization",
+            description:
+              "Layers sensor feeds, map services, and public APIs into cohesive risk overlays and simulations.",
+          },
+          {
+            title: "Voice & chat interaction",
+            description:
+              "Natural-language questions (e.g. flood risk in a region) drive instant map views and summaries.",
+          },
+          {
+            title: "Generative scenario modelling",
+            description:
+              "What-if prompts (e.g. rainfall shocks) to explore knock-on effects on infrastructure and operations.",
+          },
+          {
+            title: "Responsive map dashboards",
+            description:
+              "Live analytics with smooth map interactions for operations and briefing rooms.",
+          },
+          {
+            title: "Enterprise authentication",
+            description:
+              "Directory SSO with role-aware permissions for multi-user deployments.",
+          },
         ],
-        techStack: ["PostgreSQL", "Apache Airflow", "Python"],
+        techStack: [
+          "Next.js",
+          "TypeScript",
+          "Python",
+          "ArcGIS API",
+          "LangChain",
+          "OpenAI API",
+        ],
         challenges: [
-          { title: "Challenge One", description: "Describe the challenge and what you learned." },
-          { title: "Challenge Two", description: "Describe the challenge and what you learned." },
+          {
+            title: "Multi-source geospatial integration",
+            description:
+              "Different cadences, formats, and projections across data providers.",
+            solution:
+              "Unified ingestion layer, ETL normalisation, and resilient caching with graceful degradation.",
+          },
+          {
+            title: "Map performance",
+            description:
+              "Heavy layers and smooth UX rarely coexist out of the box.",
+            solution:
+              "Progressive loading, level-of-detail tuning, and GPU-friendly rendering paths for large tiles.",
+          },
+          {
+            title: "Trust in AI-generated scenarios",
+            description:
+              "Stakeholders need transparency when models narrate risk.",
+            solution:
+              "Ensemble checks against historical baselines, confidence cues, and human-in-the-loop review hooks.",
+          },
+          {
+            title: "Real-time sync across surfaces",
+            description:
+              "Web dashboards and downstream tools must stay aligned during incidents.",
+            solution:
+              "WebSocket channels, conflict handling, and offline-first patterns with catch-up sync.",
+          },
         ],
         outcome: {
-          description: "Describe the overall outcome and impact of this project.",
+          description:
+            "Helped analysts and response teams visualise risk faster and communicate scenarios with less manual map prep.",
           metrics: [
-            { value: "—", label: "Metric label" },
-            { value: "—", label: "Metric label" },
+            { value: "~30%", label: "Faster risk visualisation workflows" },
+            { value: "~25%", label: "Lift in scenario consistency vs. ad-hoc baselines" },
+          ],
+          achievements: [
+            "Demonstrated across multiple regional readiness forums",
+            "Integrated feeds from major weather and geospatial providers",
           ],
         },
       },
     },
     {
-      name: "Car Rental Management System",
+      id: "credit-risk-ai",
+      name: "Credit Risk AI — Multi-Module Screening & Document Intelligence",
+      featured: true,
       description:
-        "A comprehensive car rental management system that allocates cars to individual customers and enterprise partners",
+        "An enterprise AI platform that streamlines credit screening by unifying borrower context, market signals, financial spreads, and document-grounded answers — with audit-friendly sourcing and responsible-AI guardrails.",
       tags: [
-        {
-          name: "java",
-          color: "green-text-gradient",
-        },
-        {
-          name: "restapi",
-          color: "pink-text-gradient",
-        },
+        { name: "RAG", color: "blue-text-gradient" },
+        { name: "Python", color: "green-text-gradient" },
+        { name: "PostgreSQL", color: "pink-text-gradient" },
       ],
-      image: carms,
-      source_code_link: "https://github.com/ImAshuaige/CarManagementSystem",
+      image: kpmg,
+      video: null,
       details: {
-        duration: "Add date range",
-        status: "Completed",
+        duration: "2024 – Present",
+        status: "In progress",
         demoLink: null,
-        overview: "Add your project overview here — what problem it solves, who it's for, and why it matters.",
+        tagline: "From fragmented sources to one governed workflow",
+        context:
+          "Delivered in a multi-vendor environment for a global development-finance institution (client and business units anonymised). Focus: regulated credit workflows, not consumer lending.",
+        overview:
+          "Credit teams traditionally juggle many systems — internal loan data, ratings and market data partners, country and sector research, and deal documents. This platform concentrates that work into a modular, conversational experience: structured outputs per analysis stage, explainable field population, and retrieval grounded in approved corpora. Transaction types (e.g. corporate vs. project finance vs. financial institutions) drive different logic and prompts so outputs match how practitioners actually review deals.",
         keyFeatures: [
-          { title: "Feature One", description: "Describe this feature and why it matters." },
-          { title: "Feature Two", description: "Describe this feature and why it matters." },
+          {
+            title: "Modular analysis workspace",
+            description:
+              "Six coordinated areas — from borrower and peer context to country and industry views, ratings, financial highlights, facility structure, and risk themes — each with clear acceptance criteria.",
+          },
+          {
+            title: "RAG over institutional documents",
+            description:
+              "Semantic search across policy papers, methodologies, and deal files with metadata-aware filtering so answers cite the right slice of the corpus.",
+          },
+          {
+            title: "Pre-retrieval guardrails",
+            description:
+              "Intent classification before tool calls to block out-of-scope requests and reduce misuse of external data APIs.",
+          },
+          {
+            title: "Partner data integrations",
+            description:
+              "Live connectors to ratings and financial-spreading services; spreadsheet-style outputs for covenant and ratio narratives.",
+          },
+          {
+            title: "Responsible AI test harness",
+            description:
+              "Structured cases for safety, scope adherence, and grounding — run in dev and UAT before release candidates.",
+          },
+          {
+            title: "Explainability by design",
+            description:
+              "Key auto-filled fields retain source metadata (document, retrieval path, timestamp) for audit and reviewer trust.",
+          },
         ],
-        techStack: ["Java", "REST API"],
+        techStack: [
+          "Python",
+          "PostgreSQL",
+          "OpenSearch",
+          "LLM orchestration",
+          "HTML/CSS/JS",
+          "Chart.js",
+          "REST APIs",
+        ],
         challenges: [
-          { title: "Challenge One", description: "Describe the challenge and what you learned." },
-          { title: "Challenge Two", description: "Describe the challenge and what you learned." },
+          {
+            title: "Scope vs. retrieval quality",
+            description:
+              "The model occasionally reframed off-scope questions using retrieved passages as false anchors.",
+            solution:
+              "Tightened system prompts and routing so scope enforcement stays independent of which documents matched.",
+          },
+          {
+            title: "Data quality at scale",
+            description:
+              "Peer groups, industry codes, and FX-normalised financials broke in edge cases.",
+            solution:
+              "Backlog of data-engineering stories with reproducible examples; single sources of truth for FX and taxonomy.",
+          },
+          {
+            title: "Multi-stakeholder delivery",
+            description:
+              "Internal engineering, client data teams, and external data vendors in one release train.",
+            solution:
+              "Shared JIRA conventions, Given/When/Then acceptance criteria, and standard bug templates.",
+          },
         ],
         outcome: {
-          description: "Describe the overall outcome and impact of this project.",
+          description:
+            "Replaced much of the manual tab-hopping in early deal screening with a single governed flow — while preserving the paper trail regulators and credit committees expect.",
           metrics: [
-            { value: "—", label: "Metric label" },
-            { value: "—", label: "Metric label" },
+            { value: "6", label: "Major analysis modules in one product surface" },
+            { value: "38+", label: "Responsible-AI evaluation cases in the test suite" },
+          ],
+          achievements: [
+            "Functional ownership from requirements through UAT across modules",
+            "Production-minded RAG and prompt design for institutional credit use",
+          ],
+        },
+      },
+    },
+    {
+      id: "exec-assistant",
+      name: "Executive AI Assistant — C-Suite & Board Operating Companion",
+      featured: true,
+      description:
+        "A discreet AI operating companion for C-suite and board members that organises calendars, business trips, and stakeholder context — and generates meeting agendas, talking points, and briefing notes from company-ingested data.",
+      tags: [
+        { name: "Next.js", color: "blue-text-gradient" },
+        { name: "LangChain", color: "green-text-gradient" },
+        { name: "RAG", color: "pink-text-gradient" },
+      ],
+      image: kpmg,
+      video: null,
+      details: {
+        duration: "2025 – Present",
+        status: "In progress",
+        demoLink: null,
+        tagline: "A quiet operating system for leaders who run on judgement, not admin",
+        context:
+          "Designed for senior executives and non-executive directors who juggle multiple boards, portfolios, and travel commitments — without the bandwidth of a chief of staff team.",
+        overview:
+          "The assistant unifies an executive's calendar, business trips, and meeting prep into a single conversational surface. It ingests the company's internal documents, CRM notes, and people data to generate context-rich agendas, talking points, and post-meeting summaries. When a director asks 'who am I meeting tomorrow and what do I need to know?', the assistant assembles a briefing from board packs, prior interactions, and external public profile signals — with sources cited.",
+        keyFeatures: [
+          {
+            title: "Calendar & travel intelligence",
+            description:
+              "Unified view across personal and assistant-managed calendars; flags travel conflicts, time-zone load, and back-to-back meeting risk before the week starts.",
+          },
+          {
+            title: "Auto-generated agendas & talking points",
+            description:
+              "Pulls from prior board minutes, recent updates, and company KPIs to draft meeting agendas and tailored talking points per attendee.",
+          },
+          {
+            title: "Profile search over ingested data",
+            description:
+              "Conversational search across internal CRM, deal flow notes, and board materials — surfaces who the executive has met before, last topics discussed, and current relationship status.",
+          },
+          {
+            title: "Meeting notes & follow-ups",
+            description:
+              "Captures key decisions, action items, and named owners from meetings; routes follow-up reminders into the calendar and a personal action register.",
+          },
+          {
+            title: "Briefing memos on demand",
+            description:
+              "One-tap briefings before each meeting — combining internal context, public company filings, and recent news, with explicit source attribution.",
+          },
+          {
+            title: "Privacy-first deployment",
+            description:
+              "Single-tenant deployment with role-based access, audit logs, and the option to keep ingestion inside the executive's own cloud tenancy.",
+          },
+        ],
+        techStack: [
+          "Next.js",
+          "TypeScript",
+          "LangChain",
+          "OpenAI API",
+          "PostgreSQL",
+          "Pinecone",
+          "Microsoft Graph API",
+        ],
+        challenges: [
+          {
+            title: "Trust at the executive tier",
+            description:
+              "Senior leaders won't tolerate hallucinated names, dates, or commitments in briefings.",
+            solution:
+              "Strict source-grounded responses, mandatory citations on every claim, and a confidence-gated fallback when retrieval is thin.",
+          },
+          {
+            title: "Calendar reasoning beyond scheduling",
+            description:
+              "Off-the-shelf calendar APIs surface events, not meaning — the assistant needs to understand purpose, history, and stakes.",
+            solution:
+              "Layered enrichment that links each event to its CRM record, board agenda, or deal file before producing any narrative output.",
+          },
+          {
+            title: "Sensitive data handling",
+            description:
+              "Board materials, M&A discussions, and personal travel are among the most sensitive corporate data.",
+            solution:
+              "Single-tenant architecture with encryption at rest and in transit, fine-grained access scopes, and a clear data retention policy per workspace.",
+          },
+        ],
+        outcome: {
+          description:
+            "Reduced the cognitive overhead of running multiple board and executive commitments — turning fragmented prep work into a single conversational workflow.",
+          metrics: [
+            { value: "10+", label: "Hours saved per executive each week on prep and follow-up" },
+            { value: "1", label: "Unified surface across calendar, CRM, and board materials" },
+          ],
+          achievements: [
+            "Designed for non-executive directors and C-suite operators",
+            "Privacy-first deployment model suitable for regulated industries",
           ],
         },
       },
@@ -420,91 +695,17 @@ const experiences = [
   
   const investmentProjects = [
     {
-      name: "Enterprise AI Investment Memo",
+      name: "BB Deals & Valuing Innovation — Tesla Battery Recycling",
       description:
-        "A structured investment thesis evaluating the AI infrastructure stack — from foundation model providers to tooling, orchestration, and deployment layers. Covers competitive moats, revenue models, and value capture dynamics.",
+        "Applied capital budgeting, DCF, EVA, comparable multiples, and LBO modelling in the BB Deals & Valuing Innovation Bootcamp — culminating in a buy-side pitch deck for how Tesla should acquire a US$6M EV battery-recycling target. Use the links to open the Excel DCF / LBO workbook and the pitch deck when shared.",
       tags: [
-        { name: "ai-infrastructure", color: "blue-text-gradient" },
-        { name: "venture", color: "green-text-gradient" },
-        { name: "thesis", color: "pink-text-gradient" },
+        { name: "dcf", color: "blue-text-gradient" },
+        { name: "lbo", color: "green-text-gradient" },
+        { name: "m-a", color: "pink-text-gradient" },
       ],
       image: web,
       source_code_link: "#",
-    },
-    {
-      name: "Climate Resilience Fund Analysis",
-      description:
-        "Sector analysis of climate adaptation assets including nature-based solutions, resilient infrastructure, and parametric insurance. Includes DCF models and risk-adjusted return comparisons across asset classes.",
-      tags: [
-        { name: "climate-tech", color: "blue-text-gradient" },
-        { name: "dcf-model", color: "green-text-gradient" },
-        { name: "esg", color: "pink-text-gradient" },
-      ],
-      image: creator,
-      source_code_link: "#",
-    },
-    {
-      name: "Development Finance Model",
-      description:
-        "Financial model for a blended finance structure targeting SME lending in Southeast Asia. Covers waterfall mechanics, first-loss tranche sizing, and concessional capital deployment for a DFI-style vehicle.",
-      tags: [
-        { name: "development-finance", color: "blue-text-gradient" },
-        { name: "excel-model", color: "green-text-gradient" },
-        { name: "emerging-markets", color: "pink-text-gradient" },
-      ],
-      image: mobile,
-      source_code_link: "#",
-    },
-  ];
-
-  const communityItems = [
-    {
-      name: "Women in Product Singapore",
-      description:
-        "Volunteer and event co-organizer. Supporting the growth of women in product management across Singapore through community events, mentorship, and professional development initiatives.",
-      tags: [
-        { name: "product", color: "blue-text-gradient" },
-        { name: "community", color: "green-text-gradient" },
-        { name: "singapore", color: "pink-text-gradient" },
-      ],
-      image: creator,
-      source_code_link: "#",
-    },
-    {
-      name: "FinTech Genesis Hackathon",
-      description:
-        "Co-organizer of the FinTech Genesis Hackathon, a collaboration between StashAway and Women in Product Singapore. Brought together builders, designers, and domain experts to tackle fintech product challenges.",
-      tags: [
-        { name: "fintech", color: "blue-text-gradient" },
-        { name: "hackathon", color: "green-text-gradient" },
-        { name: "co-organizer", color: "pink-text-gradient" },
-      ],
-      image: web,
-      source_code_link: "#",
-    },
-    {
-      name: "Balik Kampoeng",
-      description:
-        "Mental Health Division Officer supporting Indonesian migrant workers in Singapore. Involved in outreach, welfare programming, and coordinating mental health support services for the migrant community.",
-      tags: [
-        { name: "mental-health", color: "blue-text-gradient" },
-        { name: "ngo", color: "green-text-gradient" },
-        { name: "social-impact", color: "pink-text-gradient" },
-      ],
-      image: mobile,
-      source_code_link: "#",
-    },
-    {
-      name: "INSEAD Alumni Forum",
-      description:
-        "Active participant in the INSEAD alumni network and consulting recruitment ecosystem across Singapore. Engaged in knowledge-sharing, peer mentorship, and connecting with the global INSEAD community.",
-      tags: [
-        { name: "insead", color: "blue-text-gradient" },
-        { name: "alumni", color: "green-text-gradient" },
-        { name: "strategy", color: "pink-text-gradient" },
-      ],
-      image: backend,
-      source_code_link: "#",
+      deck_link: "#",
     },
   ];
 
@@ -535,4 +736,4 @@ const experiences = [
     },
   ];
 
-  export { services, technologies, experiences, projects, investmentProjects, communityItems, researchProjects };
+  export { services, technologies, experiences, projects, investmentProjects, researchProjects };

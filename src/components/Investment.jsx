@@ -369,7 +369,6 @@ const VCDigestPane = () => {
                   fontSize: "11px",
                   fontWeight: activeTab === i ? 600 : 400,
                   color: activeTab === i ? "#f59e0b" : "rgba(255,255,255,0.35)",
-                  borderBottom: activeTab === i ? "2px solid #f59e0b" : "2px solid transparent",
                   background: "none",
                   border: "none",
                   borderBottom: activeTab === i ? "2px solid #f59e0b" : "2px solid transparent",
@@ -406,111 +405,50 @@ const VCDigestPane = () => {
 
 // ── Document previews ────────────────────────────────────────────────
 
-const MemoPreview = () => (
-  <div className="w-full h-full bg-[#0d0d1a] rounded-xl p-5 flex flex-col gap-2.5 font-mono">
-    <div className="flex justify-between items-center mb-1">
-      <span className="text-[9px] text-[#915EFF] uppercase tracking-widest font-semibold">Investment Memo</span>
-      <span className="text-[8px] text-white/20">CONFIDENTIAL</span>
-    </div>
-    {["TO: Investment Committee", "RE: Enterprise AI — Series B Evaluation", "DATE: Q2 2025"].map((line, i) => (
-      <div key={i} className="flex gap-2 items-center">
-        <div className="w-1 h-1 rounded-full bg-[#915EFF]/60 flex-shrink-0" />
-        <span className="text-[9px] text-white/50">{line}</span>
-      </div>
-    ))}
-    <div className="mt-2 space-y-1.5">
-      {[80, 60, 90, 45, 70].map((w, i) => (
-        <div key={i} className="h-[5px] rounded-full bg-white/8" style={{ width: `${w}%` }} />
-      ))}
-    </div>
-    <div className="mt-auto pt-2 border-t border-white/5 flex gap-3">
-      {["Thesis", "Comps", "Risks", "Returns"].map((s) => (
-        <span key={s} className="text-[8px] text-white/25">{s}</span>
-      ))}
-    </div>
-  </div>
-);
-
-const ExcelPreview = () => {
-  const bars = [42, 68, 55, 80, 63, 91, 74];
-  const cols = ["Y1", "Y2", "Y3", "Y4", "Y5", "Y6", "Y7"];
-  const rows = [
-    { label: "Revenue", vals: ["$2.1M", "$4.8M", "$9.2M", "$16M", "$24M"] },
-    { label: "EBITDA",  vals: ["(0.8M)", "(0.2M)", "$1.1M", "$3.4M", "$7.2M"] },
-    { label: "IRR",     vals: ["—", "—", "—", "—", "28.4%"] },
+/** Preview card — BB Deals bootcamp: Tesla × EV battery recycling buy-side work */
+const BootcampDealPreview = () => {
+  const waterfall = [
+    { label: "DCF base", w: 72, color: "#e11d48" },
+    { label: "EVA / multiples", w: 58, color: "#f59e0b" },
+    { label: "LBO bridge", w: 64, color: "#34d399" },
   ];
   return (
-    <div className="w-full h-full bg-[#071a0f] rounded-xl p-4 flex flex-col gap-3">
-      <div className="flex justify-between items-center">
-        <span className="text-[9px] text-emerald-400 uppercase tracking-widest font-semibold">DCF Model · Blended Finance</span>
-        <span className="text-[8px] text-white/20">v2.3.xlsx</span>
+    <div className="w-full h-full bg-gradient-to-br from-[#140808] to-[#0a0a12] rounded-xl p-4 flex flex-col gap-3 border border-white/[0.06]">
+      <div className="flex justify-between items-start gap-2">
+        <div>
+          <span className="text-[9px] text-rose-400 uppercase tracking-widest font-semibold">Buy-side thesis</span>
+          <div className="text-[10px] text-white/45 mt-1 leading-snug">EV battery recycling · M&A target ~US$6M EV</div>
+        </div>
+        <span className="text-[8px] text-white/25 shrink-0">BB Deals</span>
       </div>
-      <div className="flex items-end gap-1 h-14 px-1">
-        {bars.map((h, i) => (
-          <div key={i} className="flex-1 flex flex-col items-center gap-0.5">
-            <div
-              className="w-full rounded-t"
-              style={{
-                height: `${h}%`,
-                background: i === 6 ? "linear-gradient(to top, #34d399, #6ee7b7)" : "rgba(52,211,153,0.25)",
-              }}
-            />
-            <span className="text-[6px] text-white/20">{cols[i]}</span>
-          </div>
+      <div className="flex gap-2 mt-0.5">
+        {["DCF", "EVA", "LBO"].map((t) => (
+          <span key={t} className="text-[7px] px-2 py-0.5 rounded-full bg-white/[0.06] text-white/35 border border-white/[0.06]">
+            {t}
+          </span>
         ))}
       </div>
-      <div className="border border-white/5 rounded overflow-hidden">
-        {rows.map((row, i) => (
-          <div key={i} className={`flex text-[8px] ${i % 2 === 0 ? "bg-white/[0.02]" : ""}`}>
-            <span className="w-16 px-2 py-1 text-white/30 border-r border-white/5 flex-shrink-0">{row.label}</span>
-            {row.vals.map((v, j) => (
-              <span key={j} className={`flex-1 px-1 py-1 text-center ${v.startsWith("(") ? "text-red-400/70" : v === "—" ? "text-white/15" : "text-emerald-400/80"}`}>{v}</span>
-            ))}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const DeckPreview = () => {
-  const sectors = [
-    { label: "Nature-based",    pct: 35, color: "#34d399" },
-    { label: "Infrastructure",  pct: 40, color: "#60a5fa" },
-    { label: "Parametric Ins.", pct: 25, color: "#a78bfa" },
-  ];
-  return (
-    <div className="w-full h-full bg-[#0a0a1f] rounded-xl p-5 flex flex-col gap-3">
-      <div className="flex justify-between items-center">
-        <span className="text-[9px] text-blue-400 uppercase tracking-widest font-semibold">Sector Analysis · Climate</span>
-        <span className="text-[8px] text-white/20">Fund III</span>
-      </div>
-      <div className="space-y-2.5 mt-1">
-        {sectors.map((s) => (
-          <div key={s.label} className="space-y-1">
-            <div className="flex justify-between">
-              <span className="text-[9px] text-white/50">{s.label}</span>
-              <span className="text-[9px] font-semibold" style={{ color: s.color }}>{s.pct}%</span>
+      <div className="flex flex-col gap-2 flex-1 justify-center">
+        {waterfall.map((row) => (
+          <div key={row.label} className="space-y-1">
+            <div className="flex justify-between text-[8px] text-white/40">
+              <span>{row.label}</span>
             </div>
             <div className="h-1.5 rounded-full bg-white/5 overflow-hidden">
               <motion.div
                 className="h-full rounded-full"
-                style={{ background: s.color }}
+                style={{ background: row.color }}
                 initial={{ width: 0 }}
-                animate={{ width: `${s.pct}%` }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
+                animate={{ width: `${row.w}%` }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
               />
             </div>
           </div>
         ))}
       </div>
-      <div className="mt-auto grid grid-cols-3 gap-2 pt-2 border-t border-white/5">
-        {[["Target IRR", "14–18%"], ["Fund Size", "$120M"], ["Horizon", "10 yr"]].map(([k, v]) => (
-          <div key={k} className="text-center">
-            <div className="text-[10px] font-semibold text-white/80">{v}</div>
-            <div className="text-[7px] text-white/25 mt-0.5">{k}</div>
-          </div>
-        ))}
+      <div className="pt-2 border-t border-white/5 flex justify-between text-[7px] text-white/20">
+        <span>Model.xlsx</span>
+        <span>Pitch.pdf</span>
       </div>
     </div>
   );
@@ -520,52 +458,24 @@ const DeckPreview = () => {
 
 const WORKSTREAM_META = [
   {
-    type: "MEMO",
-    typeColor: "#915EFF",
-    activeBorder: "rgba(145,94,255,0.6)",
-    meta: "Q2 2025 · Investment Committee",
-    subtitle: "Investment Committee Memo · Q2 2025 · CONFIDENTIAL",
-    breadcrumbSub: "Enterprise AI",
-    Preview: MemoPreview,
+    type: "BOOTCAMP",
+    typeColor: "#f59e0b",
+    activeBorder: "rgba(245,158,11,0.6)",
+    meta: "BB Deals & Valuing Innovation Bootcamp",
+    subtitle: "Capital budgeting, DCF, EVA, multiples & LBO — buy-side pitch for Tesla acquiring a US$6M EV battery-recycling target",
+    breadcrumbSub: "Tesla M&A · Battery Recycling",
+    Preview: BootcampDealPreview,
     metrics: [
-      { label: "Deal Size",       value: "$28M"  },
-      { label: "Projected MOIC",  value: "3.2×"  },
-      { label: "Target IRR",      value: "28%"   },
-    ],
-  },
-  {
-    type: "ANALYSIS",
-    typeColor: "#60a5fa",
-    activeBorder: "rgba(96,165,250,0.6)",
-    meta: "Q4 2024 · Fund III",
-    subtitle: "Sector Analysis · Fund III · Q4 2024",
-    breadcrumbSub: "Climate Tech",
-    Preview: DeckPreview,
-    metrics: [
-      { label: "Fund Size",   value: "$120M"   },
-      { label: "Target IRR", value: "14–18%"  },
-      { label: "Horizon",    value: "10 yr"   },
-    ],
-  },
-  {
-    type: "MODEL",
-    typeColor: "#34d399",
-    activeBorder: "rgba(52,211,153,0.6)",
-    meta: "Q1 2025 · v2.3",
-    subtitle: "DCF Model · Blended Finance · Q1 2025 · v2.3",
-    breadcrumbSub: "Blended Finance",
-    Preview: ExcelPreview,
-    metrics: [
-      { label: "Revenue (Y7)",  value: "$24M"   },
-      { label: "IRR",          value: "28.4%"  },
-      { label: "EBITDA (Y7)",  value: "$7.2M"  },
+      { label: "Target EV", value: "~US$6M" },
+      { label: "Buyer lens", value: "Tesla" },
+      { label: "Outputs", value: "DCF + Deck" },
     ],
   },
 ];
 
 // ── Main section ─────────────────────────────────────────────────────
 
-const VC_DIGEST_INDEX = 3; // index after the 3 investmentProjects
+const VC_DIGEST_INDEX = 1; // second tab: VC & Startup Intelligence
 
 const Investment = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -590,7 +500,7 @@ const Investment = () => {
         <span className="text-white/80">AI infrastructure</span>,{" "}
         <span className="text-white/80">climate tech</span>, and{" "}
         <span className="text-white/80">emerging market enterprise software</span> — sectors I've worked in directly.
-        These are working files: financial models, sector analyses, and investment memos built to sharpen deal evaluation skills.
+        Below: a valuation bootcamp deliverable (DCF / LBO / deck) plus a living digest of regional VC & startup intelligence.
       </motion.p>
 
       <motion.div
@@ -602,18 +512,16 @@ const Investment = () => {
           overflow: "hidden",
           background: "rgba(255,255,255,0.01)",
           display: "flex",
+          flexDirection: "column",
           minHeight: "560px",
         }}
       >
-        {/* ── Sidebar ── */}
+        {/* ── Top workstream tabs ── */}
         <div
           style={{
-            width: "280px",
             flexShrink: 0,
-            borderRight: "1px solid rgba(255,255,255,0.06)",
+            borderBottom: "1px solid rgba(255,255,255,0.06)",
             background: "rgba(255,255,255,0.015)",
-            display: "flex",
-            flexDirection: "column",
           }}
         >
           <div
@@ -622,80 +530,108 @@ const Investment = () => {
               textTransform: "uppercase",
               letterSpacing: "3px",
               color: "rgba(255,255,255,0.2)",
-              padding: "20px 20px 12px",
-              borderBottom: "1px solid rgba(255,255,255,0.04)",
+              padding: "16px 20px 8px",
             }}
           >
             Workstreams
           </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              gap: "4px",
+              padding: "0 12px 0",
+            }}
+          >
+            {investmentProjects.map((project, i) => {
+              const meta = WORKSTREAM_META[i];
+              const isActive = i === activeIndex;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveIndex(i)}
+                  style={{
+                    flex: "1 1 220px",
+                    minWidth: "min(100%, 200px)",
+                    padding: "12px 16px 14px",
+                    textAlign: "left",
+                    borderBottom: isActive ? `2px solid ${meta.typeColor}` : "2px solid transparent",
+                    marginBottom: "-1px",
+                    background: isActive ? `rgba(${hexToRgb(meta.typeColor)}, 0.08)` : "transparent",
+                    transition: "all 0.2s ease",
+                    cursor: "pointer",
+                    borderTop: "none",
+                    borderLeft: "none",
+                    borderRight: "none",
+                    borderRadius: "10px 10px 0 0",
+                  }}
+                >
+                  <div style={{ fontSize: "8px", textTransform: "uppercase", letterSpacing: "2px", color: meta.typeColor, marginBottom: "4px", fontWeight: 600 }}>
+                    {meta.type}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "13px",
+                      fontWeight: 500,
+                      color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
+                      lineHeight: 1.3,
+                      marginBottom: "3px",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      overflow: "hidden",
+                    }}
+                  >
+                    {project.name}
+                  </div>
+                  <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {meta.meta}
+                  </div>
+                </button>
+              );
+            })}
 
-          {investmentProjects.map((project, i) => {
-            const meta = WORKSTREAM_META[i];
-            const isActive = i === activeIndex;
-            return (
-              <button
-                key={i}
-                onClick={() => setActiveIndex(i)}
-                style={{
-                  padding: "16px 20px",
-                  textAlign: "left",
-                  borderLeft: isActive ? `2px solid ${meta.typeColor}` : "2px solid transparent",
-                  background: isActive ? `rgba(${hexToRgb(meta.typeColor)}, 0.07)` : "transparent",
-                  transition: "all 0.2s ease",
-                  cursor: "pointer",
-                  borderTop: "none",
-                  borderRight: "none",
-                  borderBottom: "1px solid rgba(255,255,255,0.03)",
-                }}
-              >
-                <div style={{ fontSize: "8px", textTransform: "uppercase", letterSpacing: "2px", color: meta.typeColor, marginBottom: "5px", fontWeight: 600 }}>
-                  {meta.type}
-                </div>
-                <div style={{ fontSize: "13px", fontWeight: 500, color: isActive ? "#fff" : "rgba(255,255,255,0.6)", lineHeight: 1.3, marginBottom: "4px" }}>
-                  {project.name}
-                </div>
-                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)" }}>
-                  {meta.meta}
-                </div>
-              </button>
-            );
-          })}
-
-          {/* VC Digest entry */}
-          {(() => {
-            const isActive = activeIndex === VC_DIGEST_INDEX;
-            return (
-              <button
-                onClick={() => setActiveIndex(VC_DIGEST_INDEX)}
-                style={{
-                  padding: "16px 20px",
-                  textAlign: "left",
-                  borderLeft: isActive ? "2px solid #f59e0b" : "2px solid transparent",
-                  background: isActive ? "rgba(245,158,11,0.07)" : "transparent",
-                  transition: "all 0.2s ease",
-                  cursor: "pointer",
-                  borderTop: "none",
-                  borderRight: "none",
-                  borderBottom: "none",
-                  marginTop: "auto",
-                  borderTop: "1px solid rgba(255,255,255,0.05)",
-                }}
-              >
-                <div style={{ fontSize: "8px", textTransform: "uppercase", letterSpacing: "2px", color: "#f59e0b", marginBottom: "5px", fontWeight: 600 }}>
-                  DIGEST
-                </div>
-                <div style={{ fontSize: "13px", fontWeight: 500, color: isActive ? "#fff" : "rgba(255,255,255,0.6)", lineHeight: 1.3, marginBottom: "4px" }}>
-                  VC & Startup Intelligence
-                </div>
-                <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)" }}>
-                  SEA & Singapore · May 2026
-                </div>
-              </button>
-            );
-          })()}
+            {(() => {
+              const isActive = activeIndex === VC_DIGEST_INDEX;
+              return (
+                <button
+                  type="button"
+                  onClick={() => setActiveIndex(VC_DIGEST_INDEX)}
+                  style={{
+                    flex: "1 1 220px",
+                    minWidth: "min(100%, 200px)",
+                    padding: "12px 16px 14px",
+                    textAlign: "left",
+                    borderBottom: isActive ? "2px solid #f59e0b" : "2px solid transparent",
+                    marginBottom: "-1px",
+                    background: isActive ? "rgba(245,158,11,0.08)" : "transparent",
+                    transition: "all 0.2s ease",
+                    cursor: "pointer",
+                    borderTop: "none",
+                    borderLeft: "none",
+                    borderRight: "none",
+                    borderRadius: "10px 10px 0 0",
+                  }}
+                >
+                  <div style={{ fontSize: "8px", textTransform: "uppercase", letterSpacing: "2px", color: "#f59e0b", marginBottom: "4px", fontWeight: 600 }}>
+                    DIGEST
+                  </div>
+                  <div style={{ fontSize: "13px", fontWeight: 500, color: isActive ? "#fff" : "rgba(255,255,255,0.6)", lineHeight: 1.3, marginBottom: "3px" }}>
+                    VC & Startup Intelligence
+                  </div>
+                  <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    SEA & Singapore · May 2026
+                  </div>
+                </button>
+              );
+            })()}
+          </div>
         </div>
 
         {/* ── Focus pane ── */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, overflow: "hidden" }}>
         <AnimatePresence mode="wait">
           {isVCDigest ? (
             <motion.div key="vc-digest" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }} style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
@@ -715,16 +651,29 @@ const Investment = () => {
                   <h3 style={{ fontSize: "22px", fontWeight: 600, lineHeight: 1.25, color: "#fff" }}>
                     {project.name}
                   </h3>
-                  {project.source_code_link !== "#" && (
-                    <button
-                      onClick={() => window.open(project.source_code_link, "_blank")}
-                      style={{ color: "rgba(255,255,255,0.25)", flexShrink: 0, marginTop: "4px", background: "none", border: "none", cursor: "pointer" }}
-                      title="Open"
-                    >
-                      <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </button>
+                  {(project.source_code_link !== "#" || (project.deck_link && project.deck_link !== "#")) && (
+                    <div style={{ display: "flex", gap: "6px", flexShrink: 0, marginTop: "4px" }}>
+                      {project.source_code_link !== "#" && (
+                        <button
+                          type="button"
+                          onClick={() => window.open(project.source_code_link, "_blank")}
+                          style={{ color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "6px 10px", cursor: "pointer", fontSize: "10px", letterSpacing: "0.5px" }}
+                          title="Open financial model"
+                        >
+                          Model
+                        </button>
+                      )}
+                      {project.deck_link && project.deck_link !== "#" && (
+                        <button
+                          type="button"
+                          onClick={() => window.open(project.deck_link, "_blank")}
+                          style={{ color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "6px 10px", cursor: "pointer", fontSize: "10px", letterSpacing: "0.5px" }}
+                          title="Open pitch deck"
+                        >
+                          Deck
+                        </button>
+                      )}
+                    </div>
                   )}
                 </div>
                 <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginBottom: "20px" }}>
@@ -787,6 +736,7 @@ const Investment = () => {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </motion.div>
     </>
   );
