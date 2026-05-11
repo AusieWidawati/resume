@@ -13,6 +13,12 @@
   color-scheme: dark;
 }
 
+/* Custom cursor (see CustomCursor.jsx) — applied while component is mounted */
+body.custom-cursor-active,
+body.custom-cursor-active * {
+  cursor: none !important;
+}
+
 .hash-span {
   margin-top: -100px;
   padding-bottom: 100px;

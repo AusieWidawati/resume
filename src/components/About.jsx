@@ -1,12 +1,54 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Tilt } from 'react-tilt';
-import { motion } from 'framer-motion';
-import { useState } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from 'framer-motion';
 
 import { styles } from '../styles';
 import { services } from '../constants';
-import { fadeIn, textVariant } from '../utils/motion'
+import { fadeIn, textVariant } from '../utils/motion';
 import { SectionWrapper } from '../hoc';
+
+/** Scroll-linked fade + slide; respects prefers-reduced-motion */
+const ScrollReveal = ({
+  children,
+  className = '',
+  yFrom = 28,
+  xFrom = 0,
+  offset = ['start 0.9', 'start 0.38'],
+}) => {
+  const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset,
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [yFrom, 0]);
+  const x = useTransform(scrollYProgress, [0, 1], [xFrom, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.35, 1], [0, 1, 1]);
+
+  if (reduceMotion) {
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ y, x, opacity }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const ServiceCard = ({ index, title, icon, description }) => {
   const [show, setShow] = useState(false);
@@ -37,7 +79,20 @@ const ServiceCard = ({ index, title, icon, description }) => {
   )
 }
 
+const bodySm =
+  'text-secondary text-[14px] sm:text-[15px] leading-[23px] sm:leading-[26px]';
+
 const About = () => {
+  const columnRef = useRef(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress: columnProgress } = useScroll({
+    target: columnRef,
+    offset: ['start 0.85', 'end 0.2'],
+  });
+
+  const lineScaleX = useTransform(columnProgress, [0.08, 0.45], [0, 1]);
+  const orbY = useTransform(columnProgress, [0, 1], [0, -18]);
+
   return (
     <>
       <motion.div variants={textVariant()}>
@@ -46,15 +101,76 @@ const About = () => {
       </motion.div>
 
       <div className="mt-4 flex flex-col md:flex-row gap-10 md:gap-16 items-start">
-        <motion.p
-          variants={fadeIn("", "", 0.1, 1)}
-          className="text-secondary text-[20px] leading-[30px] flex-1"
+        <div
+          ref={columnRef}
+          className="relative flex flex-1 flex-col gap-8 sm:gap-10 md:gap-12"
         >
-          I'm an <span className="font-semibold">AI product manager and strategy consultant</span>, and a graduate of the <span className="font-semibold">INSEAD</span> Master in Management programme. I ship enterprise AI platforms, drive digital transformation, and think commercially — from pricing strategy to deal evaluation.<br /><br />
-          I own products end-to-end. From requirements to UAT to stakeholder management, I turn complex business problems into systems that work.<br /><br />
-          Beyond my day job, I run <a href="https://www.linkedin.com/company/friendswhoshare/posts/" target="_blank" rel="noopener noreferrer" className="font-semibold underline hover:opacity-75 transition-opacity">Friends Who Share</a>, an AI and tech startup community connecting builders, thinkers, and investors in Singapore.<br /><br />
-          I'm currently open to opportunities in <span className="font-semibold">product management, strategy consulting, and venture capital</span> or investment adjacent roles.
-        </motion.p>
+          {!reduceMotion && (
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute -right-4 top-0 h-40 w-40 rounded-full bg-[#915eff] opacity-[0.12] blur-3xl md:-right-8"
+              style={{ y: orbY }}
+            />
+          )}
+
+          <ScrollReveal yFrom={36} xFrom={0} className="relative z-[1] max-w-2xl">
+            <p className="text-[15px] font-medium leading-[26px] text-[#dfd9ff] sm:text-[16px] sm:leading-[28px]">
+              I'm an{' '}
+              <span className="bg-gradient-to-r from-white to-[#c4b5fd] bg-clip-text font-semibold text-transparent">
+                AI product manager and strategy consultant
+              </span>
+              , and a graduate of the{' '}
+              <span className="font-semibold text-white">INSEAD</span> Master in
+              Management programme. I ship enterprise AI platforms, drive digital
+              transformation, and think commercially — from pricing strategy to deal
+              evaluation.
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal yFrom={26} xFrom={-22} className="relative z-[1] md:pl-10">
+            <div
+              className="absolute left-0 top-1 hidden h-[calc(100%-0.25rem)] w-px overflow-hidden bg-white/10 md:block"
+              aria-hidden
+            >
+              {reduceMotion ? (
+                <div className="h-full w-full bg-gradient-to-b from-[#915eff] via-[#e879f9]/80 to-transparent" />
+              ) : (
+                <motion.div
+                  className="h-full w-full origin-top bg-gradient-to-b from-[#915eff] via-[#e879f9] to-transparent"
+                  style={{ scaleY: lineScaleX, transformOrigin: 'top' }}
+                />
+              )}
+            </div>
+            <p className={`${bodySm} md:pl-8`}>
+              I own products end-to-end. From requirements to UAT to stakeholder
+              management, I turn complex business problems into systems that work.
+            </p>
+          </ScrollReveal>
+
+          <ScrollReveal
+            yFrom={22}
+            xFrom={18}
+            offset={['start 0.88', 'start 0.32']}
+            className="relative z-[1] md:ml-4 md:max-w-[94%]"
+          >
+            <p className={bodySm}>
+              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#915eff]">
+                On the side
+              </span>
+              Beyond my day job, I run{' '}
+              <a
+                href="https://www.linkedin.com/company/friendswhoshare/posts/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[#dfd9ff] underline decoration-[#915EFF]/45 underline-offset-[3px] transition-colors duration-200 hover:text-white hover:decoration-[#e879f9]"
+              >
+                Friends Who Share
+              </a>
+              , an AI and tech startup community connecting builders, thinkers, and
+              investors in Singapore.
+            </p>
+          </ScrollReveal>
+        </div>
 
         <motion.div
           variants={fadeIn("left", "spring", 0.2, 0.75)}
@@ -109,6 +225,78 @@ const About = () => {
           </Tilt>
         </motion.div>
       </div>
+
+      {/* Full-viewport-width strip (breaks out of max-w column) */}
+      <ScrollReveal
+        yFrom={16}
+        xFrom={0}
+        offset={['start 0.88', 'start 0.35']}
+        className="relative z-[1] mt-10 sm:mt-12"
+      >
+        <div className="relative left-1/2 w-screen max-w-[100vw] -translate-x-1/2 overflow-x-clip">
+          <motion.div
+            role="note"
+            aria-label="Currently open to work"
+            className="relative overflow-hidden rounded-none py-6 shadow-2xl sm:py-7"
+            style={{
+              background:
+                'linear-gradient(128deg, #ff3cac 0%, #c026d3 42%, #7c3aed 78%, #4f46e5 100%)',
+            }}
+            animate={
+              reduceMotion
+                ? {
+                    boxShadow:
+                      '0 12px 48px rgba(124, 58, 237, 0.45), 0 8px 28px rgba(255, 60, 172, 0.35)',
+                  }
+                : {
+                    boxShadow: [
+                      '0 10px 40px rgba(192, 38, 211, 0.45), 0 0 0 0 rgba(124, 58, 237, 0)',
+                      '0 20px 64px rgba(255, 60, 172, 0.55), 0 0 80px 18px rgba(124, 58, 237, 0.55)',
+                      '0 10px 40px rgba(192, 38, 211, 0.45), 0 0 0 0 rgba(124, 58, 237, 0)',
+                    ],
+                  }
+            }
+            transition={
+              reduceMotion
+                ? { duration: 0.3 }
+                : {
+                    duration: 2.4,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }
+            }
+          >
+            {!reduceMotion && (
+              <motion.div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/25 via-transparent to-[#4f46e5]/30"
+                animate={{ opacity: [0.28, 0.5, 0.28] }}
+                transition={{
+                  duration: 2.4,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+            )}
+            <div
+              className={`relative z-[1] mx-auto max-w-7xl text-left ${styles.paddingX}`}
+            >
+              <span className="inline-flex items-center gap-2 rounded-full bg-black/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.28em] text-white/95 ring-1 ring-white/25 backdrop-blur-[2px]">
+                Currently
+              </span>
+              <p className="mt-4 max-w-3xl text-[14px] font-medium leading-[24px] text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.35)] sm:text-[15px] sm:leading-[26px]">
+                I'm open to opportunities in{' '}
+                <span className="font-semibold text-white">
+                  product management, strategy consulting, and venture capital
+                </span>{' '}
+                <span className="font-normal text-white/85">
+                  or investment adjacent roles.
+                </span>
+              </p>
+            </div>
+          </motion.div>
+        </div>
+      </ScrollReveal>
 
       <div className="mt-20 flex flex-wrap gap-10">
         {services.map((service, index) => (

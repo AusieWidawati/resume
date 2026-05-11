@@ -1,37 +1,53 @@
-import { useState } from "react";
+import {
+  SiCss,
+  SiGit,
+  SiHtml5,
+  SiMongodb,
+  SiMysql,
+  SiR,
+  SiReact,
+  SiRedux,
+} from 'react-icons/si';
+import { TbChartDots3 } from 'react-icons/tb';
 
-import { BallCanvas } from "./canvas"
-import { motion } from "framer-motion";
-import { SectionWrapper } from "../hoc"
-import { technologies } from "../constants"
-import { textVariant } from "../utils/motion";
+import { technologies } from '../constants';
+import { SectionWrapper } from '../hoc';
+import { SkillsShowcasePortable } from './SkillsShowcasePortable';
 
-
-import { styles } from "../styles";
+/** Maps portfolio `technologies` names to react-icons + Tailwind color classes */
+const TECH_ICON_MAP = {
+  'HTML 5': { icon: SiHtml5, color: 'text-orange-500' },
+  'CSS 3': { icon: SiCss, color: 'text-blue-400' },
+  'React JS': { icon: SiReact, color: 'text-cyan-400' },
+  'Redux Toolkit': { icon: SiRedux, color: 'text-purple-400' },
+  MongoDB: { icon: SiMongodb, color: 'text-green-500' },
+  git: { icon: SiGit, color: 'text-orange-500' },
+  MySQL: { icon: SiMysql, color: 'text-blue-500' },
+  R: { icon: SiR, color: 'text-blue-300' },
+  Tableau: { icon: TbChartDots3, color: 'text-sky-400' },
+};
 
 const Tech = () => {
-  const [show, setShow] = useState(false);
+  const skillNames = technologies.map((t) => t.name);
+
+  const customSkills = technologies
+    .map((t) => {
+      const row = TECH_ICON_MAP[t.name];
+      if (!row) return null;
+      return { name: t.name, icon: row.icon, color: row.color };
+    })
+    .filter(Boolean);
 
   return (
-    <>
-      <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>What I have worked with</p>
-        <h2 className={styles.sectionHeadText}>Tech Stack.</h2>
-      </motion.div>
-      <div className="mt-20 flex flex-row flex-wrap justify-center gap-10" onMouseOver={() => setShow(true)} onMouseOut={() => setShow(false)}>
-        {technologies.map((technology) => (
-          <div className="w-28 h-28" key={technology.name}>
-            <BallCanvas icon={technology.icon} />
-            <div className="flex flex-col w-full justify-center text-center" >
-              <motion.p animate={show ? { opacity: 100 } : { opacity: 0 }}>
-                {technology.name}
-              </motion.p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </>
-  )
-}
+    <SkillsShowcasePortable
+      skills={skillNames}
+      customSkills={customSkills}
+      title="Tech Stack."
+      subtitle="What I have worked with — languages, frameworks, and tools from recent projects."
+      showHeader
+      className="!py-10 sm:!py-14"
+    />
+  );
+};
 
-export default SectionWrapper(Tech, "")
+export default SectionWrapper(Tech, 'tech-stack');
