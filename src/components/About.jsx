@@ -6,11 +6,23 @@ import {
   useTransform,
   useReducedMotion,
 } from 'framer-motion';
+import { TypeAnimation } from 'react-type-animation';
 
 import { styles } from '../styles';
 import { services } from '../constants';
 import { fadeIn, textVariant } from '../utils/motion';
 import { SectionWrapper } from '../hoc';
+
+const OPEN_TO_ROLES = [
+  'Product management',
+  1800,
+  'Strategy/Management Consulting',
+  1800,
+  'Venture Capital',
+  1800,
+  'Investment-adjacent role',
+  1800,
+];
 
 /** Scroll-linked fade + slide; respects prefers-reduced-motion */
 const ScrollReveal = ({
@@ -51,33 +63,161 @@ const ScrollReveal = ({
 };
 
 const ServiceCard = ({ index, title, icon, description }) => {
-  const [show, setShow] = useState(false);
+  const [flipped, setFlipped] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const toggle = () => setFlipped((v) => !v);
+
+  const flipTransition = reduceMotion
+    ? { duration: 0 }
+    : { type: 'spring', stiffness: 95, damping: 14, mass: 0.9 };
 
   return (
-    <Tilt className="xs:w-[250px]">
-      <motion.div variants={fadeIn("right", "spring", 0.5 * index, 0.75)} className="w-full green-pink-gradient p-[1px] rounded-[20px] shadow-card" onMouseOver={() => setShow(true)} onMouseOut={() => setShow(false)}>
-        <div
-          options={{
-            max: 45,
-            scale: 0.5,
-            speed: 450,
-          }} className="bg-tertiary rounded-[20px] py-5 px-12 min-h-[140px] flex justify-evenly items-center flex-col">
-          {!show && <img src={icon} alt={title} className= "w-16 h-16 object-contain" />}
-          <h3 className={!show ? "text-white text-[20px] font-bp;d text-center" : "text-[0px]"}>{title}</h3>
-          {show &&
-            <div className="object-contain w-full" >
-              <motion.p animate={show ? { opacity: 100 } : { opacity: 0 }}>
-                <div className="text-white text-[15px] font-bp;d text-center">
-                  {description}
-                </div>
-              </motion.p>
+    <motion.div
+      variants={fadeIn('up', 'spring', 0.15 * index, 0.7)}
+      className="w-[260px]"
+      style={{ perspective: 1200 }}
+    >
+      <motion.button
+        type="button"
+        onClick={toggle}
+        aria-pressed={flipped}
+        aria-label={`${title}. ${flipped ? 'Hide' : 'View'} description.`}
+        whileHover={reduceMotion ? undefined : { y: -6 }}
+        whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+        transition={{ type: 'spring', stiffness: 240, damping: 18 }}
+        className="group relative block h-[280px] w-full cursor-pointer rounded-[22px] text-left outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+      >
+        <motion.div
+          className="relative h-full w-full"
+          style={{ transformStyle: 'preserve-3d' }}
+          animate={{ rotateY: flipped ? 180 : 0 }}
+          transition={flipTransition}
+        >
+          {/* FRONT */}
+          <div
+            className="absolute inset-0 rounded-[22px] p-[1.5px] shadow-card"
+            style={{
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              background:
+                'conic-gradient(from 140deg, #00cea8, #915EFF, #ff3cac, #bf61ff, #00cea8)',
+            }}
+          >
+            <div className="relative flex h-full w-full flex-col items-center justify-center gap-5 overflow-hidden rounded-[20.5px] bg-tertiary px-6 py-6">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-3 top-1 select-none text-[88px] font-black leading-none text-white/[0.045]"
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
+
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -left-10 -bottom-12 h-36 w-36 rounded-full bg-[#915EFF]/25 blur-3xl transition-opacity duration-300 group-hover:opacity-90"
+              />
+
+              <motion.div
+                className="relative"
+                animate={
+                  reduceMotion ? undefined : { y: [-3, 3, -3] }
+                }
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        duration: 4 + index * 0.4,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                      }
+                }
+              >
+                <div
+                  aria-hidden
+                  className="absolute -inset-4 rounded-full bg-gradient-to-br from-[#915EFF]/35 to-[#00cea8]/25 blur-2xl"
+                />
+                <img
+                  src={icon}
+                  alt=""
+                  className="relative h-16 w-16 object-contain drop-shadow-[0_4px_18px_rgba(145,94,255,0.45)]"
+                />
+              </motion.div>
+
+              <h3 className="relative z-[1] text-center text-[19px] font-bold leading-tight text-white">
+                {title}
+              </h3>
+
+              <div className="relative z-[1] mt-1 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+                <motion.span
+                  className="h-1.5 w-1.5 rounded-full bg-[#915EFF]"
+                  animate={
+                    reduceMotion
+                      ? undefined
+                      : { scale: [1, 1.6, 1], opacity: [1, 0.5, 1] }
+                  }
+                  transition={
+                    reduceMotion
+                      ? undefined
+                      : {
+                          duration: 1.8,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                        }
+                  }
+                />
+                Tap to reveal
+              </div>
             </div>
-          }
-        </div>
-      </motion.div>
-    </Tilt>
-  )
-}
+          </div>
+
+          {/* BACK */}
+          <div
+            className="absolute inset-0 rounded-[22px] p-[1.5px] shadow-card"
+            style={{
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+              transform: 'rotateY(180deg)',
+              background:
+                'conic-gradient(from 320deg, #ff3cac, #bf61ff, #00cea8, #915EFF, #ff3cac)',
+            }}
+          >
+            <div className="relative flex h-full w-full flex-col gap-3 overflow-hidden rounded-[20.5px] bg-tertiary px-5 py-5">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-[#ff3cac]/45 to-[#915EFF]/35 blur-3xl"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -left-8 -bottom-12 h-32 w-32 rounded-full bg-gradient-to-tr from-[#00cea8]/35 to-[#915EFF]/20 blur-3xl"
+              />
+
+              <div className="relative z-[1] flex w-full items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#c4b5fd]">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
+                  Tap to close
+                </span>
+              </div>
+
+              <h4 className="relative z-[1] text-[16px] font-bold leading-tight text-white">
+                {title}
+              </h4>
+
+              <span
+                aria-hidden
+                className="relative z-[1] h-px w-10 bg-gradient-to-r from-[#915EFF] to-transparent"
+              />
+
+              <p className="relative z-[1] text-[13.5px] leading-[20px] text-[#dfd9ff]">
+                {description}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+      </motion.button>
+    </motion.div>
+  );
+};
 
 const bodySm =
   'text-secondary text-[14px] sm:text-[15px] leading-[23px] sm:leading-[26px]';
@@ -284,21 +424,67 @@ const About = () => {
               <span className="inline-flex items-center gap-2 rounded-full bg-black/20 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.28em] text-white/95 ring-1 ring-white/25 backdrop-blur-[2px]">
                 Currently
               </span>
-              <p className="mt-4 max-w-3xl text-[14px] font-medium leading-[24px] text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.35)] sm:text-[15px] sm:leading-[26px]">
+              <p className="mt-4 max-w-3xl text-[16px] font-medium leading-[28px] text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.35)] sm:text-[18px] sm:leading-[30px] md:text-[20px] md:leading-[34px]">
                 I'm open to opportunities in{' '}
-                <span className="font-semibold text-white">
-                  product management, strategy consulting, and venture capital
-                </span>{' '}
-                <span className="font-normal text-white/85">
-                  or investment adjacent roles.
-                </span>
+                {reduceMotion ? (
+                  <span
+                    className="font-extrabold"
+                    style={{
+                      color: '#dbeafe',
+                      textShadow:
+                        '0 0 18px rgba(186, 230, 253, 0.6), 0 1px 2px rgba(0, 0, 0, 0.45)',
+                    }}
+                  >
+                    product management, strategy/management consulting, venture
+                    capital, or investment adjacent roles.
+                  </span>
+                ) : (
+                  <TypeAnimation
+                    sequence={OPEN_TO_ROLES}
+                    wrapper="span"
+                    speed={50}
+                    deletionSpeed={65}
+                    repeat={Infinity}
+                    cursor
+                    style={{
+                      display: 'inline-block',
+                      color: '#dbeafe',
+                      textShadow:
+                        '0 0 18px rgba(186, 230, 253, 0.6), 0 1px 2px rgba(0, 0, 0, 0.45)',
+                    }}
+                    className="font-extrabold"
+                  />
+                )}
               </p>
             </div>
           </motion.div>
         </div>
       </ScrollReveal>
 
-      <div className="mt-20 flex flex-wrap gap-10">
+      <ScrollReveal
+        yFrom={22}
+        xFrom={0}
+        offset={['start 0.92', 'start 0.45']}
+        className="mt-20 sm:mt-24"
+      >
+        <div className="max-w-2xl">
+          <p className={styles.sectionSubText}>What I'm passionate about</p>
+          <h3 className="mt-1 font-black leading-[1.1] text-white text-[28px] sm:text-[34px] md:text-[40px]">
+            Four domains I{' '}
+            <span className="bg-gradient-to-r from-[#915EFF] via-[#e879f9] to-[#00cea8] bg-clip-text text-transparent">
+              live and breathe
+            </span>
+            .
+          </h3>
+          <p className="mt-3 text-[14px] sm:text-[15px] leading-[24px] text-secondary">
+            Building products, evaluating deals, connecting people, and digging
+            into research — these threads run through everything I do. Tap a
+            card to see how.
+          </p>
+        </div>
+      </ScrollReveal>
+
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-6 gap-y-10 justify-items-center">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}
