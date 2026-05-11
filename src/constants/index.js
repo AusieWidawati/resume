@@ -24,8 +24,8 @@ import {
       title: "About",
     },
     {
-      id: "work",
-      title: "Work",
+      id: "experience",
+      title: "Experience",
     },
     {
       id: "projects",
@@ -221,7 +221,7 @@ const experiences = [
     ],
   },
   {
-    title: "SMB Strategy and Planning Intern",
+    title: "SME Strategy and Planning Intern",
     company_name: "Grab (GrabAds)",
     icon: backend,
     iconBg: "#383E56",
@@ -242,6 +242,27 @@ const experiences = [
       {
         short: "Produced merchant content including a press release published on Kompas, Indonesia's Tier 1 media outlet.",
         full: "Produced merchant-facing content including a monthly newsletter and a Grab Ramadan press release published on Kompas, a Tier 1 media outlet in Indonesia.",
+      },
+    ],
+  },
+  {
+    title: "Business Product Management Intern",
+    company_name: "Shopee (Shopee Video)",
+    icon: web,
+    iconBg: "#EE4D2D",
+    date: "Aug 2022 - Nov 2022",
+    points: [
+      {
+        short: "Push & NLP analytics; ~10–15% CTR/open lift.",
+        full: "Analyzed push notification engagement across segments and supported NLP-driven copy generation for scalable outreach to millions of users. Ran campaign performance analysis in Excel and internal analytics tools, surfacing messaging patterns that lifted click-through and open rates by approximately 10–15% during testing cycles.",
+      },
+      {
+        short: "Cross-functional campaigns; A/B tests & targeting experiments.",
+        full: "Collaborated with marketing, product, and operations to streamline campaign execution and deployment turnaround. Supported A/B tests on push notifications using behavioral metrics for personalization recommendations, and contributed to experiments on automated notification content and customer targeting logic for more scalable outreach.",
+      },
+      {
+        short: "SEA benchmarking, promo KPIs, stakeholder decks.",
+        full: "Benchmarked engagement and retention strategies across Southeast Asian e-commerce platforms and presented synthesized recommendations internally. Monitored campaign KPIs and engagement during large-scale promotions to inform retention decisions. Packaged large datasets into actionable insights and presentation materials to accelerate decisions on engagement strategy.",
       },
     ],
   },
@@ -709,31 +730,4 @@ const experiences = [
     },
   ];
 
-  const researchProjects = [
-    {
-      name: "Tonga Multi-Hazard Disaster Risk Assessment",
-      description:
-        "Contributed to hazard modeling, vulnerability analysis, and exposure quantification across 220 scenarios spanning floods, tsunamis, wind, and seismic events. Supported resilience planning and infrastructure decision-making for a Pacific island nation facing compounding climate and seismic risks.",
-      tags: [
-        { name: "geospatial", color: "blue-text-gradient" },
-        { name: "climate-risk", color: "green-text-gradient" },
-        { name: "ntu-stanford", color: "pink-text-gradient" },
-      ],
-      image: creator,
-      source_code_link: "#",
-    },
-    {
-      name: "Multi-Hazard Risk Modeling Framework",
-      description:
-        "Developed and applied a multi-hazard spatial modeling framework as part of the NTU–Stanford collaboration. Integrated geospatial datasets, statistical vulnerability functions, and probabilistic loss estimation methods across 50+ hazard scenarios.",
-      tags: [
-        { name: "spatial-analytics", color: "blue-text-gradient" },
-        { name: "probabilistic-modeling", color: "green-text-gradient" },
-        { name: "disaster-risk", color: "pink-text-gradient" },
-      ],
-      image: backend,
-      source_code_link: "#",
-    },
-  ];
-
-  export { services, technologies, experiences, projects, investmentProjects, researchProjects };
+  export { services, technologies, experiences, projects, investmentProjects };

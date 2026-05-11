@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { styles } from "../styles";
 import { navLinks } from "../constants";
 import { menu, close } from "../assets";
 
 const Navbar = ({ leading = null }) => {
+  const { pathname } = useLocation();
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  /** Router index route — hash-only navigation should scroll, not reload */
+  const onIndexRoute = pathname === "/" || pathname === "";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -32,7 +35,7 @@ const Navbar = ({ leading = null }) => {
 
   return (
     <nav
-      className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-20 transition-all duration-500 ${
+      className={`${styles.paddingX} w-full flex items-center py-4 fixed top-0 z-[100] transition-all duration-500 pointer-events-auto ${
         scrolled
           ? "glass border-b border-white/5 shadow-lg shadow-black/20"
           : "bg-transparent"
@@ -61,8 +64,15 @@ const Navbar = ({ leading = null }) => {
             <li key={nav.id}>
               <Link
                 to={{ pathname: "/", hash: nav.id }}
-                onClick={() => setActive(nav.title)}
-                className={`nav-link text-[15px] font-medium transition-colors duration-200 ${
+                onClick={(e) => {
+                  setActive(nav.title);
+                  if (onIndexRoute) {
+                    e.preventDefault();
+                    document.getElementById(nav.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                    window.history.replaceState(null, "", `#${nav.id}`);
+                  }
+                }}
+                className={`nav-link relative z-[1] cursor-pointer text-[15px] font-medium transition-colors duration-200 pointer-events-auto ${
                   active === nav.title ? "text-white active" : "text-white/50 hover:text-white"
                 }`}
               >
@@ -84,16 +94,24 @@ const Navbar = ({ leading = null }) => {
 
           <div
             className={`${
-              !toggle ? "opacity-0 pointer-events-none scale-95" : "opacity-100 scale-100"
-            } glass absolute top-16 right-4 min-w-[160px] z-10 rounded-2xl p-5 transition-all duration-200 border border-white/10`}
+              !toggle ? "opacity-0 pointer-events-none scale-95" : "opacity-100 scale-100 pointer-events-auto"
+            } glass absolute top-16 right-4 min-w-[160px] z-[110] rounded-2xl p-5 transition-all duration-200 border border-white/10`}
           >
             <ul className="list-none flex flex-col gap-4">
               {navLinks.map((nav) => (
                 <li key={nav.id}>
                   <Link
                     to={{ pathname: "/", hash: nav.id }}
-                    onClick={() => { setToggle(false); setActive(nav.title); }}
-                    className={`text-[15px] font-medium transition-colors ${
+                    onClick={(e) => {
+                      setToggle(false);
+                      setActive(nav.title);
+                      if (onIndexRoute) {
+                        e.preventDefault();
+                        document.getElementById(nav.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                        window.history.replaceState(null, "", `#${nav.id}`);
+                      }
+                    }}
+                    className={`block w-full text-left text-[15px] font-medium transition-colors cursor-pointer pointer-events-auto ${
                       active === nav.title ? "text-white" : "text-white/50"
                     }`}
                   >

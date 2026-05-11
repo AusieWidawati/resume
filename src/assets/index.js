@@ -22,6 +22,8 @@ import peVcInsead from "./pe vc insead.jpeg";
 import mealnus from "./mealnus.png";
 import bitcoin from "./bitcoin.png";
 import carms from "./carms.jpg";
+import researchPosterFyp from "./FYP Poster-1.png";
+import researchPosterFani from "./Slide1.png";
 
 import figmaSvg from "./Figma.svg";
 import jira from "./Jira.svg";
@@ -74,6 +76,8 @@ export {
   mealnus,
   bitcoin,
   carms,
+  researchPosterFyp,
+  researchPosterFani,
   figmaSvg,
   jira,
   ntu,

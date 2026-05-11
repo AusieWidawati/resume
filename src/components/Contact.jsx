@@ -15,15 +15,24 @@ const ContactPage = () => {
         <p className={styles.sectionSubText}>Let's get in touch</p>
         <h3 className={styles.sectionHeadText}>Contact Me.</h3>
         <p className="text-secondary text-[17px] max-w-3xl leading-[30px] mb-5">
-          Feel free to contact me via any of the means below!
+          Whether it's a product build, a partnership, or a role where you need someone who ships end-to-end and thinks in impact — I'm
+          excited to hear what you're working on and how I can add value. Reach out and we'll make the next step concrete.
         </p>
-        <a className="cursor-pointer p-2 hover:bg-secondary hover:bg-opacity-50 rounded-lg flex items-center w-fit" href="https://www.linkedin.com/in/Ausie-a-sharma-2b8a49248/">
-          <img src={linkedin} alt="" className=" w-5 h-5 object-contain mr-2"/>
-          Ausie Sharma
+        <a
+          className="cursor-pointer p-2 hover:bg-secondary hover:bg-opacity-50 rounded-lg flex items-center w-fit"
+          href="https://www.linkedin.com/in/ausie-widawati/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img src={linkedin} alt="" className="w-5 h-5 object-contain mr-2" />
+          Ausie Widawati
         </a>
-        <a className="cursor-pointer p-2 hover:bg-secondary hover:bg-opacity-50 rounded-lg flex items-center w-fit" href="mailto:Ausieasharma13@gmail.com">
-          <img src={gmail} alt="" className=" w-5 h-5 object-contain mr-2"/>
-          Ausieasharma13@gmail.com
+        <a
+          className="cursor-pointer p-2 hover:bg-secondary hover:bg-opacity-50 rounded-lg flex items-center w-fit"
+          href="mailto:ausie.widawati@gmail.com"
+        >
+          <img src={gmail} alt="" className="w-5 h-5 object-contain mr-2" />
+          ausie.widawati@gmail.com
         </a>
       </motion.div>
 
