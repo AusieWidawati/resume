@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -6,6 +7,10 @@ import { fadeIn, textVariant } from "../utils/motion";
 import { VCDigestPane } from "./Investment";
 
 const VCDigestPage = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
+
   return (
     <div className="relative min-h-screen bg-primary overflow-hidden">
       <div className="absolute inset-0 bg-hero-pattern bg-cover bg-center opacity-20" />
