@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {About, Contact, Experience, Education, Hero, Navbar, Tech, Works, Investment, Community, Research, StarsCanvas} from './components';
 import ProjectDetail from './components/ProjectDetail';
+import VCDigestPage from './components/VCDigestPage';
 import { CustomCursor } from './components/CustomCursor';
 
 const Divider = () => (
@@ -41,6 +42,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
+        <Route path="/vc-digest" element={<VCDigestPage />} />
       </Routes>
     </BrowserRouter>
   );

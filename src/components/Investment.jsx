@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
@@ -331,7 +332,7 @@ const WatchListTab = () => (
 
 // ── VC Digest Pane ────────────────────────────────────────────────────
 
-const VCDigestPane = () => {
+const VCDigestPane = ({ showFullPageLink = false }) => {
   const [activeTab, setActiveTab] = useState(0);
   const TabContent = [MarketPulseTab, TopDealsTab, SectorsTab, WatchListTab][activeTab];
   return (
@@ -349,9 +350,29 @@ const VCDigestPane = () => {
             <h3 style={{ fontSize: "20px", fontWeight: 700, color: "#fff", lineHeight: 1.25 }}>
               VC & Startup Intelligence
             </h3>
-            <div style={{ display: "flex", gap: "6px", alignItems: "center", flexShrink: 0 }}>
-              <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34d399", boxShadow: "0 0 8px #34d399" }} />
-              <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.3)", letterSpacing: "1px" }}>{DIGEST_DATE}</span>
+            <div style={{ display: "flex", gap: "8px", alignItems: "center", flexShrink: 0, flexWrap: "wrap", justifyContent: "flex-end" }}>
+              {showFullPageLink && (
+                <Link
+                  to="/vc-digest"
+                  style={{
+                    fontSize: "10px",
+                    letterSpacing: "0.5px",
+                    color: "rgba(255,255,255,0.78)",
+                    background: "rgba(245,158,11,0.1)",
+                    border: "1px solid rgba(245,158,11,0.28)",
+                    borderRadius: "999px",
+                    padding: "6px 12px",
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Open full page
+                </Link>
+              )}
+              <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#34d399", boxShadow: "0 0 8px #34d399" }} />
+                <span style={{ fontSize: "10px", color: "rgba(255,255,255,0.3)", letterSpacing: "1px" }}>{DIGEST_DATE}</span>
+              </div>
             </div>
           </div>
           <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.3)", marginBottom: "16px" }}>
@@ -635,7 +656,7 @@ const Investment = () => {
         <AnimatePresence mode="wait">
           {isVCDigest ? (
             <motion.div key="vc-digest" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }} style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-              <VCDigestPane />
+              <VCDigestPane showFullPageLink />
             </motion.div>
           ) : (
             <motion.div key={activeIndex} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }} style={{ flex: 1, padding: "28px 32px", display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -750,4 +771,5 @@ function hexToRgb(hex) {
   return `${r},${g},${b}`;
 }
 
+export { VCDigestPane };
 export default SectionWrapper(Investment, "investment");
