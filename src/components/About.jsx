@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { Tilt } from 'react-tilt';
 import {
   motion,
-  AnimatePresence,
   useScroll,
   useTransform,
   useReducedMotion,
+  useAnimationControls,
 } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 
@@ -71,211 +70,115 @@ const gradientBorderBack =
 const ServiceCard = ({ index, title, icon, description }) => {
   const [flipped, setFlipped] = useState(false);
   const reduceMotion = useReducedMotion();
-  const toggle = () => setFlipped((v) => !v);
+  const controls = useAnimationControls();
+  const busy = useRef(false);
 
-  const flipTransition = reduceMotion
-    ? { duration: 0 }
-    : { type: 'spring', stiffness: 95, damping: 14, mass: 0.9 };
+  // Two-phase flip: turn edge-on, swap faces, turn back. Only one face is ever
+  // rendered, so it doesn't depend on backface-visibility (unreliable in Safari).
+  const flip = async () => {
+    if (reduceMotion) {
+      setFlipped((v) => !v);
+      return;
+    }
+    if (busy.current) return;
+    busy.current = true;
+    await controls.start({ rotateY: 90, transition: { duration: 0.16, ease: 'easeIn' } });
+    setFlipped((v) => !v);
+    controls.set({ rotateY: -90 });
+    await controls.start({ rotateY: 0, transition: { type: 'spring', stiffness: 260, damping: 22 } });
+    busy.current = false;
+  };
 
-  /** Shared front-face visuals (icon stack + title + tap hint) */
-  const CardFaceContent = ({ tapLabel = 'Tap to reveal' }) => (
-    <>
-      <span
-        aria-hidden
-        className="pointer-events-none absolute right-3 top-1 select-none text-[88px] font-black leading-none text-white/[0.045]"
-      >
-        {String(index + 1).padStart(2, '0')}
-      </span>
-
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-10 -bottom-12 h-36 w-36 rounded-full bg-[#915EFF]/25 blur-3xl transition-opacity duration-300 group-hover:opacity-90"
-      />
-
-      <motion.div
-        className="relative"
-        animate={reduceMotion ? undefined : { y: [-3, 3, -3] }}
-        transition={
-          reduceMotion
-            ? undefined
-            : {
-                duration: 4 + index * 0.4,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }
-        }
-      >
-        <div
-          aria-hidden
-          className="absolute -inset-4 rounded-full bg-gradient-to-br from-[#915EFF]/35 to-[#00cea8]/25 blur-2xl"
-        />
-        <img
-          src={icon}
-          alt=""
-          className="relative h-16 w-16 object-contain drop-shadow-[0_4px_18px_rgba(145,94,255,0.45)]"
-        />
-      </motion.div>
-
-      <h3 className="relative z-[1] text-center text-[19px] font-bold leading-tight text-white">
-        {title}
-      </h3>
-
-      <div className="relative z-[1] mt-1 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
-        <motion.span
-          className="h-1.5 w-1.5 rounded-full bg-[#915EFF]"
-          animate={
-            reduceMotion ? undefined : { scale: [1, 1.6, 1], opacity: [1, 0.5, 1] }
-          }
-          transition={
-            reduceMotion
-              ? undefined
-              : {
-                  duration: 1.8,
-                  repeat: Infinity,
-                  ease: 'easeInOut',
-                }
-          }
-        />
-        {tapLabel}
-      </div>
-    </>
-  );
-
-  const BackBody = () => (
-    <>
-      <div className="relative z-[1] flex w-full items-center justify-between">
-        <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#c4b5fd]">
-          {String(index + 1).padStart(2, '0')}
-        </span>
-        <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
-          Tap to close
-        </span>
-      </div>
-
-      <h4 className="relative z-[1] text-[16px] font-bold leading-tight text-white">
-        {title}
-      </h4>
-
-      <span
-        aria-hidden
-        className="relative z-[1] h-px w-10 bg-gradient-to-r from-[#915EFF] to-transparent"
-      />
-
-      <p className="relative z-[1] text-[13.5px] leading-[22px] text-[#dfd9ff] sm:leading-[20px]">
-        {description}
-      </p>
-    </>
-  );
+  const face = 'h-full w-full rounded-[20px] p-[1.5px] shadow-card';
 
   return (
     <motion.div
       variants={fadeIn('up', 'spring', 0.15 * index, 0.7)}
-      className="flex w-full max-w-[280px] flex-col items-center md:block md:w-[260px] md:max-w-none"
+      className="w-full max-w-[340px]"
+      style={{ perspective: 1200 }}
     >
-      {/* Mobile: expand in document flow — avoids 3D flip overlapping sibling columns */}
-      <div className="w-full md:hidden">
-        <div
-          className="rounded-[22px] p-[1.5px] shadow-card"
-          style={{ background: gradientBorderFront }}
-        >
-          <div className="overflow-hidden rounded-[20.5px] bg-tertiary">
-            <motion.button
-              type="button"
-              onClick={toggle}
-              aria-pressed={flipped}
-              aria-label={`${title}. ${flipped ? 'Hide' : 'View'} description.`}
-              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-              transition={{ type: 'spring', stiffness: 240, damping: 18 }}
-              className="group relative flex min-h-[240px] w-full cursor-pointer flex-col items-center justify-center gap-5 px-6 py-6 text-left outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
-            >
-              <CardFaceContent tapLabel={flipped ? 'Tap to close' : 'Tap to reveal'} />
-            </motion.button>
-
-            <AnimatePresence initial={false}>
-              {flipped && (
-                <motion.div
-                  key="mobile-detail"
-                  initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-                  transition={{ duration: reduceMotion ? 0 : 0.3, ease: [0.4, 0, 0.2, 1] }}
-                  className="overflow-hidden border-t border-white/[0.08]"
-                >
-                  <div
-                    className="relative space-y-3 bg-tertiary px-5 pb-5 pt-4"
-                    style={{
-                      background:
-                        'linear-gradient(145deg, rgba(255,61,172,0.06), rgba(145,94,255,0.06))',
-                    }}
-                  >
-                    <div
-                      aria-hidden
-                      className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-[#ff3cac]/25 to-[#915EFF]/20 blur-3xl"
-                    />
-                    <BackBody />
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+      {/* Same flip card at every size: tapping turns it over in place, no layout shift */}
+      <motion.button
+        type="button"
+        onClick={flip}
+        aria-pressed={flipped}
+        aria-label={`${title}. ${flipped ? 'Hide' : 'View'} description.`}
+        whileHover={reduceMotion ? undefined : { y: -4 }}
+        whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+        transition={{ type: 'spring', stiffness: 240, damping: 18 }}
+        className="group relative block h-[220px] w-full cursor-pointer rounded-[20px] text-left outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
+      >
+        <motion.div className="relative h-full w-full" initial={false} animate={controls}>
+          {!flipped ? (
+          <div className={face} style={{ background: gradientBorderFront }}>
+            <div className="relative flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-[18.5px] bg-tertiary px-5 py-5">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute right-3 top-1 select-none text-[64px] font-black leading-none text-white/[0.045]"
+              >
+                {String(index + 1).padStart(2, '0')}
+              </span>
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -left-10 -bottom-12 h-40 w-40 rounded-full bg-[radial-gradient(closest-side,rgba(145,94,255,0.3),transparent)]"
+              />
+              <motion.div
+                className="relative"
+                animate={reduceMotion ? undefined : { y: [-3, 3, -3] }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 4 + index * 0.4, repeat: Infinity, ease: 'easeInOut' }
+                }
+              >
+                <div
+                  aria-hidden
+                  className="absolute -inset-5 rounded-full bg-[radial-gradient(closest-side,rgba(145,94,255,0.45),rgba(0,206,168,0.15),transparent)]"
+                />
+                <img
+                  src={icon}
+                  alt=""
+                  className="relative h-12 w-12 object-contain drop-shadow-[0_4px_18px_rgba(145,94,255,0.45)]"
+                />
+              </motion.div>
+              <h3 className="relative z-[1] text-center text-[17px] font-bold leading-tight text-white">
+                {title}
+              </h3>
+              <div className="relative z-[1] flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
+                <motion.span
+                  className="h-1.5 w-1.5 rounded-full bg-[#915EFF]"
+                  animate={reduceMotion ? undefined : { scale: [1, 1.6, 1], opacity: [1, 0.5, 1] }}
+                  transition={
+                    reduceMotion ? undefined : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
+                  }
+                />
+                Tap to flip
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* Desktop: 3D flip */}
-      <div className="hidden md:block" style={{ perspective: 1200 }}>
-        <motion.button
-          type="button"
-          onClick={toggle}
-          aria-pressed={flipped}
-          aria-label={`${title}. ${flipped ? 'Hide' : 'View'} description.`}
-          whileHover={reduceMotion ? undefined : { y: -6 }}
-          whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-          transition={{ type: 'spring', stiffness: 240, damping: 18 }}
-          className="group relative block h-[280px] w-full cursor-pointer rounded-[22px] text-left outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
-        >
-          <motion.div
-            className="relative h-full w-full"
-            style={{ transformStyle: 'preserve-3d' }}
-            animate={{ rotateY: flipped ? 180 : 0 }}
-            transition={flipTransition}
-          >
-            <div
-              className="absolute inset-0 rounded-[22px] p-[1.5px] shadow-card"
-              style={{
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                background: gradientBorderFront,
-              }}
-            >
-              <div className="relative flex h-full w-full flex-col items-center justify-center gap-5 overflow-hidden rounded-[20.5px] bg-tertiary px-6 py-6">
-                <CardFaceContent />
+          ) : (
+          <div className={face} style={{ background: gradientBorderBack }}>
+            <div className="relative flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-[18.5px] bg-tertiary px-5 py-4">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[radial-gradient(closest-side,rgba(255,60,172,0.4),transparent)]"
+              />
+              <div className="relative z-[1] flex w-full items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#c4b5fd]">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
+                  Tap to flip back
+                </span>
               </div>
+              <h4 className="relative z-[1] text-[15px] font-bold leading-tight text-white">{title}</h4>
+              <p className="relative z-[1] text-[13px] leading-[20px] text-[#dfd9ff]">{description}</p>
             </div>
-
-            <div
-              className="absolute inset-0 rounded-[22px] p-[1.5px] shadow-card"
-              style={{
-                backfaceVisibility: 'hidden',
-                WebkitBackfaceVisibility: 'hidden',
-                transform: 'rotateY(180deg)',
-                background: gradientBorderBack,
-              }}
-            >
-              <div className="relative flex h-full w-full flex-col gap-3 overflow-y-auto overflow-x-hidden rounded-[20.5px] bg-tertiary px-5 py-5">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-gradient-to-br from-[#ff3cac]/45 to-[#915EFF]/35 blur-3xl"
-                />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute -left-8 -bottom-12 h-32 w-32 rounded-full bg-gradient-to-tr from-[#00cea8]/35 to-[#915EFF]/20 blur-3xl"
-                />
-                <BackBody />
-              </div>
-            </div>
-          </motion.div>
-        </motion.button>
-      </div>
+          </div>
+          )}
+        </motion.div>
+      </motion.button>
     </motion.div>
   );
 };
@@ -301,7 +204,43 @@ const About = () => {
         <h2 className={styles.sectionHeadText}>About Me.</h2>
       </motion.div>
 
-      <div className="mt-4 flex flex-col md:flex-row gap-10 md:gap-16 items-start">
+      {/* Profile photo — layered gradient slabs behind the card */}
+      <motion.div
+        className="group relative mx-auto mt-8 mb-10 h-[206px] w-[170px] sm:h-[255px] sm:w-[210px]"
+        variants={fadeIn("up", "spring", 0.1, 0.75)}
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0 rounded-[18px] opacity-55 transition-transform duration-500 [transform:rotate(6deg)_translateY(6px)] group-hover:[transform:rotate(8deg)_translateY(6px)]"
+          style={{
+            background: "linear-gradient(135deg, #ff6ec7, #915eff)",
+            boxShadow: "0 12px 40px rgba(255,110,199,0.25)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 rounded-[18px] opacity-40 transition-transform duration-500 [transform:rotate(-3.5deg)_translateY(3px)] group-hover:[transform:rotate(-5deg)_translateY(3px)]"
+          style={{ background: "linear-gradient(135deg, #915eff, #60a5fa)" }}
+        />
+        <div
+          className="relative h-full w-full rounded-[16px] p-[2px]"
+          style={{
+            background: "linear-gradient(135deg, #ff6ec7, #915eff, #60a5fa)",
+            boxShadow: "0 20px 60px rgba(145,94,255,0.35), 0 8px 24px rgba(255,110,199,0.2)",
+          }}
+        >
+          <div className="h-full w-full overflow-hidden rounded-[14px]">
+            <img
+              src={`${import.meta.env.BASE_URL}ausie-white-bg.svg`}
+              alt="Ausie Widawati"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </motion.div>
+
+      <div className="mt-6 sm:mt-4">
         <div
           ref={columnRef}
           className="relative flex flex-1 flex-col gap-8 sm:gap-10 md:gap-12"
@@ -309,7 +248,7 @@ const About = () => {
           {!reduceMotion && (
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute -right-4 top-0 h-40 w-40 rounded-full bg-[#915eff] opacity-[0.12] blur-3xl md:-right-8"
+              className="pointer-events-none absolute -right-4 top-0 h-56 w-56 rounded-full bg-[radial-gradient(closest-side,rgba(145,94,255,0.14),transparent)] md:-right-8"
               style={{ y: orbY }}
             />
           )}
@@ -373,58 +312,6 @@ const About = () => {
           </ScrollReveal>
         </div>
 
-        <motion.div
-          variants={fadeIn("left", "spring", 0.2, 0.75)}
-          className="shrink-0 mx-auto md:mx-0"
-        >
-          <Tilt options={{ max: 10, scale: 1.02, speed: 400 }}>
-            <div style={{ position: "relative", width: "210px", height: "255px", marginRight: "18px", marginBottom: "18px" }}>
-
-              {/* Back slab — pink/purple, rotate right */}
-              <motion.div
-                initial={{ rotate: 6 }}
-                whileHover={{ rotate: 8 }}
-                transition={{ type: "spring", stiffness: 120 }}
-                style={{
-                  position: "absolute", inset: 0, borderRadius: "18px",
-                  background: "linear-gradient(135deg, #ff6ec7, #915eff)",
-                  opacity: 0.55,
-                  transform: "rotate(6deg) translateY(6px)",
-                  boxShadow: "0 12px 40px rgba(255,110,199,0.25)",
-                }}
-              />
-
-              {/* Mid slab — purple/blue, rotate left */}
-              <motion.div
-                initial={{ rotate: -3.5 }}
-                whileHover={{ rotate: -5 }}
-                transition={{ type: "spring", stiffness: 120 }}
-                style={{
-                  position: "absolute", inset: 0, borderRadius: "18px",
-                  background: "linear-gradient(135deg, #915eff, #60a5fa)",
-                  opacity: 0.4,
-                  transform: "rotate(-3.5deg) translateY(3px)",
-                }}
-              />
-
-              {/* Main photo card */}
-              <div style={{
-                position: "relative", borderRadius: "16px", padding: "2px",
-                background: "linear-gradient(135deg, #ff6ec7, #915eff, #60a5fa)",
-                boxShadow: "0 20px 60px rgba(145,94,255,0.35), 0 8px 24px rgba(255,110,199,0.2)",
-              }}>
-                <div style={{ borderRadius: "14px", overflow: "hidden", width: "206px", height: "251px" }}>
-                  <img
-                    src={`${import.meta.env.BASE_URL}ausie-white-bg.svg`}
-                    alt="Profile"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-
-            </div>
-          </Tilt>
-        </motion.div>
       </div>
 
       {/* Full-viewport-width strip (breaks out of max-w column) */}
@@ -517,26 +404,25 @@ const About = () => {
         yFrom={22}
         xFrom={0}
         offset={['start 0.92', 'start 0.45']}
-        className="mt-20 sm:mt-24"
+        className="mt-14 sm:mt-24"
       >
         <div className="max-w-2xl">
           <p className={styles.sectionSubText}>What I'm passionate about</p>
           <h3 className="mt-1 font-black leading-[1.1] text-white text-[28px] sm:text-[34px] md:text-[40px]">
-            Four domains I{' '}
+            Three domains I{' '}
             <span className="bg-gradient-to-r from-[#915EFF] via-[#e879f9] to-[#00cea8] bg-clip-text text-transparent">
               live and breathe
             </span>
             .
           </h3>
           <p className="mt-3 text-[14px] sm:text-[15px] leading-[24px] text-secondary">
-            Building products, evaluating deals, connecting people, and digging
-            into research — these threads run through everything I do. Tap a
-            card to see how.
+            Building products, evaluating deals, and connecting people — these
+            threads run through everything I do. Tap a card to see how.
           </p>
         </div>
       </ScrollReveal>
 
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-6 gap-y-10 justify-items-center">
+      <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 justify-items-center">
         {services.map((service, index) => (
           <ServiceCard key={service.title} index={index} {...service} />
         ))}

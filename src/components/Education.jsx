@@ -11,12 +11,12 @@ const EduLink = ({ href, children }) => (
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="group/edulink inline-flex items-center gap-0.5 font-medium text-[#e8dfff] underline decoration-[#915EFF]/55 underline-offset-[3px] transition-colors hover:text-white hover:decoration-[#e879f9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
+    className="group/edulink inline font-medium text-[#e8dfff] underline decoration-[#915EFF]/55 underline-offset-[3px] transition-colors hover:text-white hover:decoration-[#e879f9] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary rounded-sm"
   >
     <span>{children}</span>
     <FiExternalLink
       aria-hidden
-      className="inline-block h-3 w-3 shrink-0 opacity-60 transition-opacity group-hover/edulink:opacity-100"
+      className="ml-0.5 inline-block h-3 w-3 align-[-1px] opacity-60 transition-opacity group-hover/edulink:opacity-100"
     />
   </a>
 );
@@ -30,17 +30,12 @@ const EDUCATION = [
     date: "2023 – 2024",
     accent: "from-[#915EFF] via-[#e879f9] to-[#00cea8]",
     coursework: [
-      "Strategy",
-      "Marketing",
-      "Managerial Accounting",
-      "Financial Accounting",
-      "Economics",
-      "Fintech",
-      "Agile Project Management",
-      "Machine Learning & Optimisation",
-      "Data Science & AI",
       "Private Equity & VC",
       "Finance & Valuation",
+      "Fintech",
+      "Strategy",
+      "Accounting",
+      "Agile Project Management",
     ],
     highlights: [
       {
@@ -97,6 +92,11 @@ const EDUCATION = [
     meta: "Minor in Entrepreneurship · GPA 4.00 / 5.00",
     date: "2019 – 2023",
     accent: "from-[#00cea8] via-[#915EFF] to-[#e879f9]",
+    coursework: [
+      "Machine Learning & Optimisation",
+      "Data Science & AI",
+      "Statistics",
+    ],
     highlights: [
       {
         title: "CN Yang Scholars Programme",
@@ -150,7 +150,7 @@ const EducationEntry = ({ entry, index, isLast }) => {
       className={`relative ${isLast ? "" : "pb-12 sm:pb-14"}`}
     >
       {/* HEADER */}
-      <div className="flex flex-wrap items-start gap-4 sm:gap-5">
+      <div className="flex items-start gap-4 sm:gap-5">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/[0.04] p-1.5 ring-1 ring-white/10 sm:h-14 sm:w-14">
           <img
             src={entry.logo}
@@ -169,13 +169,16 @@ const EducationEntry = ({ entry, index, isLast }) => {
             {entry.degree}
           </p>
           {entry.meta && (
-            <p className="mt-0.5 text-[12.5px] text-[#dfd9ff]/70 sm:text-[13.5px]">
+            <p className="mt-0.5 text-[13px] text-[#dfd9ff]/70 sm:text-[13.5px]">
               {entry.meta}
             </p>
           )}
+          <p className="mt-1 text-[13px] font-medium italic text-[#dfd9ff]/60 sm:hidden">
+            {entry.date}
+          </p>
         </div>
 
-        <p className="shrink-0 self-start pt-1 text-right text-[12.5px] font-medium italic text-[#dfd9ff]/65 sm:text-[14px]">
+        <p className="hidden sm:block shrink-0 self-start pt-1 text-right text-[14px] font-medium italic text-[#dfd9ff]/65">
           {entry.date}
         </p>
       </div>
@@ -211,7 +214,7 @@ const EducationEntry = ({ entry, index, isLast }) => {
                     transition: { type: "spring", stiffness: 300, damping: 22 },
                   },
                 }}
-                className="inline-block rounded-md border border-white/10 px-2.5 py-[3px] text-[12.5px] font-medium text-[#dfd9ff]/90 transition-colors hover:border-[#915EFF]/60 hover:text-white"
+                className="inline-block rounded-md border border-white/10 px-2.5 py-1 sm:py-[3px] text-[13px] sm:text-[12.5px] font-medium text-[#dfd9ff]/90 transition-colors hover:border-[#915EFF]/60 hover:text-white"
               >
                 {course}
               </motion.span>
@@ -230,10 +233,10 @@ const EducationEntry = ({ entry, index, isLast }) => {
                 key={item.title}
                 className="group border-l border-white/10 pl-4 transition-colors hover:border-[#915EFF]/60"
               >
-                <p className="text-[14px] font-semibold leading-snug text-white sm:text-[14.5px]">
+                <p className="text-[15px] font-semibold leading-snug text-white sm:text-[14.5px]">
                   {item.title}
                 </p>
-                <p className="mt-1 text-[13px] leading-[20px] text-[#dfd9ff]/75 sm:text-[13.5px]">
+                <p className="mt-1 text-[14px] leading-[22px] text-[#dfd9ff]/75 sm:text-[13.5px] sm:leading-[20px]">
                   {item.desc}
                 </p>
               </li>

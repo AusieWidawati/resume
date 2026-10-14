@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
@@ -127,9 +127,9 @@ const MarketPulseTab = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {DIGEST_STATS.map((s) => (
           <div key={s.label} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", padding: "14px", display: "flex", flexDirection: "column", gap: "4px" }}>
-            <div style={{ fontSize: "22px", fontWeight: 700, color: s.color, lineHeight: 1 }}>{s.value}</div>
+            <div className="text-[20px] sm:text-[22px]" style={{ fontWeight: 700, color: s.color, lineHeight: 1 }}>{s.value}</div>
             <div style={{ fontSize: "11px", fontWeight: 600, color: "rgba(255,255,255,0.7)", marginTop: "2px" }}>{s.label}</div>
-            <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)", textTransform: "uppercase", letterSpacing: "1px" }}>{s.sub}</div>
+            <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,0.35)", textTransform: "uppercase", letterSpacing: "0.8px", lineHeight: 1.4 }}>{s.sub}</div>
           </div>
         ))}
       </div>
@@ -144,7 +144,7 @@ const MarketPulseTab = () => {
             { label: "Indonesia / Others", pct: 3.0, color: "#9ca3af" },
           ].map((row) => (
             <div key={row.label} className="flex items-center gap-3">
-              <div style={{ width: "120px", fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{row.label}</div>
+              <div className="w-[92px] sm:w-[120px]" style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{row.label}</div>
               <div style={{ flex: 1, height: "8px", background: "rgba(255,255,255,0.05)", borderRadius: "99px", overflow: "hidden" }}>
                 <motion.div
                   style={{ height: "100%", borderRadius: "99px", background: row.color }}
@@ -165,7 +165,7 @@ const MarketPulseTab = () => {
         <div className="flex flex-col gap-2">
           {deals.map((d) => (
             <div key={d.name} className="flex items-center gap-3">
-              <div style={{ width: "96px", fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{d.name}</div>
+              <div className="w-[80px] sm:w-[96px]" style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{d.name}</div>
               <div style={{ flex: 1, height: "10px", background: "rgba(255,255,255,0.04)", borderRadius: "99px", overflow: "hidden" }}>
                 <motion.div
                   style={{ height: "100%", borderRadius: "99px", background: d.color, opacity: 0.85 }}
@@ -193,8 +193,8 @@ const MarketPulseTab = () => {
                 <span style={{ fontSize: "9px", fontWeight: 700, color: "#915EFF" }}>{t.n}</span>
               </div>
               <div>
-                <div style={{ fontSize: "12px", fontWeight: 600, color: "rgba(255,255,255,0.75)", marginBottom: "2px" }}>{t.title}</div>
-                <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", lineHeight: 1.6 }}>{t.body}</div>
+                <div className="text-[13px] sm:text-[12px]" style={{ fontWeight: 600, color: "rgba(255,255,255,0.75)", marginBottom: "2px" }}>{t.title}</div>
+                <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{t.body}</div>
               </div>
             </div>
           ))}
@@ -220,15 +220,15 @@ const TopDealsTab = () => (
           padding: "16px",
         }}
       >
-        <div className="flex items-start justify-between gap-3 flex-wrap">
-          <div className="flex-1">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap mb-1">
               <span style={{ fontSize: "15px", fontWeight: 700, color: "#fff" }}>{deal.name}</span>
               <span style={{ fontSize: "9px", padding: "2px 8px", borderRadius: "999px", background: `rgba(${hexToRgb(deal.color)},0.15)`, border: `1px solid ${deal.color}40`, color: deal.color, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>{deal.stage}</span>
               <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "999px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)", letterSpacing: "1px" }}>{deal.country}</span>
             </div>
             <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginBottom: "8px" }}>{deal.sector} · Lead: {deal.lead} · {deal.announced}</div>
-            <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>{deal.insight}</div>
+            <div className="text-[13px] sm:text-[12px]" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>{deal.insight}</div>
             <div className="flex flex-wrap gap-1.5 mt-2.5">
               {deal.tags.map((tag) => (
                 <span key={tag} style={{ fontSize: "9px", padding: "2px 8px", borderRadius: "999px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.3)" }}>{tag}</span>
@@ -236,7 +236,7 @@ const TopDealsTab = () => (
             </div>
           </div>
           <div style={{ textAlign: "right", flexShrink: 0 }}>
-            <div style={{ fontSize: "26px", fontWeight: 800, color: deal.color, lineHeight: 1 }}>{deal.amount}</div>
+            <div className="text-[22px] sm:text-[26px]" style={{ fontWeight: 800, color: deal.color, lineHeight: 1 }}>{deal.amount}</div>
             <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", marginTop: "3px", textTransform: "uppercase", letterSpacing: "1px" }}>raised</div>
           </div>
         </div>
@@ -274,7 +274,7 @@ const SectorsTab = () => (
             transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 + i * 0.04 }}
           />
         </div>
-        <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.4)", lineHeight: 1.6 }}>{s.note}</div>
+        <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{s.note}</div>
       </motion.div>
     ))}
   </div>
@@ -285,7 +285,7 @@ const WatchListTab = () => (
     <div style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.25)", marginBottom: "4px" }}>Companies to Watch — Southeast Asia 2026</div>
     <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", overflow: "hidden" }}>
       {/* Header */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 80px 130px 1fr", gap: "12px", padding: "10px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
+      <div className="hidden sm:grid grid-cols-[1fr_80px_130px_1fr]" style={{ gap: "12px", padding: "10px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
         {["Company", "Market", "Stage", "Why Watch"].map((h) => (
           <div key={h} style={{ fontSize: "8px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.2)", fontWeight: 600 }}>{h}</div>
         ))}
@@ -296,19 +296,17 @@ const WatchListTab = () => (
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.2, delay: i * 0.05 }}
+          className="grid grid-cols-[1fr_auto] gap-x-3 gap-y-1 sm:grid-cols-[1fr_80px_130px_1fr] sm:gap-3"
           style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 80px 130px 1fr",
-            gap: "12px",
             padding: "12px 16px",
             borderBottom: i < DIGEST_WATCHLIST.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none",
             alignItems: "start",
           }}
         >
           <div style={{ fontSize: "13px", fontWeight: 600, color: row.color }}>{row.company}</div>
-          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)" }}>{row.country}</div>
-          <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.45)", lineHeight: 1.4 }}>{row.stage}</div>
-          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{row.why}</div>
+          <div className="text-right sm:text-left" style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)" }}>{row.country}</div>
+          <div className="col-span-2 sm:col-span-1" style={{ fontSize: "10.5px", color: "rgba(255,255,255,0.45)", lineHeight: 1.4 }}>{row.stage}</div>
+          <div className="col-span-2 sm:col-span-1 text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.5)", lineHeight: 1.6 }}>{row.why}</div>
         </motion.div>
       ))}
     </div>
@@ -321,7 +319,7 @@ const WatchListTab = () => (
         </div>
         <div>
           <div style={{ fontSize: "11px", fontWeight: 700, color: "#f87171", marginBottom: "4px" }}>Governance Alert — eFishery</div>
-          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.45)", lineHeight: 1.65 }}>
+          <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.65 }}>
             Founder Gibran Huzaifah sentenced to <strong style={{ color: "rgba(255,255,255,0.65)" }}>9 years</strong> for inflating financial reports. Once backed by SoftBank & Sequoia, eFishery fabricated revenue. Expect stricter financial audit requirements and more rigorous diligence on SEA growth-stage companies.
           </div>
         </div>
@@ -336,7 +334,7 @@ const VCDigestPane = ({ showFullPageLink = false }) => {
   const [activeTab, setActiveTab] = useState(0);
   const TabContent = [MarketPulseTab, TopDealsTab, SectorsTab, WatchListTab][activeTab];
   return (
-    <div style={{ flex: 1, padding: "28px 32px", display: "flex", flexDirection: "column", gap: "18px", overflow: "hidden" }}>
+    <div className="p-4 sm:px-8 sm:py-7" style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column", gap: "18px", overflow: "hidden" }}>
       {/* Breadcrumb */}
       <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.2)" }}>
         Investment Thinking /{" "}
@@ -354,8 +352,8 @@ const VCDigestPane = ({ showFullPageLink = false }) => {
               {showFullPageLink && (
                 <Link
                   to="/vc-digest"
+                  className="text-[12px] sm:text-[10px]"
                   style={{
-                    fontSize: "10px",
                     letterSpacing: "0.5px",
                     color: "rgba(255,255,255,0.78)",
                     background: "rgba(245,158,11,0.1)",
@@ -380,14 +378,19 @@ const VCDigestPane = ({ showFullPageLink = false }) => {
           </div>
 
           {/* Sub-tabs */}
-          <div style={{ display: "flex", gap: "4px", borderBottom: "1px solid rgba(255,255,255,0.06)", marginBottom: "4px" }}>
+          <div className="no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0" role="tablist" style={{ display: "flex", gap: "4px", overflowX: "auto", borderBottom: "1px solid rgba(255,255,255,0.06)", marginBottom: "4px" }}>
             {VC_TABS.map((tab, i) => (
               <button
                 key={tab}
+                type="button"
+                role="tab"
+                aria-selected={activeTab === i}
                 onClick={() => setActiveTab(i)}
+                className="min-h-[44px] text-[13px] sm:min-h-0 sm:text-[11px]"
                 style={{
                   padding: "7px 14px",
-                  fontSize: "11px",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
                   fontWeight: activeTab === i ? 600 : 400,
                   color: activeTab === i ? "#f59e0b" : "rgba(255,255,255,0.35)",
                   background: "none",
@@ -407,7 +410,7 @@ const VCDigestPane = ({ showFullPageLink = false }) => {
       </AnimatePresence>
 
       {/* Tab content — scrollable */}
-      <div style={{ flex: 1, overflowY: "auto", paddingRight: "4px" }}>
+      <div className="sm:pr-1" style={{ flex: 1, overflowY: "auto" }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -449,7 +452,7 @@ const BootcampDealPreview = () => {
           </span>
         ))}
       </div>
-      <div className="flex flex-col gap-2 flex-1 justify-center">
+      <div className="flex flex-col gap-2 flex-1 justify-center py-1 md:py-0">
         {waterfall.map((row) => (
           <div key={row.label} className="space-y-1">
             <div className="flex justify-between text-[8px] text-white/40">
@@ -494,274 +497,187 @@ const WORKSTREAM_META = [
   },
 ];
 
-// ── Main section ─────────────────────────────────────────────────────
+// ── Bootcamp detail pane (rendered on its own page) ──────────────────
 
-const VC_DIGEST_INDEX = 1; // second tab: VC & Startup Intelligence
-
-const Investment = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  const isVCDigest = activeIndex === VC_DIGEST_INDEX;
-  const active = isVCDigest ? null : WORKSTREAM_META[activeIndex];
-  const project = isVCDigest ? null : investmentProjects[activeIndex];
-  const Preview = active?.Preview ?? null;
+const BootcampPane = () => {
+  const active = WORKSTREAM_META[0];
+  const project = investmentProjects[0];
+  const Preview = active.Preview;
+  const links = [
+    project.source_code_link !== "#" && { label: "Model", title: "Open financial model", href: project.source_code_link },
+    project.deck_link && project.deck_link !== "#" && { label: "Deck", title: "Open pitch deck", href: project.deck_link },
+  ].filter(Boolean);
 
   return (
-    <>
-      <motion.div variants={textVariant()}>
-        <p className={styles.sectionSubText}>Where analytical rigor meets market intuition.</p>
-        <h2 className={styles.sectionHeadText}>Investment Thinking.</h2>
-      </motion.div>
+    <div className="flex flex-1 flex-col gap-5 p-4 sm:px-8 sm:py-7">
+      <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.25)" }}>
+        Investment Thinking / <span style={{ color: active.typeColor }}>{active.breadcrumbSub}</span>
+      </div>
 
-      <motion.p
-        variants={fadeIn("", "", 0.1, 1)}
-        className="mt-5 text-white/55 text-[16px] max-w-3xl leading-[30px]"
-      >
-        My investment interest sits at the overlap of{" "}
-        <span className="text-white/80">AI infrastructure</span>,{" "}
-        <span className="text-white/80">climate tech</span>, and{" "}
-        <span className="text-white/80">emerging market enterprise software</span> — sectors I've worked in directly.
-        Below: a valuation bootcamp deliverable (DCF / LBO / deck) plus a living digest of regional VC & startup intelligence.
-      </motion.p>
-
-      <motion.div
-        variants={fadeIn("up", "spring", 0.2, 0.75)}
-        className="mt-12"
-        style={{
-          border: "1px solid rgba(255,255,255,0.07)",
-          borderRadius: "16px",
-          overflow: "hidden",
-          background: "rgba(255,255,255,0.01)",
-          display: "flex",
-          flexDirection: "column",
-          minHeight: "560px",
-        }}
-      >
-        {/* ── Top workstream tabs ── */}
-        <div
-          style={{
-            flexShrink: 0,
-            borderBottom: "1px solid rgba(255,255,255,0.06)",
-            background: "rgba(255,255,255,0.015)",
-          }}
-        >
-          <div
-            style={{
-              fontSize: "9px",
-              textTransform: "uppercase",
-              letterSpacing: "3px",
-              color: "rgba(255,255,255,0.2)",
-              padding: "16px 20px 8px",
-            }}
-          >
-            Workstreams
+      <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
+        <h3 className="text-[19px] font-semibold leading-tight text-white sm:text-[22px]">{project.name}</h3>
+        {links.length > 0 && (
+          <div className="flex shrink-0 gap-2">
+            {links.map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={l.title}
+                className="flex min-h-[40px] items-center rounded-lg border border-white/10 bg-white/[0.04] px-3 text-[12px] text-white/60 hover:text-white"
+              >
+                {l.label}
+              </a>
+            ))}
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: "4px",
-              padding: "0 12px 0",
-            }}
-          >
-            {investmentProjects.map((project, i) => {
-              const meta = WORKSTREAM_META[i];
-              const isActive = i === activeIndex;
-              return (
-                <button
-                  key={i}
-                  type="button"
-                  onClick={() => setActiveIndex(i)}
-                  style={{
-                    flex: "1 1 220px",
-                    minWidth: "min(100%, 200px)",
-                    padding: "12px 16px 14px",
-                    textAlign: "left",
-                    borderBottom: isActive ? `2px solid ${meta.typeColor}` : "2px solid transparent",
-                    marginBottom: "-1px",
-                    background: isActive ? `rgba(${hexToRgb(meta.typeColor)}, 0.08)` : "transparent",
-                    transition: "all 0.2s ease",
-                    cursor: "pointer",
-                    borderTop: "none",
-                    borderLeft: "none",
-                    borderRight: "none",
-                    borderRadius: "10px 10px 0 0",
-                  }}
-                >
-                  <div style={{ fontSize: "8px", textTransform: "uppercase", letterSpacing: "2px", color: meta.typeColor, marginBottom: "4px", fontWeight: 600 }}>
-                    {meta.type}
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "13px",
-                      fontWeight: 500,
-                      color: isActive ? "#fff" : "rgba(255,255,255,0.6)",
-                      lineHeight: 1.3,
-                      marginBottom: "3px",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                    }}
-                  >
-                    {project.name}
-                  </div>
-                  <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                    {meta.meta}
-                  </div>
-                </button>
-              );
-            })}
+        )}
+      </div>
 
-            {(() => {
-              const isActive = activeIndex === VC_DIGEST_INDEX;
-              return (
-                <button
-                  type="button"
-                  onClick={() => setActiveIndex(VC_DIGEST_INDEX)}
-                  style={{
-                    flex: "1 1 220px",
-                    minWidth: "min(100%, 200px)",
-                    padding: "12px 16px 14px",
-                    textAlign: "left",
-                    borderBottom: isActive ? "2px solid #f59e0b" : "2px solid transparent",
-                    marginBottom: "-1px",
-                    background: isActive ? "rgba(245,158,11,0.08)" : "transparent",
-                    transition: "all 0.2s ease",
-                    cursor: "pointer",
-                    borderTop: "none",
-                    borderLeft: "none",
-                    borderRight: "none",
-                    borderRadius: "10px 10px 0 0",
-                  }}
-                >
-                  <div style={{ fontSize: "8px", textTransform: "uppercase", letterSpacing: "2px", color: "#f59e0b", marginBottom: "4px", fontWeight: 600 }}>
-                    DIGEST
-                  </div>
-                  <div style={{ fontSize: "13px", fontWeight: 500, color: isActive ? "#fff" : "rgba(255,255,255,0.6)", lineHeight: 1.3, marginBottom: "3px" }}>
-                    VC & Startup Intelligence
-                  </div>
-                  <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.25)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                    SEA & Singapore · May 2026
-                  </div>
-                </button>
-              );
-            })()}
+      <p className="text-[13px] leading-[1.6] text-white/40 sm:text-[12.5px]">{active.subtitle}</p>
+
+      <div className="flex flex-col gap-5 md:flex-row md:items-start md:gap-6">
+        <div className="w-full md:h-[190px] md:w-[260px] md:shrink-0">
+          <Preview />
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col gap-4">
+          <p className="text-[14.5px] leading-[1.75] text-white/55 sm:text-[13.5px]">{project.description}</p>
+          <div className="grid grid-cols-3 gap-2.5">
+            {active.metrics.map(({ label, value }) => (
+              <div key={label} className="rounded-[10px] border border-white/[0.06] bg-white/[0.03] px-2 py-3 text-center">
+                <div className="text-[15px] font-bold leading-tight sm:text-[18px]" style={{ color: active.typeColor }}>{value}</div>
+                <div className="mt-1 text-[9px] uppercase tracking-[1px] text-white/30">{label}</div>
+              </div>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span key={tag.name} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-0.5 text-[10.5px] text-white/40">
+                {tag.name}
+              </span>
+            ))}
           </div>
         </div>
-
-        {/* ── Focus pane ── */}
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0, overflow: "hidden" }}>
-        <AnimatePresence mode="wait">
-          {isVCDigest ? (
-            <motion.div key="vc-digest" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }} style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-              <VCDigestPane showFullPageLink />
-            </motion.div>
-          ) : (
-            <motion.div key={activeIndex} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.18 }} style={{ flex: 1, padding: "28px 32px", display: "flex", flexDirection: "column", gap: "20px" }}>
-              {/* Breadcrumb */}
-              <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.2)" }}>
-                Investment Thinking /{" "}
-                <span style={{ color: active.typeColor }}>{active.breadcrumbSub}</span>
-              </div>
-
-              {/* Title row */}
-              <div>
-                <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "12px", marginBottom: "4px" }}>
-                  <h3 style={{ fontSize: "22px", fontWeight: 600, lineHeight: 1.25, color: "#fff" }}>
-                    {project.name}
-                  </h3>
-                  {(project.source_code_link !== "#" || (project.deck_link && project.deck_link !== "#")) && (
-                    <div style={{ display: "flex", gap: "6px", flexShrink: 0, marginTop: "4px" }}>
-                      {project.source_code_link !== "#" && (
-                        <button
-                          type="button"
-                          onClick={() => window.open(project.source_code_link, "_blank")}
-                          style={{ color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "6px 10px", cursor: "pointer", fontSize: "10px", letterSpacing: "0.5px" }}
-                          title="Open financial model"
-                        >
-                          Model
-                        </button>
-                      )}
-                      {project.deck_link && project.deck_link !== "#" && (
-                        <button
-                          type="button"
-                          onClick={() => window.open(project.deck_link, "_blank")}
-                          style={{ color: "rgba(255,255,255,0.35)", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", padding: "6px 10px", cursor: "pointer", fontSize: "10px", letterSpacing: "0.5px" }}
-                          title="Open pitch deck"
-                        >
-                          Deck
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </div>
-                <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.3)", marginBottom: "20px" }}>
-                  {active.subtitle}
-                </div>
-
-                {/* Two-column: preview + detail */}
-                <div style={{ display: "flex", gap: "24px", alignItems: "flex-start" }}>
-                  {/* Preview */}
-                  <div style={{ width: "260px", height: "190px", flexShrink: 0 }}>
-                    <Preview />
-                  </div>
-
-                  {/* Description + metrics */}
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "16px" }}>
-                    <p style={{ fontSize: "13.5px", color: "rgba(255,255,255,0.5)", lineHeight: 1.75 }}>
-                      {project.description}
-                    </p>
-
-                    {/* Metrics */}
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
-                      {active.metrics.map(({ label, value }) => (
-                        <div
-                          key={label}
-                          style={{
-                            background: "rgba(255,255,255,0.03)",
-                            border: "1px solid rgba(255,255,255,0.06)",
-                            borderRadius: "10px",
-                            padding: "12px",
-                            textAlign: "center",
-                          }}
-                        >
-                          <div style={{ fontSize: "18px", fontWeight: 700, color: active.typeColor }}>{value}</div>
-                          <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.25)", textTransform: "uppercase", letterSpacing: "1px", marginTop: "3px" }}>{label}</div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Tags */}
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag.name}
-                          style={{
-                            fontSize: "10px",
-                            padding: "3px 10px",
-                            borderRadius: "999px",
-                            background: "rgba(255,255,255,0.04)",
-                            border: "1px solid rgba(255,255,255,0.08)",
-                            color: "rgba(255,255,255,0.35)",
-                          }}
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-        </div>
-      </motion.div>
-    </>
+      </div>
+    </div>
   );
 };
+
+// ── Card preview for the VC digest ───────────────────────────────────
+
+const VCDigestPreview = () => (
+  <div className="flex h-full w-full flex-col gap-2 rounded-xl border border-white/[0.06] bg-gradient-to-br from-[#120d05] to-[#0a0a12] p-3">
+    <div className="flex items-center justify-between text-[9px] uppercase tracking-widest">
+      <span className="font-semibold text-amber-400">Weekly digest</span>
+      <span className="flex items-center gap-1.5 text-white/30">
+        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
+        {DIGEST_DATE.replace("Week of ", "")}
+      </span>
+    </div>
+    <div className="grid flex-1 grid-cols-2 gap-2">
+      {DIGEST_STATS.map((st) => (
+        <div key={st.label} className="flex flex-col justify-center rounded-lg border border-white/[0.06] bg-white/[0.03] px-2.5 py-1.5">
+          <div className="text-[16px] font-bold leading-none" style={{ color: st.color }}>{st.value}</div>
+          <div className="mt-1 truncate text-[9.5px] text-white/50">{st.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+// ── Main section ─────────────────────────────────────────────────────
+
+const WORKSTREAM_CARDS = [
+  {
+    to: "/investment/bootcamp",
+    type: "Bootcamp",
+    color: "#f59e0b",
+    title: investmentProjects[0].name,
+    blurb: WORKSTREAM_META[0].subtitle,
+    chips: ["DCF", "LBO", "M&A"],
+    Preview: BootcampDealPreview,
+  },
+  {
+    to: "/vc-digest",
+    type: "Digest",
+    color: "#60a5fa",
+    title: "VC & Startup Intelligence",
+    blurb: `${DIGEST_REGION} · weekly deal flow, sector heat and companies to watch.`,
+    chips: ["Market Pulse", "Top Deals", "Watch List"],
+    Preview: VCDigestPreview,
+  },
+];
+
+const WorkstreamCard = ({ card, index }) => {
+  const navigate = useNavigate();
+  const { Preview } = card;
+
+  return (
+    <motion.div variants={fadeIn("up", "spring", index * 0.12, 0.75)} className="h-full w-full">
+      <div
+        className="h-full rounded-[22px] p-[1px]"
+        style={{ background: `linear-gradient(135deg, ${card.color}88, rgba(145,94,255,0.35), ${card.color}55)` }}
+      >
+        <button
+          type="button"
+          onClick={() => navigate(card.to)}
+          className="group flex h-full w-full flex-col rounded-[21px] bg-tertiary p-4 text-left shadow-card transition-transform duration-300 active:scale-[0.99] sm:p-5 [@media(hover:hover)]:hover:-translate-y-1"
+        >
+          <div className="pointer-events-none h-[215px] w-full shrink-0 overflow-hidden rounded-xl sm:h-[210px]">
+            <Preview />
+          </div>
+          <span className="mt-4 text-[10px] font-bold uppercase tracking-[0.2em]" style={{ color: card.color }}>
+            {card.type}
+          </span>
+          <h3 className="mt-1 text-[18px] font-bold leading-snug text-white sm:text-[20px]">{card.title}</h3>
+          <p className="mt-2 line-clamp-2 text-[14px] leading-[22px] text-secondary">{card.blurb}</p>
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {card.chips.map((c) => (
+              <span key={c} className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-[#dfd9ff]/90">
+                {c}
+              </span>
+            ))}
+          </div>
+          <span className="mt-auto block w-full pt-5">
+            <span
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-white sm:text-[13.5px]"
+              style={{ background: `linear-gradient(120deg, ${card.color}, #915EFF)` }}
+            >
+              Open full page
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </span>
+          </span>
+        </button>
+      </div>
+    </motion.div>
+  );
+};
+
+const Investment = () => (
+  <>
+    <motion.div variants={textVariant()}>
+      <p className={styles.sectionSubText}>Where analytical rigor meets market intuition.</p>
+      <h2 className={styles.sectionHeadText}>Investment Thinking.</h2>
+    </motion.div>
+
+    <motion.p
+      variants={fadeIn("", "", 0.1, 1)}
+      className="mt-4 sm:mt-5 text-white/55 text-[15px] sm:text-[16px] max-w-3xl leading-[26px] sm:leading-[30px]"
+    >
+      My investment interest sits at the overlap of{" "}
+      <span className="text-white/80">AI infrastructure</span>,{" "}
+      <span className="text-white/80">climate tech</span>, and{" "}
+      <span className="text-white/80">emerging market enterprise software</span> — sectors I've worked in directly.
+      Below: a valuation bootcamp deliverable (DCF / LBO / deck) plus a living digest of regional VC & startup intelligence.
+    </motion.p>
+
+    <div className="mt-8 grid grid-cols-1 items-stretch gap-5 sm:mt-12 md:grid-cols-2 md:gap-7">
+      {WORKSTREAM_CARDS.map((card, i) => (
+        <WorkstreamCard key={card.to} card={card} index={i} />
+      ))}
+    </div>
+  </>
+);
 
 // hex color to rgb triplet for rgba() usage
 function hexToRgb(hex) {
@@ -771,5 +687,5 @@ function hexToRgb(hex) {
   return `${r},${g},${b}`;
 }
 
-export { VCDigestPane };
+export { VCDigestPane, BootcampPane };
 export default SectionWrapper(Investment, "investment");

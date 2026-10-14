@@ -193,36 +193,38 @@ export function SkillsShowcasePortable({
       {/* Decorative blurred blobs */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <motion.div
-          className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full bg-gradient-to-r from-emerald-500/10 to-purple-500/10 blur-3xl"
+          className="absolute top-1/4 left-1/4 h-96 w-96 rounded-full"
+          style={{ background: "radial-gradient(closest-side, rgba(147,51,234,0.14), transparent)" }}
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
         <motion.div
-          className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-gradient-to-r from-pink-500/10 to-blue-500/10 blur-3xl"
+          className="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full"
+          style={{ background: "radial-gradient(closest-side, rgba(236,72,153,0.12), transparent)" }}
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
         />
       </div>
 
-      <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto max-w-7xl px-0 sm:px-6 lg:px-8">
         {showHeader && (
           <motion.div
-            className="mb-16 text-center"
+            className="mb-10 sm:mb-16 text-center"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <h2 className="mb-6 bg-gradient-to-r from-emerald-500 via-purple-500 to-pink-500 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl md:text-5xl">
+            <h2 className="mb-4 sm:mb-6 bg-gradient-to-r from-emerald-500 via-purple-500 to-pink-500 bg-clip-text text-3xl font-bold text-transparent sm:text-4xl md:text-5xl">
               {title}
             </h2>
-            <p className="mx-auto max-w-3xl text-lg leading-relaxed text-secondary sm:text-xl">
+            <p className="mx-auto max-w-3xl text-[15px] leading-relaxed text-secondary sm:text-xl">
               {subtitle}
             </p>
           </motion.div>
         )}
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 md:gap-8 lg:grid-cols-6 xl:grid-cols-8">
+        <div className="grid grid-cols-3 gap-x-2 gap-y-6 sm:grid-cols-3 sm:gap-6 md:grid-cols-4 md:gap-8 lg:grid-cols-6 xl:grid-cols-8">
           {resolved.map((skill, index) => {
             const Icon = skill.icon
             return (
@@ -237,7 +239,7 @@ export function SkillsShowcasePortable({
                   ease: [0.25, 0.46, 0.45, 0.94],
                 }}
                 whileHover={{ scale: 1.1, y: -5 }}
-                className="group flex cursor-pointer flex-col items-center"
+                className="group flex flex-col items-center rounded-xl py-2 sm:cursor-pointer"
               >
                 <motion.div
                   className={`mb-2 text-3xl sm:mb-3 sm:text-4xl ${skill.color ?? "text-white"}`}

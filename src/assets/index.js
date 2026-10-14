@@ -14,15 +14,15 @@ import tripguide from "./tripguide.png";
 import kpmg from "./kpmg.png";
 import stanford from "./stanford.png";
 import inseadLogo from "./logo-insead.jpg";
-import ausieFws from "./ausie fws.png";
-import fwsGroupPic from "./fws group pic.JPG";
+import ausieFws from "./ausie-fws.jpg";
+import fwsGroupPic from "./fws-group-pic.jpg";
 import balineseDance from "./balinese dance.jpeg";
 import superAi from "./super ai.jpeg";
 import peVcInsead from "./pe vc insead.jpeg";
 import mealnus from "./mealnus.png";
 import bitcoin from "./bitcoin.png";
 import carms from "./carms.jpg";
-import researchPosterFyp from "./FYP Poster-1.png";
+import researchPosterFyp from "./fyp-poster.jpg";
 import researchPosterFani from "./Slide1.png";
 
 import figmaSvg from "./Figma.svg";

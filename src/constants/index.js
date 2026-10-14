@@ -65,11 +65,6 @@ import {
       icon: backend,
       description: "I founded Friends Who Share, an AI and tech startup community in Singapore connecting founders, builders, and investors. I believe the best ideas emerge when the right people are in the same room.",
     },
-    {
-      title: "Geospatial Researcher",
-      icon: backend,
-      description: "I've modelled risk across 50+ hazard scenarios spanning floods, tsunamis, wind, and seismic events. My research background in spatial analytics and climate risk informs how I think about data, uncertaintys.",
-    },
   ];
   
   const technologies = [
@@ -263,23 +258,6 @@ const experiences = [
       {
         short: "SEA benchmarking, promo KPIs, stakeholder decks.",
         full: "Benchmarked engagement and retention strategies across Southeast Asian e-commerce platforms and presented synthesized recommendations internally. Monitored campaign KPIs and engagement during large-scale promotions to inform retention decisions. Packaged large datasets into actionable insights and presentation materials to accelerate decisions on engagement strategy.",
-      },
-    ],
-  },
-  {
-    title: "Associate Consultant",
-    company_name: "Thrive Social Consulting (Conjunct Consulting)",
-    icon: backend,
-    iconBg: "#E6DEDD",
-    date: "Feb 2022 - Dec 2022",
-    points: [
-      {
-        short: "Identified IT volunteerism awareness gap through 60+ stakeholder interviews, informing a targeted marketing strategy.",
-        full: "Identified a gap in IT volunteerism awareness among university students through 60+ stakeholder interviews and surveys, providing the evidence base for a targeted marketing strategy.",
-      },
-      {
-        short: "Developed marketing campaign proposal for 5,000 students, pitched directly to the CEO.",
-        full: "Developed and delivered a marketing campaign proposal for a target audience of 5,000 university students, culminating in a pitch presentation directly to the CEO.",
       },
     ],
   },

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiPlay, FiArrowRight } from "react-icons/fi";
@@ -7,10 +8,13 @@ import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
+import { useIsTouch, useLockBodyScroll } from "../utils/device";
 
 // ── Video modal ──────────────────────────────────────────────────────
 
 const VideoModal = ({ video, name, onClose }) => {
+  useLockBodyScroll(true);
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") onClose();
@@ -21,11 +25,14 @@ const VideoModal = ({ video, name, onClose }) => {
 
   return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-[120] flex items-center justify-center p-3 sm:p-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[max(0.75rem,env(safe-area-inset-bottom))]"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${name} demo video`}
       onClick={onClose}
     >
       <div className="absolute inset-0 bg-black/80 backdrop-blur-md" />
@@ -48,10 +55,10 @@ const VideoModal = ({ video, name, onClose }) => {
           className="flex items-center justify-between px-5 py-3.5"
           style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
         >
-          <span className="text-sm font-medium text-white/80">{name}</span>
+          <span className="min-w-0 truncate pr-3 text-sm font-medium text-white/80">{name}</span>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-white/45 transition-colors hover:bg-white/10 hover:text-white"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-white/45 transition-colors hover:bg-white/10 hover:text-white active:bg-white/10"
             aria-label="Close"
           >
             <svg
@@ -75,6 +82,7 @@ const VideoModal = ({ video, name, onClose }) => {
           src={video}
           controls
           autoPlay
+          playsInline
           className="block w-full"
           style={{ maxHeight: "75vh" }}
         />
@@ -100,15 +108,33 @@ const ProjectCard = ({
   const [modalOpen, setModalOpen] = useState(false);
   const videoRef = useRef(null);
   const navigate = useNavigate();
+  const isTouch = useIsTouch();
+
+  // Phones have no hover: play the muted preview while the card is on screen
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!isTouch || !el) return undefined;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
+      },
+      { threshold: 0.6 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [isTouch]);
 
   const isHovered = hoveredIndex === index;
   const isDimmed = hoveredIndex !== null && hoveredIndex !== index;
 
   const handleMouseEnter = () => {
+    if (isTouch) return;
     setHoveredIndex(index);
     if (videoRef.current) videoRef.current.play();
   };
   const handleMouseLeave = () => {
+    if (isTouch) return;
     setHoveredIndex(null);
     if (videoRef.current) {
       videoRef.current.pause();
@@ -123,7 +149,7 @@ const ProjectCard = ({
     <>
       <motion.div
         variants={fadeIn("up", "spring", index * 0.12, 0.75)}
-        className="h-full w-full"
+        className="h-full w-[86%] max-w-[380px] shrink-0 sm:w-full sm:max-w-none"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         animate={{
@@ -145,9 +171,9 @@ const ProjectCard = ({
               : "0 8px 28px -16px rgba(0,0,0,0.5)",
           }}
         >
-          <div className="flex h-full flex-col rounded-[21px] bg-tertiary p-5 shadow-card">
+          <div className="flex h-full flex-col rounded-[21px] bg-tertiary p-4 sm:p-5 shadow-card">
             <div
-              className="group relative h-[220px] w-full shrink-0 cursor-pointer overflow-hidden rounded-2xl"
+              className="group relative h-[190px] sm:h-[220px] w-full shrink-0 cursor-pointer overflow-hidden rounded-2xl"
               onClick={() => video && setModalOpen(true)}
               role={video ? "button" : undefined}
               tabIndex={video ? 0 : undefined}
@@ -166,6 +192,7 @@ const ProjectCard = ({
                   muted
                   loop
                   playsInline
+                  preload="metadata"
                   className="h-full w-full object-cover"
                 />
               ) : (
@@ -188,7 +215,7 @@ const ProjectCard = ({
               )}
 
               {video && (
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 [@media(hover:none)]:opacity-100">
                   <div
                     className="flex h-14 w-14 items-center justify-center rounded-full text-white shadow-lg ring-2 ring-white/30"
                     style={{
@@ -202,7 +229,7 @@ const ProjectCard = ({
               )}
             </div>
 
-            <div className="mt-5 flex min-h-[112px] flex-col">
+            <div className="mt-4 sm:mt-5 flex min-h-[104px] sm:min-h-[112px] flex-col">
               <h3 className="text-[18px] font-bold leading-snug text-white sm:text-[20px] line-clamp-2">
                 {name}
               </h3>
@@ -231,7 +258,7 @@ const ProjectCard = ({
               <button
                 type="button"
                 onClick={() => navigate(`/project/${index}`)}
-                className="group/btn relative inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-2.5 text-[13.5px] font-bold text-white shadow-[0_10px_30px_-12px_rgba(145,94,255,0.7)] transition-all duration-300 hover:shadow-[0_14px_36px_-10px_rgba(232,121,249,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e879f9]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary"
+                className="group/btn relative inline-flex min-h-[48px] w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-2.5 text-[15px] sm:text-[13.5px] active:scale-[0.98] font-bold text-white shadow-[0_10px_30px_-12px_rgba(145,94,255,0.7)] transition-all duration-300 hover:shadow-[0_14px_36px_-10px_rgba(232,121,249,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e879f9]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary"
                 style={{
                   background:
                     "linear-gradient(120deg, #915EFF 0%, #c026d3 50%, #e879f9 100%)",
@@ -262,15 +289,18 @@ const ProjectCard = ({
         </div>
       </motion.div>
 
-      <AnimatePresence>
-        {modalOpen && video && (
-          <VideoModal
-            video={video}
-            name={name}
-            onClose={() => setModalOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {createPortal(
+        <AnimatePresence>
+          {modalOpen && video && (
+            <VideoModal
+              video={video}
+              name={name}
+              onClose={() => setModalOpen(false)}
+            />
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </>
   );
 };
@@ -279,6 +309,21 @@ const ProjectCard = ({
 
 const Works = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const railRef = useRef(null);
+
+  const onRailScroll = () => {
+    const rail = railRef.current;
+    const first = rail?.firstElementChild;
+    if (!first) return;
+    const step = first.getBoundingClientRect().width + 16; // card + gap-4
+    setActiveSlide(Math.min(projects.length - 1, Math.round(rail.scrollLeft / step)));
+  };
+
+  const goToSlide = (i) => {
+    const card = railRef.current?.children[i];
+    if (card) railRef.current.scrollTo({ left: card.offsetLeft - railRef.current.offsetLeft - 20, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -290,7 +335,7 @@ const Works = () => {
       <div className="w-full flex">
         <motion.p
           variants={fadeIn("", "", 0.1, 1)}
-          className="mt-3 max-w-3xl text-[16px] leading-[28px] text-secondary sm:text-[17px] sm:leading-[30px]"
+          className="mt-3 max-w-3xl text-[15px] leading-[26px] text-secondary sm:text-[17px] sm:leading-[30px]"
         >
           Enterprise AI builds spanning knowledge engines, climate intelligence,
           regulated credit screening, and executive operating companions. Each
@@ -299,7 +344,12 @@ const Works = () => {
         </motion.p>
       </div>
 
-      <div className="mt-14 grid grid-cols-1 items-stretch gap-6 sm:grid-cols-2 sm:gap-7 xl:grid-cols-4 xl:gap-6 2xl:gap-7 lg:mt-16">
+      {/* Phones: edge-to-edge swipe rail. sm+: grid. */}
+      <div
+        ref={railRef}
+        onScroll={onRailScroll}
+        className="snap-row -mx-5 mt-8 flex items-stretch gap-4 overflow-x-auto scroll-px-5 px-5 pb-2 sm:mx-0 sm:mt-14 sm:grid sm:grid-cols-2 sm:gap-7 sm:overflow-visible sm:px-0 sm:pb-0 xl:grid-cols-4 xl:gap-6 2xl:gap-7 lg:mt-16"
+      >
         {projects.map((project, index) => (
           <ProjectCard
             key={project.id || `project-${index}`}
@@ -308,6 +358,25 @@ const Works = () => {
             hoveredIndex={hoveredIndex}
             setHoveredIndex={setHoveredIndex}
           />
+        ))}
+      </div>
+
+      <div className="mt-4 flex items-center justify-center gap-1 sm:hidden">
+        {projects.map((project, i) => (
+          <button
+            key={project.id || i}
+            type="button"
+            onClick={() => goToSlide(i)}
+            aria-label={`Show project ${i + 1} of ${projects.length}`}
+            aria-current={activeSlide === i}
+            className="flex h-8 w-8 items-center justify-center"
+          >
+            <span
+              className={`block h-1.5 rounded-full transition-all duration-300 ${
+                activeSlide === i ? "w-5 bg-[#915EFF]" : "w-1.5 bg-white/25"
+              }`}
+            />
+          </button>
         ))}
       </div>
     </>

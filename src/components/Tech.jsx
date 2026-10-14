@@ -45,7 +45,7 @@ const Tech = () => {
       title="Tech Stack."
       subtitle="What I have worked with — languages, frameworks, and tools from recent projects."
       showHeader
-      className="!py-10 sm:!py-14"
+      className="!pt-6 !pb-0 sm:!pt-10"
     />
   );
 };

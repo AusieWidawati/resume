@@ -2,10 +2,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {About, Contact, Experience, Education, Hero, Navbar, Tech, Works, Investment, Community, Research, StarsCanvas} from './components';
 import ProjectDetail from './components/ProjectDetail';
 import VCDigestPage from './components/VCDigestPage';
-import { CustomCursor } from './components/CustomCursor';
+import BootcampPage from './components/BootcampPage';
 
 const Divider = () => (
-  <div className="relative z-0 w-full px-8 md:px-24 py-10 md:py-14">
+  <div className="relative z-0 w-full px-3 md:px-24 py-2 md:py-6">
     <div className="section-divider" />
   </div>
 );
@@ -38,11 +38,11 @@ const MainContent = () => (
 const App = () => {
   return (
     <BrowserRouter basename="/resume">
-      <CustomCursor />
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
         <Route path="/vc-digest" element={<VCDigestPage />} />
+        <Route path="/investment/bootcamp" element={<BootcampPage />} />
       </Routes>
     </BrowserRouter>
   );

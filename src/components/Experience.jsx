@@ -1,42 +1,76 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component/dist-modules";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useDragControls, useReducedMotion } from "framer-motion";
 import 'react-vertical-timeline-component/style.min.css';
 
 import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
+import { useLockBodyScroll } from "../utils/device";
 
 const isCurrentRole = (date) => /present/i.test(date || '');
 
-const Modal = ({ experience, onClose }) => (
-  <AnimatePresence>
+const Modal = ({ experience, onClose }) => {
+  const dragControls = useDragControls();
+  useLockBodyScroll(true);
+
+  useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
     <motion.div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      className="fixed inset-0 z-[120] flex items-end justify-center sm:items-center sm:p-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${experience.title} at ${experience.company_name}`}
     >
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+      {/* Bottom sheet on phones, centered card from sm up */}
       <motion.div
-        className="relative bg-[#1d1836] rounded-2xl p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl border border-white/10"
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
-        animate={{ scale: 1, opacity: 1, y: 0 }}
-        exit={{ scale: 0.9, opacity: 0, y: 20 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="relative w-full max-w-2xl max-h-[88dvh] sm:max-h-[80vh] overflow-y-auto overscroll-contain rounded-t-3xl sm:rounded-2xl bg-[#1d1836] px-5 pt-3 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:p-8 shadow-2xl border border-white/10 border-b-0 sm:border-b"
+        initial={{ y: "100%" }}
+        animate={{ y: 0 }}
+        exit={{ y: "100%" }}
+        transition={{ type: "spring", stiffness: 320, damping: 34 }}
+        // Drag only from the grab handle so inner scrolling still works
+        drag="y"
+        dragControls={dragControls}
+        dragListener={false}
+        dragConstraints={{ top: 0, bottom: 0 }}
+        dragElastic={{ top: 0, bottom: 0.6 }}
+        onDragEnd={(_, info) => {
+          if (info.offset.y > 120 || info.velocity.y > 600) onClose();
+        }}
         onClick={(e) => e.stopPropagation()}
       >
+        <div
+          aria-hidden
+          className="sm:hidden -mx-5 -mt-3 mb-2 flex h-8 cursor-grab touch-none items-center justify-center"
+          onPointerDown={(e) => dragControls.start(e)}
+        >
+          <span className="h-1.5 w-10 rounded-full bg-white/25" />
+        </div>
+
         <button
+          type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 text-secondary hover:text-white transition-colors text-2xl leading-none"
+          aria-label="Close"
+          className="absolute top-2 right-2 sm:top-3 sm:right-3 flex h-11 w-11 items-center justify-center rounded-full text-secondary hover:text-white active:bg-white/10 transition-colors text-2xl leading-none"
         >
           ×
         </button>
 
-        <div className="mb-6">
-          <h3 className="text-white text-[22px] font-bold">{experience.title}</h3>
+        <div className="mb-6 pr-10">
+          <h3 className="text-white text-[20px] sm:text-[22px] font-bold leading-tight">{experience.title}</h3>
           <p className="text-secondary text-[15px] font-semibold mt-1">{experience.company_name}</p>
           <p className="text-[13px] text-white/50 mt-1">{experience.date}</p>
         </div>
@@ -45,7 +79,7 @@ const Modal = ({ experience, onClose }) => (
           {experience.points.map((point, index) => (
             <li
               key={`modal-point-${index}`}
-              className="text-white-100 text-[14px] tracking-wide leading-relaxed"
+              className="text-white-100 text-[15px] sm:text-[14px] tracking-wide leading-relaxed"
             >
               {point.full}
             </li>
@@ -53,8 +87,8 @@ const Modal = ({ experience, onClose }) => (
         </ul>
       </motion.div>
     </motion.div>
-  </AnimatePresence>
-);
+  );
+};
 
 const ExperienceCard = ({ experience }) => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -145,7 +179,7 @@ const ExperienceCard = ({ experience }) => {
               .map((point, index) => (
                 <li
                   key={`experience-point-${index}`}
-                  className="flex gap-2.5 text-[13.5px] sm:text-[14px] leading-[20px] text-white-100"
+                  className="flex gap-2.5 text-[14px] leading-[21px] text-white-100"
                 >
                   <span
                     aria-hidden
@@ -158,9 +192,10 @@ const ExperienceCard = ({ experience }) => {
 
           <button
             onClick={() => setModalOpen(true)}
-            className="group/cta mt-5 inline-flex items-center gap-1.5 cursor-pointer transition-opacity hover:opacity-90"
+            type="button"
+            className="group/cta mt-3 -mx-2 inline-flex min-h-[44px] items-center gap-1.5 rounded-lg px-2 cursor-pointer transition-opacity hover:opacity-90 active:bg-white/5"
           >
-            <span className="text-[12.5px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300">
+            <span className="text-[14px] sm:text-[12.5px] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300">
               View full experience details
             </span>
             <span
@@ -173,8 +208,14 @@ const ExperienceCard = ({ experience }) => {
         </div>
       </VerticalTimelineElement>
 
-      {modalOpen && (
-        <Modal experience={experience} onClose={() => setModalOpen(false)} />
+      {/* Portal: sections are z-0 stacking contexts, which would keep the sheet under the navbar */}
+      {createPortal(
+        <AnimatePresence>
+          {modalOpen && (
+            <Modal experience={experience} onClose={() => setModalOpen(false)} />
+          )}
+        </AnimatePresence>,
+        document.body
       )}
     </>
   );
@@ -188,7 +229,7 @@ const Experience = () => {
         <h2 className={styles.sectionHeadText}>Work Experience.</h2>
       </motion.div>
 
-      <div className="exp-timeline mt-16 sm:mt-20 flex flex-col">
+      <div className="exp-timeline mt-8 sm:mt-20 flex flex-col">
         <VerticalTimeline lineColor="">
           {experiences.map((experience, index) => (
             <ExperienceCard key={index} experience={experience} />

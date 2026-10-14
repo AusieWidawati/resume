@@ -10,7 +10,7 @@ const challengeAnchorId = (title) =>
 
 // ── Section heading with left blue bar ──────────────────────────────
 const SectionHeading = ({ children }) => (
-  <h2 className="text-[28px] font-bold text-white flex items-center gap-4 mb-6">
+  <h2 className="text-[23px] sm:text-[28px] font-bold text-white flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
     <span className="w-[3px] h-8 rounded-full shrink-0" style={{ background: "#3b82f6" }} />
     {children}
   </h2>
@@ -21,14 +21,18 @@ const FeatureCard = ({ title, description }) => {
   const [open, setOpen] = useState(false);
   return (
     <div
-      className="rounded-xl px-5 py-4 mb-3 cursor-pointer transition-colors"
+      className="rounded-xl mb-3 transition-colors"
       style={{
         background: "#111118",
         border: "1px solid rgba(255,255,255,0.06)",
       }}
-      onClick={() => setOpen(!open)}
     >
-      <div className="flex items-center justify-between gap-4">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        className="flex min-h-[52px] w-full items-center justify-between gap-4 px-4 sm:px-5 py-3.5 sm:py-4 text-left active:bg-white/[0.03] rounded-xl"
+      >
         <span className="text-white font-medium text-[15px]">{title}</span>
         <svg
           width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -37,9 +41,9 @@ const FeatureCard = ({ title, description }) => {
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
-      </div>
+      </button>
       {open && (
-        <p className="mt-3 text-gray-400 text-[14px] leading-[24px]">{description}</p>
+        <p className="px-4 sm:px-5 pb-4 -mt-1 text-gray-400 text-[14.5px] sm:text-[14px] leading-[24px]">{description}</p>
       )}
     </div>
   );
@@ -48,13 +52,13 @@ const FeatureCard = ({ title, description }) => {
 // ── Outcome metric card ──────────────────────────────────────────────
 const MetricCard = ({ value, label }) => (
   <div
-    className="rounded-xl p-6 text-center"
+    className="rounded-xl p-4 sm:p-6 text-center"
     style={{
       background: "rgba(59,130,246,0.07)",
       border: "1px solid rgba(59,130,246,0.18)",
     }}
   >
-    <p className="font-bold text-[26px] leading-none mb-2" style={{ color: "#3b82f6" }}>
+    <p className="font-bold text-[22px] sm:text-[26px] leading-none mb-2" style={{ color: "#3b82f6" }}>
       {value}
     </p>
     <p className="text-gray-300 text-[13px] font-medium leading-snug">{label}</p>
@@ -223,14 +227,14 @@ const ProjectDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen text-white" style={{ background: "#0a0a0f" }}>
+    <div className="min-h-[100dvh] text-white" style={{ background: "#0a0a0f" }}>
 
       <Navbar
         leading={
           <button
             type="button"
             onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-[15px] font-medium transition-colors group text-white/50 hover:text-white"
+            className="-ml-2 flex min-h-[44px] items-center gap-2 rounded-lg px-2 text-[15px] font-medium transition-colors group text-white/60 hover:text-white active:bg-white/5"
           >
             <svg
               width="16"
@@ -250,8 +254,8 @@ const ProjectDetail = () => {
       />
 
       {/* ── Hero / Title + Media ── */}
-      <div className="pt-20" style={{ background: "#0d0d16" }}>
-        <div className="max-w-6xl mx-auto px-6 pt-10 pb-8">
+      <div className="pt-[calc(64px+env(safe-area-inset-top))] lg:pt-20" style={{ background: "#0d0d16" }}>
+        <div className="max-w-6xl mx-auto px-5 sm:px-6 pt-6 sm:pt-10 pb-6 sm:pb-8">
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
@@ -265,7 +269,7 @@ const ProjectDetail = () => {
                 </span>
               ))}
             </div>
-            <h1 className="text-[36px] sm:text-[46px] font-black text-white leading-tight">
+            <h1 className="text-[30px] sm:text-[46px] font-black text-white leading-[1.12] sm:leading-tight">
               {name}
             </h1>
             {details?.tagline && (
@@ -287,7 +291,9 @@ const ProjectDetail = () => {
                 src={video}
                 controls
                 className="w-full block"
-                style={{ maxHeight: "520px", objectFit: "cover" }}
+                playsInline
+                preload="metadata"
+                style={{ maxHeight: "min(520px, 60svh)", objectFit: "cover" }}
               />
             ) : (
               <img
@@ -302,7 +308,32 @@ const ProjectDetail = () => {
       </div>
 
       {/* ── Main layout ── */}
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      {/* Phones/tablets: sticky, swipeable section chips (replaces the desktop TOC) */}
+      <div
+        className="lg:hidden sticky z-40 border-b border-white/5 bg-[#0a0a0f]/90 backdrop-blur-md"
+        style={{ top: "calc(64px + env(safe-area-inset-top))" }}
+      >
+        <nav aria-label="On this page" className="no-scrollbar flex gap-2 overflow-x-auto px-5 py-2.5">
+          {tocItems.map((item) => {
+            const isActive =
+              activeSection === item.id || item.subItems?.some((sub) => sub.id === activeSection);
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                className={`shrink-0 min-h-[36px] rounded-full px-3.5 text-[13px] font-medium whitespace-nowrap transition-colors ${
+                  isActive ? "bg-[#3b82f6]/15 text-[#60a5fa] ring-1 ring-[#3b82f6]/40" : "bg-white/[0.04] text-gray-400 ring-1 ring-white/[0.06]"
+                }`}
+              >
+                {item.label}
+              </button>
+            );
+          })}
+        </nav>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-6 py-8 sm:py-12 pb-[calc(2rem+env(safe-area-inset-bottom))]">
         <div className="flex gap-16">
 
           {/* Left: content */}
@@ -310,10 +341,10 @@ const ProjectDetail = () => {
 
             {/* Meta bar */}
             <div
-              className="flex flex-wrap items-center justify-between gap-4 mb-12 pb-6"
+              className="flex flex-wrap items-center justify-between gap-4 mb-10 sm:mb-12 pb-6"
               style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <div className="flex items-center gap-5 text-[14px]" style={{ color: "#9ca3af" }}>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]" style={{ color: "#9ca3af" }}>
                 {details?.duration && (
                   <span className="flex items-center gap-2">
                     <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -333,13 +364,13 @@ const ProjectDetail = () => {
                 )}
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex w-full sm:w-auto gap-3 [&>a]:flex-1 sm:[&>a]:flex-none">
                 {source_code_link && source_code_link !== "#" && (
                   <a
                     href={source_code_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] transition-colors hover:text-white"
+                    className="flex min-h-[44px] items-center justify-center gap-2 px-4 py-2 rounded-lg text-[14px] sm:text-[13px] transition-colors hover:text-white"
                     style={{
                       color: "#d1d5db",
                       background: "rgba(255,255,255,0.05)",
@@ -355,7 +386,7 @@ const ProjectDetail = () => {
                     href={details.demoLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg text-[13px] text-white font-medium hover:opacity-90 transition-opacity"
+                    className="flex min-h-[44px] items-center justify-center gap-2 px-4 py-2 rounded-lg text-[14px] sm:text-[13px] text-white font-medium hover:opacity-90 transition-opacity"
                     style={{ background: "#3b82f6" }}
                   >
                     <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24">
@@ -369,7 +400,7 @@ const ProjectDetail = () => {
 
             {/* Overview */}
             {(details?.overview || details?.context) && (
-              <section id="overview" className="mb-14 scroll-mt-28">
+              <section id="overview" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
                 <SectionHeading>Overview</SectionHeading>
                 {details.context && (
                   <p className="mb-4 text-[14px] leading-[26px] text-gray-500 italic border-l-2 border-[#915EFF]/40 pl-4">
@@ -377,7 +408,7 @@ const ProjectDetail = () => {
                   </p>
                 )}
                 {details.overview && (
-                  <p className="text-[15px] leading-[28px]" style={{ color: "#9ca3af" }}>
+                  <p className="text-[15px] leading-[26px] sm:leading-[28px]" style={{ color: "#9ca3af" }}>
                     {details.overview}
                   </p>
                 )}
@@ -386,7 +417,7 @@ const ProjectDetail = () => {
 
             {/* Key Features */}
             {details?.keyFeatures?.length > 0 && (
-              <section id="keyFeatures" className="mb-14 scroll-mt-28">
+              <section id="keyFeatures" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
                 <SectionHeading>Key Features</SectionHeading>
                 {details.keyFeatures.map((f) => (
                   <FeatureCard key={f.title} {...f} />
@@ -396,7 +427,7 @@ const ProjectDetail = () => {
 
             {/* Tech Stack */}
             {details?.techStack?.length > 0 && (
-              <section id="techStack" className="mb-14 scroll-mt-28">
+              <section id="techStack" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
                 <SectionHeading>Tech Stack</SectionHeading>
                 <div className="flex flex-wrap gap-2">
                   {details.techStack.map((t) => (
@@ -418,13 +449,13 @@ const ProjectDetail = () => {
 
             {/* Challenges & Learnings */}
             {details?.challenges?.length > 0 && (
-              <section id="challenges" className="mb-14 scroll-mt-28">
+              <section id="challenges" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
                 <SectionHeading>Challenges & Learnings</SectionHeading>
                 {details.challenges.map((c) => (
                   <div
                     key={c.title}
                     id={challengeAnchorId(c.title)}
-                    className="mb-7 scroll-mt-28"
+                    className="mb-7 scroll-mt-36 lg:scroll-mt-28"
                   >
                     <h3 className="text-white font-semibold text-[17px] mb-2">{c.title}</h3>
                     <p className="text-[14px] leading-[26px]" style={{ color: "#9ca3af" }}>
@@ -449,7 +480,7 @@ const ProjectDetail = () => {
 
             {/* Outcome */}
             {details?.outcome && (
-              <section id="outcome" className="mb-14 scroll-mt-28">
+              <section id="outcome" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
                 <SectionHeading>Outcome</SectionHeading>
                 {details.outcome.description && (
                   <p className="text-[15px] leading-[28px] mb-6" style={{ color: "#9ca3af" }}>

@@ -13,16 +13,66 @@
   color-scheme: dark;
 }
 
-/* Custom cursor (see CustomCursor.jsx) — applied while component is mounted */
-body.custom-cursor-active,
-body.custom-cursor-active * {
-  cursor: none !important;
+/* ── Mobile foundations ── */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: #050816;
 }
 
+/* Full-bleed strips and slide-in animations must never cause sideways scroll */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video {
+  max-width: 100%;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+/* Safe-area helpers (notch / Dynamic Island / home indicator) */
+.pt-safe { padding-top: env(safe-area-inset-top); }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+
+/* Native-feeling horizontal swipe rows */
+.snap-row {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+}
+.snap-row::-webkit-scrollbar { display: none; }
+.snap-row > * { scroll-snap-align: start; }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+
 .hash-span {
-  margin-top: -100px;
-  padding-bottom: 100px;
+  margin-top: -80px;
+  padding-bottom: 80px;
   display: block;
+}
+
+@media (min-width: 640px) {
+  .hash-span {
+    margin-top: -100px;
+    padding-bottom: 100px;
+  }
 }
 
 /* ── Gradients ── */
@@ -77,6 +127,14 @@ body.custom-cursor-active * {
   opacity: 0.18;
   position: absolute;
   pointer-events: none;
+}
+
+/* Big blurs are expensive on phone GPUs — shrink them */
+@media (max-width: 639px) {
+  .orb {
+    filter: blur(48px);
+    transform: scale(0.6);
+  }
 }
 
 /* ── Shimmer text animation ── */
@@ -174,9 +232,11 @@ body.custom-cursor-active * {
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.card-glow:hover {
-  box-shadow: 0 0 30px rgba(145, 94, 255, 0.25), 0 20px 60px rgba(0, 0, 0, 0.4);
-  transform: translateY(-4px);
+@media (hover: hover) {
+  .card-glow:hover {
+    box-shadow: 0 0 30px rgba(145, 94, 255, 0.25), 0 20px 60px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+  }
 }
 
 /* ── Vertical Timeline overrides (react-vertical-timeline-component) ── */
@@ -214,11 +274,39 @@ body.custom-cursor-active * {
 .exp-timeline .vertical-timeline-element-content {
   transition: transform 280ms ease, box-shadow 280ms ease;
 }
-.exp-timeline .vertical-timeline-element-content:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 25px 60px -15px rgba(145, 94, 255, 0.45),
-    0 10px 30px -8px rgba(0, 0, 0, 0.55) !important;
+@media (hover: hover) {
+  .exp-timeline .vertical-timeline-element-content:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 25px 60px -15px rgba(145, 94, 255, 0.45),
+      0 10px 30px -8px rgba(0, 0, 0, 0.55) !important;
+  }
+}
+
+/* Phones: slimmer timeline rail so cards get the width (360–440px screens) */
+@media (max-width: 639px) {
+  .exp-timeline .vertical-timeline {
+    padding: 0;
+    width: 100%;
+  }
+  .exp-timeline .vertical-timeline::before {
+    left: 15px;
+  }
+  .exp-timeline .vertical-timeline-element-icon {
+    width: 32px;
+    height: 32px;
+    left: 0;
+  }
+  .exp-timeline .vertical-timeline-element-content {
+    margin-left: 46px !important;
+    padding: 1.1rem 1rem 1rem !important;
+  }
+  .exp-timeline .vertical-timeline-element-content-arrow {
+    display: none;
+  }
+  .exp-timeline .vertical-timeline-element {
+    margin: 1.5em 0;
+  }
 }
 
 /* ── canvas loader ── */
