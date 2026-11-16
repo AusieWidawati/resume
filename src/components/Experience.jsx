@@ -10,6 +10,7 @@ import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
 import {
   SiClaude,
+  SiConfluence,
   SiDatabricks,
   SiDatadog,
   SiFigma,
@@ -83,6 +84,7 @@ const TOOL_ICONS = {
   SQL: { icon: TbSql, color: "#60A5FA" },
   "Microsoft 365": { icon: MicrosoftLogo },
   "Google Workspace": { icon: GoogleLogo },
+  Confluence: { icon: SiConfluence, color: "#2684FF" },
   ChatGPT: { icon: SiOpenai, color: "#FFFFFF", ai: true },
 };
 

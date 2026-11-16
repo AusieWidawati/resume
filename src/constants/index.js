@@ -17,6 +17,7 @@ import {
     stanford,
     kpmg,
     grab,
+    shopee,
   } from "../assets";
   
   export const navLinks = [
@@ -302,21 +303,50 @@ const experiences = [
   {
     title: "Business Product Management Intern",
     company_name: "Shopee (Shopee Video)",
-    icon: web,
+    icon: shopee,
     iconBg: "#EE4D2D",
     date: "Aug 2022 - Nov 2022",
-    points: [
+    // Collapsed card view
+    highlights: [
       {
-        short: "Push & NLP analytics; ~10–15% CTR/open lift.",
-        full: "Analyzed push notification engagement across segments and supported NLP-driven copy generation for scalable outreach to millions of users. Ran campaign performance analysis in Excel and internal analytics tools, surfacing messaging patterns that lifted click-through and open rates by approximately 10–15% during testing cycles.",
+        label: "Product & Competitive Insights",
+        text: "Wrote PRDs in Confluence and benchmarked competitor features to inform the roadmap.",
       },
       {
-        short: "Cross-functional campaigns; A/B tests & targeting experiments.",
-        full: "Collaborated with marketing, product, and operations to streamline campaign execution and deployment turnaround. Supported A/B tests on push notifications using behavioral metrics for personalization recommendations, and contributed to experiments on automated notification content and customer targeting logic for more scalable outreach.",
+        label: "Experimentation",
+        text: "A/B tested push notification copywriting during a special campaign, lifting engagement 35% and adding 64,000+ active users.",
       },
       {
-        short: "SEA benchmarking, promo KPIs, stakeholder decks.",
-        full: "Benchmarked engagement and retention strategies across Southeast Asian e-commerce platforms and presented synthesized recommendations internally. Monitored campaign KPIs and engagement during large-scale promotions to inform retention decisions. Packaged large datasets into actionable insights and presentation materials to accelerate decisions on engagement strategy.",
+        label: "Workflow Optimisation",
+        text: "Moved copywriting from Excel to an internal platform, cutting task time and errors by 30%.",
+      },
+    ],
+    // Expanded "full details" view
+    summary:
+      "Business product management intern on Shopee Video, working across marketing, product and operations on push notification strategy.",
+    groups: [
+      {
+        items: [
+          {
+            label: "Product Documentation",
+            text: "Authored product and business requirement documents in Confluence, aligning marketing, product and operations teams on requirements.",
+            tools: ["Confluence"],
+          },
+          {
+            label: "Competitive Analysis",
+            text: "Compared Shopee Video's product features against competitors by analysing release notes and daily active user trends bi-weekly, delivering insights to the CMO on which features to build next and influencing high-level decision-making.",
+            tools: ["Google Workspace"],
+          },
+          {
+            label: "Experimentation",
+            text: "A/B tested different push notification copywriting strategies and analysed their performance, delivering a 35% increase in user engagement and 64,000+ new active users during a key campaign, Indonesian Independence Day.",
+          },
+          {
+            label: "Workflow Optimisation",
+            text: "Moved push notification copywriting from manual Excel sheets to a new internal platform, improving operational efficiency and reducing task time and error rates by 30%.",
+            tools: ["Microsoft 365"],
+          },
+        ],
       },
     ],
   },

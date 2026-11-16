@@ -14,6 +14,7 @@ import tripguide from "./tripguide.png";
 import kpmg from "./kpmg.png";
 import stanford from "./stanford.png";
 import grab from "./grab.svg";
+import shopee from "./shopee.svg";
 import inseadLogo from "./logo-insead.jpg";
 import ausieFws from "./ausie-fws.jpg";
 import fwsGroupPic from "./fws-group-pic.jpg";
@@ -69,6 +70,7 @@ export {
   kpmg,
   stanford,
   grab,
+  shopee,
   inseadLogo,
   ausieFws,
   fwsGroupPic,
