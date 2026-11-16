@@ -1,53 +1,56 @@
-import {
-  SiCss,
-  SiGit,
-  SiHtml5,
-  SiMongodb,
-  SiMysql,
-  SiR,
-  SiReact,
-  SiRedux,
-} from 'react-icons/si';
-import { TbChartDots3 } from 'react-icons/tb';
+import { motion } from "framer-motion";
 
-import { technologies } from '../constants';
-import { SectionWrapper } from '../hoc';
-import { SkillsShowcasePortable } from './SkillsShowcasePortable';
+import { styles } from "../styles";
+import { SectionWrapper } from "../hoc";
+import { fadeIn, textVariant } from "../utils/motion";
+import { TOOL_CATEGORIES, TOOL_ICONS } from "../constants/tools";
 
-/** Maps portfolio `technologies` names to react-icons + Tailwind color classes */
-const TECH_ICON_MAP = {
-  'HTML 5': { icon: SiHtml5, color: 'text-orange-500' },
-  'CSS 3': { icon: SiCss, color: 'text-blue-400' },
-  'React JS': { icon: SiReact, color: 'text-cyan-400' },
-  'Redux Toolkit': { icon: SiRedux, color: 'text-purple-400' },
-  MongoDB: { icon: SiMongodb, color: 'text-green-500' },
-  git: { icon: SiGit, color: 'text-orange-500' },
-  MySQL: { icon: SiMysql, color: 'text-blue-500' },
-  R: { icon: SiR, color: 'text-blue-300' },
-  Tableau: { icon: TbChartDots3, color: 'text-sky-400' },
-};
-
-const Tech = () => {
-  const skillNames = technologies.map((t) => t.name);
-
-  const customSkills = technologies
-    .map((t) => {
-      const row = TECH_ICON_MAP[t.name];
-      if (!row) return null;
-      return { name: t.name, icon: row.icon, color: row.color };
-    })
-    .filter(Boolean);
-
+const ToolChip = ({ name }) => {
+  const { icon: Icon, color } = TOOL_ICONS[name] ?? {};
   return (
-    <SkillsShowcasePortable
-      skills={skillNames}
-      customSkills={customSkills}
-      title="Tech Stack."
-      subtitle="What I have worked with — languages, frameworks, and tools from recent projects."
-      showHeader
-      className="!pt-6 !pb-0 sm:!pt-10"
-    />
+    <span className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.05] px-2.5 py-1.5 text-[13px] font-medium text-[#dfd9ff]">
+      {Icon && <Icon aria-hidden className="h-4 w-4 shrink-0" style={{ color }} />}
+      {name}
+    </span>
   );
 };
 
-export default SectionWrapper(Tech, 'tech-stack');
+const Tech = () => (
+  <>
+    <motion.div variants={textVariant()}>
+      <p className={styles.sectionSubText}>What I work with</p>
+      <h2 className={styles.sectionHeadText}>Tools & Tech.</h2>
+    </motion.div>
+
+    <motion.p
+      variants={fadeIn("", "", 0.1, 1)}
+      className="mt-4 max-w-3xl text-[15px] leading-[26px] text-secondary sm:text-[17px] sm:leading-[30px]"
+    >
+      The platforms, data tools and languages behind my work, grouped by how I use them.
+    </motion.p>
+
+    <div className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-4">
+      {TOOL_CATEGORIES.map((category, index) => (
+        <motion.section
+          key={category.title}
+          variants={fadeIn("up", "spring", 0.05 * index, 0.6)}
+          className="rounded-2xl border border-white/[0.08] bg-tertiary/60 p-4 sm:p-5"
+        >
+          <h3 className="mb-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#c4b5fd]">
+            {category.title}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {category.tools.map((tool) => (
+              <ToolChip key={tool} name={tool} />
+            ))}
+          </div>
+          {category.note && (
+            <p className="mt-3 text-[11.5px] leading-[18px] text-white/45">{category.note}</p>
+          )}
+        </motion.section>
+      ))}
+    </div>
+  </>
+);
+
+export default SectionWrapper(Tech, "tech-stack");

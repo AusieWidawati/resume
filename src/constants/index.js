@@ -18,6 +18,7 @@ import {
     kpmg,
     grab,
     shopee,
+    anacle,
   } from "../assets";
   
   export const navLinks = [
@@ -113,7 +114,7 @@ const experiences = [
     title: "AI Product Manager (Senior Associate)",
     company_name: "KPMG Digital Village",
     icon: kpmg,
-    iconBg: "#383E56",
+    iconBg: "#FFFFFF",
     date: "Nov 2024 - Present",
     // Collapsed card view
     highlights: [
@@ -163,8 +164,8 @@ const experiences = [
         items: [
           {
             label: "Data Pipeline & Search",
-            text: "Built SharePoint ingestion into AWS OpenSearch with metadata tagging, and tested keyword, semantic and hybrid search to cut retrieval time by 80%.",
-            tools: ["Databricks", "SQL", "Microsoft Foundry"],
+            text: "Worked with data engineers to build pipelines for unstructured and structured data, ingesting SharePoint documents into an AWS OpenSearch vector database with metadata tagging. Tested keyword, semantic and hybrid search to cut retrieval time by 80%.",
+            tools: ["AWS OpenSearch", "PostgreSQL", "Databricks", "SQL", "Microsoft Foundry"],
           },
           {
             label: "Product Releases",
@@ -206,8 +207,8 @@ const experiences = [
   {
     title: "IT Business Analyst (Technology Consultant)",
     company_name: "Anacle Systems (acquired by MRI Software)",
-    icon: backend,
-    iconBg: "#E6DEDD",
+    icon: anacle,
+    iconBg: "#FFFFFF",
     date: "Jul 2024 - Nov 2024",
     // Collapsed card view
     highlights: [
@@ -354,7 +355,7 @@ const experiences = [
     title: "Research Scholar",
     company_name: "Stanford University x NTU",
     icon: stanford,
-    iconBg: "#383E56",
+    iconBg: "#FFFFFF",
     date: "Jan 2020 - Nov 2022",
     // Collapsed card view
     highlights: [
@@ -390,7 +391,7 @@ const experiences = [
           {
             label: "Data Visualisation",
             text: "Combined earthquake hazard with population and vulnerability data in QGIS and ArcGIS, mapping and validating model outputs to support exposure analysis for resilience planning.",
-            tools: ["QGIS", "ArcGIS"],
+            tools: ["Python", "QGIS", "ArcGIS"],
           },
           {
             label: "Research Output",

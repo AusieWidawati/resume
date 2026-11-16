@@ -40,8 +40,17 @@ const Hero = () => {
           </p>
 
           <p className="mt-3 max-w-[38rem] text-[15px] leading-[25px] text-white/60 sm:text-[17px] sm:leading-[29px] lg:text-[18px] lg:leading-[31px]">
-            I drive enterprise digital transformation and run a Singapore tech community that connects builders and
-            investors.
+            I drive enterprise digital transformation and run a{" "}
+            <a
+              href="https://www.linkedin.com/company/friendswhoshare/posts/"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Friends Who Share"
+              className="font-medium text-white/85 underline decoration-[#915EFF]/60 underline-offset-[3px] transition-colors duration-200 hover:text-white hover:decoration-[#e879f9]"
+            >
+              Singapore tech community
+            </a>{" "}
+            that connects builders and investors.
           </p>
 
           <motion.div

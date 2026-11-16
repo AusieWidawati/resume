@@ -155,7 +155,7 @@ const EducationEntry = ({ entry, index, isLast }) => {
     >
       {/* HEADER */}
       <div className="flex items-start gap-4 sm:gap-5">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/[0.04] p-1.5 ring-1 ring-white/10 sm:h-14 sm:w-14">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white p-1.5 ring-1 ring-white/10 sm:h-14 sm:w-14">
           <img
             src={entry.logo}
             alt={entry.school}

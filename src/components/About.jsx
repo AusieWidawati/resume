@@ -54,18 +54,8 @@ const ScrollReveal = ({
   );
 };
 
-const bodySm =
-  'text-secondary text-[14px] sm:text-[15px] leading-[23px] sm:leading-[26px]';
-
 const About = () => {
-  const columnRef = useRef(null);
   const reduceMotion = useReducedMotion();
-  const { scrollYProgress: columnProgress } = useScroll({
-    target: columnRef,
-    offset: ['start 0.85', 'end 0.2'],
-  });
-
-  const orbY = useTransform(columnProgress, [0, 1], [0, -18]);
 
   return (
     <>
@@ -76,7 +66,7 @@ const About = () => {
 
       {/* Profile photo — layered gradient slabs behind the card */}
       <motion.div
-        className="group relative mx-auto mt-8 mb-10 h-[206px] w-[170px] sm:h-[255px] sm:w-[210px]"
+        className="group relative mx-auto mt-8 mb-2 h-[206px] w-[170px] sm:h-[255px] sm:w-[210px]"
         variants={fadeIn("up", "spring", 0.1, 0.75)}
       >
         <div
@@ -109,57 +99,6 @@ const About = () => {
           </div>
         </div>
       </motion.div>
-
-      <div className="mt-6 sm:mt-4">
-        <div
-          ref={columnRef}
-          className="relative flex flex-1 flex-col gap-8 sm:gap-10 md:gap-12"
-        >
-          {!reduceMotion && (
-            <motion.div
-              aria-hidden
-              className="pointer-events-none absolute -right-4 top-0 h-56 w-56 rounded-full bg-[radial-gradient(closest-side,rgba(145,94,255,0.14),transparent)] md:-right-8"
-              style={{ y: orbY }}
-            />
-          )}
-
-          <ScrollReveal yFrom={36} xFrom={0} className="relative z-[1] max-w-2xl">
-            <p className="text-[15px] font-medium leading-[26px] text-[#dfd9ff] sm:text-[16px] sm:leading-[28px]">
-              I'm passionate about{' '}
-              <span className="bg-gradient-to-r from-white to-[#c4b5fd] bg-clip-text font-semibold text-transparent">
-                AI product management, the startup ecosystem and deal financing
-              </span>
-              . I am also a proud graduate of the{' '}
-              <span className="font-semibold text-white">INSEAD</span> Master in Management.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal
-            yFrom={22}
-            xFrom={18}
-            offset={['start 0.88', 'start 0.32']}
-            className="relative z-[1] md:ml-4 md:max-w-[94%]"
-          >
-            <p className={bodySm}>
-              <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#915eff]">
-                On the side
-              </span>
-              I run{' '}
-              <a
-                href="https://www.linkedin.com/company/friendswhoshare/posts/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-[#dfd9ff] underline decoration-[#915EFF]/45 underline-offset-[3px] transition-colors duration-200 hover:text-white hover:decoration-[#e879f9]"
-              >
-                Friends Who Share
-              </a>
-              , an AI and tech community connecting builders and investors in
-              Singapore.
-            </p>
-          </ScrollReveal>
-        </div>
-
-      </div>
 
       {/* Full-viewport-width strip (breaks out of max-w column) */}
       <ScrollReveal
