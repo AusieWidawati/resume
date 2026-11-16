@@ -162,7 +162,7 @@ const experiences = [
           {
             label: "Data Pipeline & Search",
             text: "Built SharePoint ingestion into AWS OpenSearch with metadata tagging, and tested keyword, semantic and hybrid search to cut retrieval time by 80%.",
-            tools: ["Databricks", "Microsoft Foundry"],
+            tools: ["Databricks", "SQL", "Microsoft Foundry"],
           },
           {
             label: "Product Releases",
@@ -202,27 +202,54 @@ const experiences = [
     ],
   },
   {
-    title: "Business Analyst",
-    company_name: "Anacle Systems",
+    title: "IT Business Analyst (Technology Consultant)",
+    company_name: "Anacle Systems (acquired by MRI Software)",
     icon: backend,
     iconBg: "#E6DEDD",
     date: "Jul 2024 - Nov 2024",
-    points: [
+    // Collapsed card view
+    highlights: [
       {
-        short: "Led requirements gathering for Singapore's largest real estate statutory board, redesigning core business processes.",
-        full: "Led stakeholder engagement and requirements gathering for Singapore's largest real estate statutory board client, redesigning business processes and translating them into technical specifications for enterprise inventory and key management systems.",
+        label: "Requirements Gathering & Technical Specification",
+        text: "Led stakeholder engagement for Singapore's largest real estate statutory board, redesigning core business processes into clear technical requirements.",
       },
       {
-        short: "Conducted UAT and SIT across 120+ users, contributing to an SGD 400,000 revenue increase.",
-        full: "Conducted UAT and SIT across 120+ users, identifying and resolving critical workflow gaps that resulted in enhanced software features and contributed to an SGD 400,000 revenue increase.",
+        label: "Testing & Migration",
+        text: "Ran UAT and SIT for a new module with 120+ users and managed data migration, contributing to an SGD 400,000 revenue increase.",
       },
       {
-        short: "Supported commercial proposals with tech infrastructure cost estimates for high-value software quotations.",
-        full: "Supported commercial proposal development by estimating tech infrastructure and man-hour costs, contributing to pricing inputs for high-value software module quotations.",
+        label: "Delivery & Commercials",
+        text: "Collaborated with front-end and back-end engineers in GitLab across the full software development lifecycle.",
       },
+    ],
+    // Expanded "full details" view
+    summary:
+      "Building a new real estate inventory management module on an existing web and mobile platform, for Singapore's largest real estate statutory board.",
+    groups: [
       {
-        short: "Redesigned UI naming conventions based on UAT feedback, improving usability clarity across enterprise modules.",
-        full: "Redesigned UI naming conventions based on UAT feedback, improving usability clarity across multiple enterprise system modules.",
+        items: [
+          {
+            label: "Requirements & Specs",
+            text: "Led stakeholder engagement and business requirements gathering, redesigning core business processes and translating them into technical specifications for enterprise inventory management systems.",
+          },
+          {
+            label: "UAT & SIT",
+            text: "Ran UAT and system integration testing across web and mobile with 120+ users, closing critical workflow gaps that shaped new features and contributed to an SGD 400,000 revenue increase. Trained users for smooth adoption.",
+          },
+          {
+            label: "Data Migration",
+            text: "Managed data preparation and migration with technical teams, validating post-migration data to achieve high accuracy and protect business continuity.",
+          },
+          {
+            label: "Commercial Support",
+            text: "Estimated tech infrastructure and man-hour costs as pricing inputs for high-value software module quotations.",
+          },
+          {
+            label: "SDLC",
+            text: "Managed work in GitLab across the full software development lifecycle.",
+            tools: ["GitLab"],
+          },
+        ],
       },
     ],
   },

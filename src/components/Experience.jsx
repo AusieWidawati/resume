@@ -13,6 +13,7 @@ import {
   SiDatabricks,
   SiDatadog,
   SiFigma,
+  SiGitlab,
   SiJira,
   SiLangchain,
   SiLanggraph,
@@ -21,6 +22,7 @@ import {
   SiQgis,
 } from "react-icons/si";
 import { VscAzure, VscAzureDevops } from "react-icons/vsc";
+import { TbSql } from "react-icons/tb";
 import { useLockBodyScroll } from "../utils/device";
 
 const isCurrentRole = (date) => /present/i.test(date || '');
@@ -49,6 +51,9 @@ const TOOL_ICONS = {
   // LangChain brand teal (#1C3C3C) disappears on the dark sheet; lightened
   LangChain: { icon: SiLangchain, color: "#4FB3A9" },
   LangGraph: { icon: SiLanggraph, color: "#4FB3A9" },
+  GitLab: { icon: SiGitlab, color: "#FC6D26" },
+  // SQL is a language, not a brand — generic SQL glyph
+  SQL: { icon: TbSql, color: "#60A5FA" },
 };
 
 const ToolChips = ({ tools }) => (
@@ -151,10 +156,12 @@ const Modal = ({ experience, onClose }) => {
             )}
             <div className="space-y-6">
               {experience.groups.map((group) => (
-                <section key={group.title}>
-                  <h4 className="mb-2.5 text-[12px] font-bold uppercase tracking-[0.16em] text-[#c4b5fd]">
-                    {group.title}
-                  </h4>
+                <section key={group.title ?? "details"}>
+                  {group.title && (
+                    <h4 className="mb-2.5 text-[12px] font-bold uppercase tracking-[0.16em] text-[#c4b5fd]">
+                      {group.title}
+                    </h4>
+                  )}
                   <ul className="m-0 list-none space-y-3 p-0">
                     {group.items.map((item) => (
                       <LabeledBullet key={item.label} {...item} className="text-[15px] sm:text-[14px] leading-relaxed" />
