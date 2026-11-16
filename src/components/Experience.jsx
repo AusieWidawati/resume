@@ -8,9 +8,60 @@ import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
+import { SiClaude, SiDatabricks, SiDatadog, SiJira, SiOpenai, SiQgis } from "react-icons/si";
+import { VscAzure, VscAzureDevops } from "react-icons/vsc";
 import { useLockBodyScroll } from "../utils/device";
 
 const isCurrentRole = (date) => /present/i.test(date || '');
+
+const BulletDot = () => (
+  <span
+    aria-hidden
+    className="mt-[7px] block h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-[#915EFF] to-[#e879f9] shadow-[0_0_6px_rgba(145,94,255,0.55)]"
+  />
+);
+
+/** Logos + brand colours for the tool chips shown under expanded bullets */
+const TOOL_ICONS = {
+  Jira: { icon: SiJira, color: "#2684FF" },
+  "Azure DevOps": { icon: VscAzureDevops, color: "#0078D7" },
+  Databricks: { icon: SiDatabricks, color: "#FF3621" },
+  QGIS: { icon: SiQgis, color: "#93B023" },
+  // No dedicated Foundry mark in react-icons; Foundry lives under Azure AI
+  "Microsoft Foundry": { icon: VscAzure, color: "#0089D6" },
+  "Claude Code": { icon: SiClaude, color: "#D97757" },
+  Codex: { icon: SiOpenai, color: "#FFFFFF" },
+  // Brand purple (#632CA6) is too dark on the sheet; lightened for contrast
+  Datadog: { icon: SiDatadog, color: "#A47BE6" },
+};
+
+const ToolChips = ({ tools }) => (
+  <span className="mt-2 flex flex-wrap gap-1.5">
+    {tools.map((tool) => {
+      const { icon: Icon, color } = TOOL_ICONS[tool] ?? {};
+      return (
+        <span
+          key={tool}
+          className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[12px] font-medium text-[#dfd9ff]"
+        >
+          {Icon && <Icon aria-hidden className="h-3.5 w-3.5" style={{ color }} />}
+          {tool}
+        </span>
+      );
+    })}
+  </span>
+);
+
+/** "Label: text" bullet, label emphasised, optional tool chips */
+const LabeledBullet = ({ label, text, tools, className = "" }) => (
+  <li className={`flex gap-2.5 text-white-100 ${className}`}>
+    <BulletDot />
+    <span className="min-w-0">
+      <strong className="font-semibold text-white">{label}:</strong> {text}
+      {tools?.length > 0 && <ToolChips tools={tools} />}
+    </span>
+  </li>
+);
 
 const Modal = ({ experience, onClose }) => {
   const dragControls = useDragControls();
@@ -75,16 +126,40 @@ const Modal = ({ experience, onClose }) => {
           <p className="text-[13px] text-white/50 mt-1">{experience.date}</p>
         </div>
 
-        <ul className="list-disc ml-5 space-y-3">
-          {experience.points.map((point, index) => (
-            <li
-              key={`modal-point-${index}`}
-              className="text-white-100 text-[15px] sm:text-[14px] tracking-wide leading-relaxed"
-            >
-              {point.full}
-            </li>
-          ))}
-        </ul>
+        {experience.groups ? (
+          <>
+            {experience.summary && (
+              <p className="mb-6 whitespace-pre-line border-l-2 border-[#915EFF]/60 pl-4 text-[15px] leading-relaxed text-[#dfd9ff] sm:text-[14.5px]">
+                {experience.summary}
+              </p>
+            )}
+            <div className="space-y-6">
+              {experience.groups.map((group) => (
+                <section key={group.title}>
+                  <h4 className="mb-2.5 text-[12px] font-bold uppercase tracking-[0.16em] text-[#c4b5fd]">
+                    {group.title}
+                  </h4>
+                  <ul className="m-0 list-none space-y-3 p-0">
+                    {group.items.map((item) => (
+                      <LabeledBullet key={item.label} {...item} className="text-[15px] sm:text-[14px] leading-relaxed" />
+                    ))}
+                  </ul>
+                </section>
+              ))}
+            </div>
+          </>
+        ) : (
+          <ul className="list-disc ml-5 space-y-3">
+            {experience.points.map((point, index) => (
+              <li
+                key={`modal-point-${index}`}
+                className="text-white-100 text-[15px] sm:text-[14px] tracking-wide leading-relaxed"
+              >
+                {point.full}
+              </li>
+            ))}
+          </ul>
+        )}
       </motion.div>
     </motion.div>
   );
@@ -174,21 +249,34 @@ const ExperienceCard = ({ experience }) => {
           />
 
           <ul className="m-0 list-none space-y-2.5 p-0">
-            {experience.points
-              .filter((p) => p.featured !== false)
-              .map((point, index) => (
-                <li
-                  key={`experience-point-${index}`}
-                  className="flex gap-2.5 text-[14px] leading-[21px] text-white-100"
-                >
-                  <span
-                    aria-hidden
-                    className="mt-[7px] block h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-[#915EFF] to-[#e879f9] shadow-[0_0_6px_rgba(145,94,255,0.55)]"
-                  />
-                  <span>{point.short}</span>
-                </li>
-              ))}
+            {experience.highlights
+              ? experience.highlights.map((item) => (
+                  <LabeledBullet key={item.label} {...item} className="text-[14px] leading-[21px]" />
+                ))
+              : experience.points
+                  .filter((p) => p.featured !== false)
+                  .map((point, index) => (
+                    <li
+                      key={`experience-point-${index}`}
+                      className="flex gap-2.5 text-[14px] leading-[21px] text-white-100"
+                    >
+                      <BulletDot />
+                      <span>{point.short}</span>
+                    </li>
+                  ))}
           </ul>
+
+          {/* Every tool from the expanded view, once each, in the order it first appears */}
+          {(() => {
+            const tools = [
+              ...new Set(experience.groups?.flatMap((g) => g.items.flatMap((item) => item.tools ?? [])) ?? []),
+            ];
+            return tools.length > 0 ? (
+              <div className="mt-4">
+                <ToolChips tools={tools} />
+              </div>
+            ) : null;
+          })()}
 
           <button
             onClick={() => setModalOpen(true)}

@@ -108,85 +108,90 @@ import {
   
 const experiences = [
   {
-    title: "Senior Associate Consultant",
+    title: "AI Product Manager (Senior Associate)",
     company_name: "KPMG Digital Village",
     icon: kpmg,
     iconBg: "#383E56",
     date: "Nov 2024 - Present",
-    points: [
-      // AI Product Management
+    // Collapsed card view
+    highlights: [
       {
-        short: "AI Product Lead on CLARA — full lifecycle ownership across 6 credit risk modules for APAC's largest MDB.",
-        full: "Served as AI Product Lead on CLARA (Credit & Loan Analysis & Risk Assessment), an end-to-end AI credit risk screening platform built for APAC's largest multilateral development bank (MDB), owning the full product lifecycle across 6 modules: Borrower Profile & Peers, Country & Industry Insights, Credit Ratings, Financial Highlights, Loan Structuring, and Risks & Mitigants.",
-        featured: true,
+        label: "AI Product & Architecture",
+        text: "Own four enterprise AI platforms from early RAG to agentic AI, choosing models, search and tool-calling designs by quality, latency and cost.",
       },
       {
-        short: "Owned requirements, acceptance criteria, and JIRA backlog across KPMG, the client, Moody's Analytics, and Evalueserve.",
-        full: "Owned functional requirements, acceptance criteria, and definition of done for all 6 CLARA modules, managing a multi-vendor engineering backlog across KPMG developers, the client's data engineering team, Moody's Analytics, and Evalueserve via JIRA with Given/When/Then acceptance criteria standards.",
-        featured: false,
+        label: "Data Preparation",
+        text: "Build the data foundation for AI, from document ingestion and chunking to Databricks SQL validation of 100+ tables.",
       },
       {
-        short: "Authored and refined LLM system prompts governing CLARA's reasoning, retrieval, and output across 4 deal structure types.",
-        full: "Authored and iteratively refined LLM system prompts governing CLARA's reasoning, retrieval behavior, and output formatting, including transaction-type branching logic across Corporate Finance, Project Finance, Banks, and NBFI deal structures.",
-        featured: false,
+        label: "Business Requirements",
+        text: "Turn client needs into user stories, acceptance criteria and LLM system prompt configuration.",
       },
       {
-        short: "Led UAT and functional QA across DEV and UAT environments, coordinating defect resolution across 10+ engineers and analysts.",
-        full: "Led UAT and functional QA across DEV and UAT environments, coordinating test execution and defect resolution across a multi-vendor team spanning 10+ engineers and analysts.",
-        featured: false,
+        label: "Stakeholders & Monitoring",
+        text: "Align senior leaders, engineers and 4 vendors across 3 countries, then track quality, adoption and user feedback in production.",
+      },
+    ],
+    // Expanded "full details" view
+    summary:
+      "Lead AI product manager across four enterprise AI platforms for APAC's largest multilateral development bank, from early RAG to agentic AI.\nTop 10% Senior Associate, rated \"Exceeding Expectations\".",
+    groups: [
+      {
+        title: "Agentic AI Credit Risk Solution",
+        items: [
+          {
+            label: "Product Delivery",
+            text: "Led requirements, prompts and delivery of a 6-module agentic solution calling 30+ APIs, managing 15+ engineers and 4 vendors across 3 countries. Cut credit screening from weeks to under 1 hour.",
+          },
+          {
+            label: "Sprints, UAT & Responsible AI",
+            text: "Owned sprint planning and led UAT with 30+ credit officers, and ensured the product met Responsible AI standards.",
+            tools: ["Jira", "Azure DevOps"],
+          },
+        ],
       },
       {
-        short: "Built Responsible AI guardrail and 38-case test suite — zero hallucination failures in production.",
-        full: "Designed and implemented a Responsible AI framework including a pre-retrieval LLM intent classification guardrail and a 38-case test suite across content safety, scope adherence, and hallucination resistance, ensuring CLARA met the client's auditability requirements for AI-assisted credit decisions.",
-        featured: true,
-      },
-      // Data Engineering & Integrations
-      {
-        short: "Scoped backend data engineering tickets for peer deduplication, FX normalization, GICS classification, and AMR extraction pipelines.",
-        full: "Scoped and authored data engineering JIRA tickets for CLARA's backend infrastructure including peer deduplication tables, LCY-to-USD currency normalization using IMF exchange rate data, GICS sub-industry classification fixes, and AMR document covenant extraction pipelines.",
-        featured: false,
-      },
-      {
-        short: "Managed live integrations with Moody's Analytics API and Evalueserve webhook for financial spreading and credit data.",
-        full: "Managed live integrations with Moody's Analytics API for entity profiles, credit ratings, scorecard outputs, and sector outlooks, and Evalueserve webhook for financial ratio spreading including gross margin, total debt/EBITDA, and multi-year averages.",
-        featured: false,
-      },
-      {
-        short: "Designed pCRF field mapping schemas across Corporate Finance, Bank/NBFI, and Project Finance transaction types.",
-        full: "Designed pCRF field mapping schemas across Corporate Finance, Bank/NBFI, and Project Finance transaction types, mapping preliminary Credit Risk Framework form fields to backend response payload paths for automated document generation.",
-        featured: false,
-      },
-      // Climate & Disaster Risk Platform
-      {
-        short: "Led AI climate risk platform — global summit showcase to 5,000+, securing 60+ leads and 3 government MoUs.",
-        full: "Led the geospatial data workstream for an AI-powered climate and disaster risk intelligence platform for APAC's largest multilateral development bank (MDB), delivering a successful showcase at a global summit attended by 5,000+ participants. Secured 60+ partnership leads and 3 signed MoUs with national governments.",
-        featured: true,
+        title: "Enterprise AI Knowledge Navigator (RAG)",
+        items: [
+          {
+            label: "Data Pipeline & Search",
+            text: "Built SharePoint ingestion into AWS OpenSearch with metadata tagging, and tested keyword, semantic and hybrid search to cut retrieval time by 80%.",
+            tools: ["Databricks", "Microsoft Foundry"],
+          },
+          {
+            label: "Product Releases",
+            text: "Led 2 releases to 2,500+ users and 52,000+ queries, iterating on Datadog LLM observability and user feedback.",
+            tools: ["Datadog"],
+          },
+        ],
       },
       {
-        short: "Built AI disaster simulation tool enabling non-technical users to run GIS-comparable resilience planning scenarios.",
-        full: "Developed an AI-enabled disaster simulation tool integrating LLMs with geospatial mapping capabilities, enabling non-technical users to run resilience planning scenarios comparable to GIS/QGIS workflows.",
-        featured: false,
+        title: "Geospatial AI Disaster Risk Platform",
+        items: [
+          {
+            label: "Spatial AI Modelling",
+            text: "Built a spatial AI agent for geospatial data modelling and visualisation that picks the right API from one prompt across 220+ datasets, cutting climate and disaster risk modelling from months to under 1 hour. Won a KPMG Global ESG Award.",
+            tools: ["QGIS"],
+          },
+          {
+            label: "Summit Showcase",
+            text: "Showcased at a global summit of 5,000+ participants, securing 60+ partnership leads and 3 government MoUs.",
+          },
+        ],
       },
       {
-        short: "Built Digital Knowledge Navigator AI chatbot for the client, improving knowledge retrieval across enterprise document formats.",
-        full: "Built a Digital Knowledge Navigator (DKN) AI chatbot for the client ingesting SharePoint and enterprise documents, improving institutional knowledge retrieval accuracy through metadata tagging architecture and chunking logic across varied document formats.",
-        featured: false,
-      },
-      // Stakeholder & Delivery Management
-      {
-        short: "Engaged 40+ senior stakeholders — outcomes embedded in client's 2025-2028 digital resilience strategy.",
-        full: "Engaged 40+ senior stakeholders across MDB departments, government ministries, and consultancies through solution demos and strategic visioning workshops, securing executive buy-in and embedding platform outcomes into the client's 2025-2028 digital resilience strategy.",
-        featured: true,
-      },
-      {
-        short: "Facilitated Director-level visioning workshops with the client, translating strategy into a multi-year use case roadmap.",
-        full: "Facilitated platform visioning workshops with Director-level leadership at the client organisation, translating high-level strategic objectives into a structured use case roadmap adopted into the client's multi-year digital strategy.",
-        featured: false,
-      },
-      {
-        short: "Established JIRA conventions, bug reporting standards, and vendor communication templates across a multi-vendor delivery structure.",
-        full: "Established bug reporting standards, JIRA ticket conventions, and vendor communication templates across a multi-vendor delivery structure, reducing ambiguity in bug reproduction and acceptance criteria handoffs.",
-        featured: false,
+        title: "Across Platforms",
+        items: [
+          {
+            label: "Prototyping & Architecture",
+            text: "Vibe-coded 10+ prototypes in Claude Code and Codex (4 became consulting engagements), choosing models by quality, latency and cost and designing human-in-the-loop review with LLM observability.",
+            tools: ["Claude Code", "Codex"],
+          },
+          {
+            label: "Stakeholder Engagement",
+            text: "Hosted Design Thinking workshops for senior stakeholders.",
+          },
+        ],
       },
     ],
   },

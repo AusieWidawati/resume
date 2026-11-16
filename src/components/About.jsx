@@ -5,24 +5,18 @@ import {
   useTransform,
   useReducedMotion,
 } from 'framer-motion';
-import { TypeAnimation } from 'react-type-animation';
 
 import { styles } from '../styles';
 import { fadeIn, textVariant } from '../utils/motion';
 import { SectionWrapper } from '../hoc';
 
+/** Scroll-linked fade + slide; respects prefers-reduced-motion */
 const OPEN_TO_ROLES = [
-  'Product management',
-  1800,
-  'Strategy/Management Consulting',
-  1800,
-  'Venture Capital',
-  1800,
-  'Investment-adjacent role',
-  1800,
+  'AI product management',
+  'Strategy/management consulting',
+  'Venture capital',
 ];
 
-/** Scroll-linked fade + slide; respects prefers-reduced-motion */
 const ScrollReveal = ({
   children,
   className = '',
@@ -71,14 +65,13 @@ const About = () => {
     offset: ['start 0.85', 'end 0.2'],
   });
 
-  const lineScaleX = useTransform(columnProgress, [0.08, 0.45], [0, 1]);
   const orbY = useTransform(columnProgress, [0, 1], [0, -18]);
 
   return (
     <>
       <motion.div variants={textVariant()}>
         <p className={styles.sectionSubText}>Introduction</p>
-        <h2 className={styles.sectionHeadText}>About Me.</h2>
+        <h2 className={styles.sectionHeadText}>About me.</h2>
       </motion.div>
 
       {/* Profile photo — layered gradient slabs behind the card */}
@@ -132,35 +125,12 @@ const About = () => {
 
           <ScrollReveal yFrom={36} xFrom={0} className="relative z-[1] max-w-2xl">
             <p className="text-[15px] font-medium leading-[26px] text-[#dfd9ff] sm:text-[16px] sm:leading-[28px]">
-              I'm an{' '}
+              I'm passionate about{' '}
               <span className="bg-gradient-to-r from-white to-[#c4b5fd] bg-clip-text font-semibold text-transparent">
-                AI product manager and strategy consultant
+                AI product management, the startup ecosystem and deal financing
               </span>
-              , and a graduate of the{' '}
-              <span className="font-semibold text-white">INSEAD</span> Master in
-              Management programme. I ship enterprise AI platforms, drive digital
-              transformation, and think commercially — from pricing strategy to deal
-              evaluation.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal yFrom={26} xFrom={-22} className="relative z-[1] md:pl-10">
-            <div
-              className="absolute left-0 top-1 hidden h-[calc(100%-0.25rem)] w-px overflow-hidden bg-white/10 md:block"
-              aria-hidden
-            >
-              {reduceMotion ? (
-                <div className="h-full w-full bg-gradient-to-b from-[#915eff] via-[#e879f9]/80 to-transparent" />
-              ) : (
-                <motion.div
-                  className="h-full w-full origin-top bg-gradient-to-b from-[#915eff] via-[#e879f9] to-transparent"
-                  style={{ scaleY: lineScaleX, transformOrigin: 'top' }}
-                />
-              )}
-            </div>
-            <p className={`${bodySm} md:pl-8`}>
-              I own products end-to-end. From requirements to UAT to stakeholder
-              management, I turn complex business problems into systems that work.
+              . I am also a proud graduate of the{' '}
+              <span className="font-semibold text-white">INSEAD</span> Master in Management.
             </p>
           </ScrollReveal>
 
@@ -174,7 +144,7 @@ const About = () => {
               <span className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.2em] text-[#915eff]">
                 On the side
               </span>
-              Beyond my day job, I run{' '}
+              I run{' '}
               <a
                 href="https://www.linkedin.com/company/friendswhoshare/posts/"
                 target="_blank"
@@ -183,8 +153,8 @@ const About = () => {
               >
                 Friends Who Share
               </a>
-              , an AI and tech startup community connecting builders, thinkers, and
-              investors in Singapore.
+              , an AI and tech community connecting builders and investors in
+              Singapore.
             </p>
           </ScrollReveal>
         </div>
@@ -250,28 +220,21 @@ const About = () => {
                 Currently
               </span>
               <p className="mt-4 max-w-3xl text-[16px] font-medium leading-[28px] text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.35)] sm:text-[18px] sm:leading-[30px] md:text-[20px] md:leading-[34px]">
-                I'm open to opportunities in{' '}
-                {reduceMotion ? (
-                  <span className="inline-block font-extrabold bg-gradient-to-r from-white/90 via-blue-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_22px_rgba(34,211,238,0.4)]">
-                    product management, strategy/management consulting, venture
-                    capital, or investment adjacent roles.
-                  </span>
-                ) : (
-                  <TypeAnimation
-                    sequence={OPEN_TO_ROLES}
-                    wrapper="span"
-                    speed={50}
-                    deletionSpeed={65}
-                    repeat={Infinity}
-                    cursor
-                    style={{
-                      display: 'inline-block',
-                      filter: 'drop-shadow(0 0 18px rgba(34, 211, 238, 0.42))',
-                    }}
-                    className="font-extrabold bg-gradient-to-r from-white/90 via-blue-400 to-cyan-400 bg-clip-text text-transparent"
-                  />
-                )}
+                I'm open to opportunities in:
               </p>
+              <ul className="mt-3 list-none space-y-2 p-0">
+                {OPEN_TO_ROLES.map((role) => (
+                  <li key={role} className="flex items-center gap-3 text-[16px] font-extrabold leading-[26px] sm:text-[18px] md:text-[20px] md:leading-[30px]">
+                    <span
+                      aria-hidden
+                      className="h-2 w-2 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_10px_rgba(103,232,249,0.9)]"
+                    />
+                    <span className="bg-gradient-to-r from-white/90 via-blue-300 to-cyan-300 bg-clip-text text-transparent drop-shadow-[0_1px_12px_rgba(0,0,0,0.25)]">
+                      {role}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </motion.div>
         </div>
