@@ -16,6 +16,7 @@ import {
     tableau,
     stanford,
     kpmg,
+    grab,
   } from "../assets";
   
   export const navLinks = [
@@ -191,7 +192,7 @@ const experiences = [
           {
             label: "Prototyping & Architecture",
             text: "Vibe-coded 10+ prototypes in Claude Code and Codex (4 became consulting engagements), choosing models by quality, latency and cost and designing human-in-the-loop review with LLM observability.",
-            tools: ["Claude Code", "Codex", "Figma"],
+            tools: ["Claude Code", "Codex", "Copilot Studio", "Google AI Studio", "Figma"],
           },
           {
             label: "Stakeholder Engagement",
@@ -231,6 +232,7 @@ const experiences = [
           {
             label: "Requirements & Specs",
             text: "Led stakeholder engagement and business requirements gathering, redesigning core business processes and translating them into technical specifications for enterprise inventory management systems.",
+            tools: ["Microsoft 365"],
           },
           {
             label: "UAT & SIT",
@@ -256,25 +258,44 @@ const experiences = [
   {
     title: "SME Strategy and Planning Intern",
     company_name: "Grab (GrabAds)",
-    icon: backend,
-    iconBg: "#383E56",
+    icon: grab,
+    iconBg: "#00B14F",
     date: "Jan 2023 - May 2023",
-    points: [
+    // Collapsed card view
+    highlights: [
       {
-        short: "Analysed 10,000+ food search queries in SQL to inform a revised keyword pricing model for GrabFood ads.",
-        full: "Identified an opportunity to improve keyword pricing efficiency for GrabFood ads by analysing demand tier patterns across 10,000+ food search queries using SQL, informing a revised pricing classification model.",
+        label: "Data Analysis",
+        text: "Analysed 10,000+ food search queries using SQL and Google Sheets to inform a revised keyword pricing model for GrabFood ads.",
       },
       {
-        short: "Developed keyword bidding strategy projecting +US$41,000/month in ad revenue uplift for GrabAds.",
-        full: "Developed a data-driven keyword bidding strategy that projected +US$41,000 per month in ad revenue uplift, directly supporting GrabAds monetization targets.",
+        label: "Strategy & Monetisation",
+        text: "Developed a keyword bidding strategy projecting +US$41,000 per month in ad revenue uplift.",
       },
       {
-        short: "Synthesised customer behaviour insights across 3 SEA markets for CRM, analytics, and marketing strategy.",
-        full: "Synthesised customer behaviour insights across Indonesia, Malaysia, and Thailand markets, contributing to strategic plans adopted by CRM, analytics, and marketing teams.",
+        label: "Customer Insights",
+        text: "Presented customer behaviour insights from 3 Southeast Asian markets to marketing leaders, shaping Ramadan campaign strategy.",
       },
+    ],
+    // Expanded "full details" view
+    summary:
+      "Strategy and planning intern at GrabAds, turning search and customer data into pricing and marketing recommendations.",
+    groups: [
       {
-        short: "Produced merchant content including a press release published on Kompas, Indonesia's Tier 1 media outlet.",
-        full: "Produced merchant-facing content including a monthly newsletter and a Grab Ramadan press release published on Kompas, a Tier 1 media outlet in Indonesia.",
+        items: [
+          {
+            label: "Data Analysis",
+            text: "Identified a pricing efficiency opportunity for GrabFood ads by analysing demand tier patterns across 10,000+ food search queries using SQL and Google Sheets, informing a revised pricing classification model.",
+            tools: ["SQL", "Google Workspace"],
+          },
+          {
+            label: "Strategy & Monetisation",
+            text: "Developed a data-driven keyword bidding strategy projecting +US$41,000 per month in ad revenue uplift, directly supporting GrabAds monetisation targets.",
+          },
+          {
+            label: "Customer Insights",
+            text: "Presented customer behaviour insights across Indonesia, Malaysia and Thailand to marketing leaders, shaping Ramadan campaign strategy. The same analysis fed a Ramadan press release published on Kompas, a Tier 1 media outlet in Indonesia.",
+          },
+        ],
       },
     ],
   },
