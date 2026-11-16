@@ -30,12 +30,12 @@ const EDUCATION = [
     date: "2023 – 2024",
     accent: "from-[#915EFF] via-[#e879f9] to-[#00cea8]",
     coursework: [
-      "Private Equity & VC",
-      "Finance & Valuation",
-      "Fintech",
-      "Strategy",
       "Accounting",
-      "Agile Project Management",
+      "Private Equity & Venture Capital",
+      "Fintech",
+      "Finance & Valuation",
+      "Economics",
+      "Strategy",
     ],
     highlights: [
       {
@@ -93,9 +93,13 @@ const EDUCATION = [
     date: "2019 – 2023",
     accent: "from-[#00cea8] via-[#915EFF] to-[#e879f9]",
     coursework: [
-      "Machine Learning & Optimisation",
       "Data Science & AI",
-      "Statistics",
+      "Regression Analysis",
+      "Stochastic Analysis",
+      "Financial Mathematics",
+      "Algorithms & Computing",
+      "Geographic Information Systems (GIS)",
+      "Linear Algebra & Calculus",
     ],
     highlights: [
       {
