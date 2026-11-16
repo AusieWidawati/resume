@@ -117,19 +117,19 @@ const experiences = [
     highlights: [
       {
         label: "AI Product & Architecture",
-        text: "Own four enterprise AI platforms from early RAG to agentic AI, choosing models, search and tool-calling designs by quality, latency and cost.",
+        text: "Own four enterprise AI platforms from RAG to agentic AI, configuring the agent orchestrator and 30+ tool integrations, and choosing models, retrieval and tool-calling designs by quality, latency and cost.",
       },
       {
-        label: "Data Preparation",
-        text: "Build the data foundation for AI, from document ingestion and chunking to Databricks SQL validation of 100+ tables.",
+        label: "AI Data Foundation",
+        text: "Build the data layer behind each product, from document ingestion, chunking and metadata tagging to Databricks SQL validation of 100+ tables.",
       },
       {
-        label: "Business Requirements",
-        text: "Turn client needs into user stories, acceptance criteria and LLM system prompt configuration.",
+        label: "Product Roadmap & Delivery",
+        text: "Own the roadmap, sprint planning and delivery, turning client needs into user stories, acceptance criteria and LLM system prompts for 15+ engineers and 4 vendors.",
       },
       {
-        label: "Stakeholders & Monitoring",
-        text: "Align senior leaders, engineers and 4 vendors across 3 countries, then track quality, adoption and user feedback in production.",
+        label: "AI Monitoring & Stakeholders",
+        text: "Track LLM quality, Responsible AI compliance and adoption through LLM observability and user feedback across 2,500+ users, while aligning senior leaders across 3 countries.",
       },
     ],
     // Expanded "full details" view
