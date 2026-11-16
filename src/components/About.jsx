@@ -1,15 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import {
   motion,
   useScroll,
   useTransform,
   useReducedMotion,
-  useAnimationControls,
 } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 
 import { styles } from '../styles';
-import { services } from '../constants';
 import { fadeIn, textVariant } from '../utils/motion';
 import { SectionWrapper } from '../hoc';
 
@@ -58,127 +56,6 @@ const ScrollReveal = ({
       style={{ y, x, opacity }}
     >
       {children}
-    </motion.div>
-  );
-};
-
-const gradientBorderFront =
-  'conic-gradient(from 140deg, #00cea8, #915EFF, #ff3cac, #bf61ff, #00cea8)';
-const gradientBorderBack =
-  'conic-gradient(from 320deg, #ff3cac, #bf61ff, #00cea8, #915EFF, #ff3cac)';
-
-const ServiceCard = ({ index, title, icon, description }) => {
-  const [flipped, setFlipped] = useState(false);
-  const reduceMotion = useReducedMotion();
-  const controls = useAnimationControls();
-  const busy = useRef(false);
-
-  // Two-phase flip: turn edge-on, swap faces, turn back. Only one face is ever
-  // rendered, so it doesn't depend on backface-visibility (unreliable in Safari).
-  const flip = async () => {
-    if (reduceMotion) {
-      setFlipped((v) => !v);
-      return;
-    }
-    if (busy.current) return;
-    busy.current = true;
-    await controls.start({ rotateY: 90, transition: { duration: 0.16, ease: 'easeIn' } });
-    setFlipped((v) => !v);
-    controls.set({ rotateY: -90 });
-    await controls.start({ rotateY: 0, transition: { type: 'spring', stiffness: 260, damping: 22 } });
-    busy.current = false;
-  };
-
-  const face = 'h-full w-full rounded-[20px] p-[1.5px] shadow-card';
-
-  return (
-    <motion.div
-      variants={fadeIn('up', 'spring', 0.15 * index, 0.7)}
-      className="w-full max-w-[340px]"
-      style={{ perspective: 1200 }}
-    >
-      {/* Same flip card at every size: tapping turns it over in place, no layout shift */}
-      <motion.button
-        type="button"
-        onClick={flip}
-        aria-pressed={flipped}
-        aria-label={`${title}. ${flipped ? 'Hide' : 'View'} description.`}
-        whileHover={reduceMotion ? undefined : { y: -4 }}
-        whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-        transition={{ type: 'spring', stiffness: 240, damping: 18 }}
-        className="group relative block h-[220px] w-full cursor-pointer rounded-[20px] text-left outline-none focus-visible:ring-2 focus-visible:ring-[#915EFF]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-primary"
-      >
-        <motion.div className="relative h-full w-full" initial={false} animate={controls}>
-          {!flipped ? (
-          <div className={face} style={{ background: gradientBorderFront }}>
-            <div className="relative flex h-full w-full flex-col items-center justify-center gap-3 overflow-hidden rounded-[18.5px] bg-tertiary px-5 py-5">
-              <span
-                aria-hidden
-                className="pointer-events-none absolute right-3 top-1 select-none text-[64px] font-black leading-none text-white/[0.045]"
-              >
-                {String(index + 1).padStart(2, '0')}
-              </span>
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -left-10 -bottom-12 h-40 w-40 rounded-full bg-[radial-gradient(closest-side,rgba(145,94,255,0.3),transparent)]"
-              />
-              <motion.div
-                className="relative"
-                animate={reduceMotion ? undefined : { y: [-3, 3, -3] }}
-                transition={
-                  reduceMotion
-                    ? undefined
-                    : { duration: 4 + index * 0.4, repeat: Infinity, ease: 'easeInOut' }
-                }
-              >
-                <div
-                  aria-hidden
-                  className="absolute -inset-5 rounded-full bg-[radial-gradient(closest-side,rgba(145,94,255,0.45),rgba(0,206,168,0.15),transparent)]"
-                />
-                <img
-                  src={icon}
-                  alt=""
-                  className="relative h-12 w-12 object-contain drop-shadow-[0_4px_18px_rgba(145,94,255,0.45)]"
-                />
-              </motion.div>
-              <h3 className="relative z-[1] text-center text-[17px] font-bold leading-tight text-white">
-                {title}
-              </h3>
-              <div className="relative z-[1] flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
-                <motion.span
-                  className="h-1.5 w-1.5 rounded-full bg-[#915EFF]"
-                  animate={reduceMotion ? undefined : { scale: [1, 1.6, 1], opacity: [1, 0.5, 1] }}
-                  transition={
-                    reduceMotion ? undefined : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
-                  }
-                />
-                Tap to flip
-              </div>
-            </div>
-          </div>
-
-          ) : (
-          <div className={face} style={{ background: gradientBorderBack }}>
-            <div className="relative flex h-full w-full flex-col gap-2 overflow-y-auto overflow-x-hidden rounded-[18.5px] bg-tertiary px-5 py-4">
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[radial-gradient(closest-side,rgba(255,60,172,0.4),transparent)]"
-              />
-              <div className="relative z-[1] flex w-full items-center justify-between">
-                <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#c4b5fd]">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <span className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/45">
-                  Tap to flip back
-                </span>
-              </div>
-              <h4 className="relative z-[1] text-[15px] font-bold leading-tight text-white">{title}</h4>
-              <p className="relative z-[1] text-[13px] leading-[20px] text-[#dfd9ff]">{description}</p>
-            </div>
-          </div>
-          )}
-        </motion.div>
-      </motion.button>
     </motion.div>
   );
 };
@@ -399,34 +276,6 @@ const About = () => {
           </motion.div>
         </div>
       </ScrollReveal>
-
-      <ScrollReveal
-        yFrom={22}
-        xFrom={0}
-        offset={['start 0.92', 'start 0.45']}
-        className="mt-14 sm:mt-24"
-      >
-        <div className="max-w-2xl">
-          <p className={styles.sectionSubText}>What I'm passionate about</p>
-          <h3 className="mt-1 font-black leading-[1.1] text-white text-[28px] sm:text-[34px] md:text-[40px]">
-            Three domains I{' '}
-            <span className="bg-gradient-to-r from-[#915EFF] via-[#e879f9] to-[#00cea8] bg-clip-text text-transparent">
-              live and breathe
-            </span>
-            .
-          </h3>
-          <p className="mt-3 text-[14px] sm:text-[15px] leading-[24px] text-secondary">
-            Building products, evaluating deals, and connecting people — these
-            threads run through everything I do. Tap a card to see how.
-          </p>
-        </div>
-      </ScrollReveal>
-
-      <div className="mt-8 sm:mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 justify-items-center">
-        {services.map((service, index) => (
-          <ServiceCard key={service.title} index={index} {...service} />
-        ))}
-      </div>
     </>
   )
 }

@@ -12,15 +12,16 @@ const Hero = () => {
         <div className="orb w-[200px] h-[200px] bg-indigo-600 bottom-0 left-[40%]" />
       </div>
 
-      <div className={`max-w-7xl mx-auto ${styles.paddingX} flex flex-row items-start gap-5 w-full`}>
+      <div className={`max-w-7xl mx-auto ${styles.paddingX} flex flex-row items-stretch gap-4 sm:gap-5 w-full`}>
         <motion.div
-          className="hidden sm:flex flex-col justify-center items-center mt-5"
+          // Dot + rail, shown at every size; the rail stretches with the text column
+          className="flex shrink-0 flex-col items-center pt-4 sm:pt-5 pb-2"
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <div className="w-5 h-5 rounded-full bg-[#915EFF] glow-ring" />
-          <div className="w-1 sm:h-80 h-40 violet-gradient" />
+          <div className="h-4 w-4 sm:h-5 sm:w-5 shrink-0 rounded-full bg-[#915EFF] glow-ring" />
+          <div className="w-[3px] sm:w-1 flex-1 rounded-full bg-gradient-to-b from-[#915EFF] via-[#915EFF]/60 to-transparent" />
         </motion.div>
 
         <motion.div
@@ -31,13 +32,16 @@ const Hero = () => {
         >
           <h1 className={`${styles.heroHeadText} text-white`}>
             Hi, I'm{" "}
-            <span className="shimmer-text">Ausie</span>
+            <span className="shimmer-text">Ausie</span>.
           </h1>
 
-          <p className={`${styles.heroSubText} mt-4 sm:mt-3 text-white/70 max-w-[38rem]`}>
-            An AI product builder, consultant, and venture enthusiast.
-            <br className="hidden sm:block" />{" "}
-            I deliver products end-to-end, evaluate what's worth building, and stay close to the startup and tech community.
+          <p className={`${styles.heroSubText} mt-4 sm:mt-3 !text-white/90 max-w-[38rem]`}>
+            AI product manager and venture community builder.
+          </p>
+
+          <p className="mt-3 max-w-[38rem] text-[15px] leading-[25px] text-white/60 sm:text-[17px] sm:leading-[29px] lg:text-[18px] lg:leading-[31px]">
+            I drive enterprise digital transformation and run a Singapore tech community that connects builders and
+            investors.
           </p>
 
           <motion.div
@@ -70,22 +74,22 @@ const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="mt-8 sm:mt-6 grid grid-cols-2 gap-3 sm:flex sm:gap-4"
+            className="mt-8 sm:mt-6 grid grid-cols-1 min-[400px]:grid-cols-2 gap-3 sm:flex sm:gap-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
           >
             <a
               href="#projects"
-              className="flex min-h-[48px] items-center justify-center px-6 py-2.5 rounded-full text-[15px] sm:text-sm font-semibold text-white bg-[#915EFF] hover:bg-[#7c3aed] active:scale-[0.97] transition-all duration-200 shadow-lg shadow-purple-900/40"
+              className="cta-glow flex min-h-[48px] items-center justify-center whitespace-nowrap px-5 sm:px-6 py-2.5 rounded-full text-[15px] sm:text-sm font-semibold text-white bg-[#915EFF] hover:bg-[#7c3aed] active:scale-[0.97] transition-colors duration-200"
             >
-              View Projects
+              See my shipped AI
             </a>
             <a
               href="#contact"
-              className="flex min-h-[48px] items-center justify-center px-6 py-2.5 rounded-full text-[15px] sm:text-sm font-semibold text-white/80 bg-white/5 backdrop-blur-sm hover:text-white hover:bg-white/10 active:scale-[0.97] transition-all duration-200 border border-white/10"
+              className="flex min-h-[48px] items-center justify-center whitespace-nowrap px-5 sm:px-6 py-2.5 rounded-full text-[15px] sm:text-sm font-semibold text-white/80 bg-white/5 backdrop-blur-sm hover:text-white hover:bg-white/10 active:scale-[0.97] transition-all duration-200 border border-white/10"
             >
-              Get in Touch
+              Let's talk!
             </a>
           </motion.div>
         </motion.div>
