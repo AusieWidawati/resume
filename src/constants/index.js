@@ -142,6 +142,7 @@ const experiences = [
           {
             label: "Product Delivery",
             text: "Led requirements, prompts and delivery of a 6-module agentic solution calling 30+ APIs, managing 15+ engineers and 4 vendors across 3 countries. Cut credit screening from weeks to under 1 hour.",
+            tools: ["Postman"],
           },
           {
             label: "Sprints, UAT & Responsible AI",
@@ -185,7 +186,7 @@ const experiences = [
           {
             label: "Prototyping & Architecture",
             text: "Vibe-coded 10+ prototypes in Claude Code and Codex (4 became consulting engagements), choosing models by quality, latency and cost and designing human-in-the-loop review with LLM observability.",
-            tools: ["Claude Code", "Codex"],
+            tools: ["Claude Code", "Codex", "Figma"],
           },
           {
             label: "Stakeholder Engagement",

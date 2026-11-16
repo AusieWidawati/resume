@@ -8,7 +8,7 @@ import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
-import { SiClaude, SiDatabricks, SiDatadog, SiJira, SiOpenai, SiQgis } from "react-icons/si";
+import { SiClaude, SiDatabricks, SiDatadog, SiFigma, SiJira, SiOpenai, SiPostman, SiQgis } from "react-icons/si";
 import { VscAzure, VscAzureDevops } from "react-icons/vsc";
 import { useLockBodyScroll } from "../utils/device";
 
@@ -33,6 +33,8 @@ const TOOL_ICONS = {
   Codex: { icon: SiOpenai, color: "#FFFFFF" },
   // Brand purple (#632CA6) is too dark on the sheet; lightened for contrast
   Datadog: { icon: SiDatadog, color: "#A47BE6" },
+  Postman: { icon: SiPostman, color: "#FF6C37" },
+  Figma: { icon: SiFigma, color: "#F24E1E" },
 };
 
 const ToolChips = ({ tools }) => (
