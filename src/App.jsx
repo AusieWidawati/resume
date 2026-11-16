@@ -18,10 +18,9 @@ const MainContent = () => (
     </div>
     <About />
     <Experience />
+    <Works />
     <Education />
     <Tech />
-    <Divider />
-    <Works />
     <Divider />
     <Investment />
     <Divider />

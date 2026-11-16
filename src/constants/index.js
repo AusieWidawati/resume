@@ -405,6 +405,106 @@ const experiences = [
   
   const projects = [
     {
+      id: "credit-risk-ai",
+      name: "Credit Risk AI — Multi-Module Screening & Document Intelligence",
+      featured: true,
+      description:
+        "An enterprise AI platform that streamlines credit screening by unifying borrower context, market signals, financial spreads, and document-grounded answers — with audit-friendly sourcing and responsible-AI guardrails.",
+      tags: [
+        { name: "RAG", color: "blue-text-gradient" },
+        { name: "Python", color: "green-text-gradient" },
+        { name: "PostgreSQL", color: "pink-text-gradient" },
+      ],
+      image: kpmg,
+      video: null,
+      details: {
+        duration: "2024 – Present",
+        status: "In progress",
+        demoLink: null,
+        tagline: "From fragmented sources to one governed workflow",
+        context:
+          "Delivered in a multi-vendor environment for a global development-finance institution (client and business units anonymised). Focus: regulated credit workflows, not consumer lending.",
+        overview:
+          "Credit teams traditionally juggle many systems — internal loan data, ratings and market data partners, country and sector research, and deal documents. This platform concentrates that work into a modular, conversational experience: structured outputs per analysis stage, explainable field population, and retrieval grounded in approved corpora. Transaction types (e.g. corporate vs. project finance vs. financial institutions) drive different logic and prompts so outputs match how practitioners actually review deals.",
+        keyFeatures: [
+          {
+            title: "Modular analysis workspace",
+            description:
+              "Six coordinated areas — from borrower and peer context to country and industry views, ratings, financial highlights, facility structure, and risk themes — each with clear acceptance criteria.",
+          },
+          {
+            title: "RAG over institutional documents",
+            description:
+              "Semantic search across policy papers, methodologies, and deal files with metadata-aware filtering so answers cite the right slice of the corpus.",
+          },
+          {
+            title: "Pre-retrieval guardrails",
+            description:
+              "Intent classification before tool calls to block out-of-scope requests and reduce misuse of external data APIs.",
+          },
+          {
+            title: "Partner data integrations",
+            description:
+              "Live connectors to ratings and financial-spreading services; spreadsheet-style outputs for covenant and ratio narratives.",
+          },
+          {
+            title: "Responsible AI test harness",
+            description:
+              "Structured cases for safety, scope adherence, and grounding — run in dev and UAT before release candidates.",
+          },
+          {
+            title: "Explainability by design",
+            description:
+              "Key auto-filled fields retain source metadata (document, retrieval path, timestamp) for audit and reviewer trust.",
+          },
+        ],
+        techStack: [
+          "Python",
+          "PostgreSQL",
+          "OpenSearch",
+          "LLM orchestration",
+          "HTML/CSS/JS",
+          "Chart.js",
+          "REST APIs",
+        ],
+        challenges: [
+          {
+            title: "Scope vs. retrieval quality",
+            description:
+              "The model occasionally reframed off-scope questions using retrieved passages as false anchors.",
+            solution:
+              "Tightened system prompts and routing so scope enforcement stays independent of which documents matched.",
+          },
+          {
+            title: "Data quality at scale",
+            description:
+              "Peer groups, industry codes, and FX-normalised financials broke in edge cases.",
+            solution:
+              "Backlog of data-engineering stories with reproducible examples; single sources of truth for FX and taxonomy.",
+          },
+          {
+            title: "Multi-stakeholder delivery",
+            description:
+              "Internal engineering, client data teams, and external data vendors in one release train.",
+            solution:
+              "Shared JIRA conventions, Given/When/Then acceptance criteria, and standard bug templates.",
+          },
+        ],
+        outcome: {
+          description:
+            "Replaced much of the manual tab-hopping in early deal screening with a single governed flow — while preserving the paper trail regulators and credit committees expect.",
+          metrics: [
+            { value: "6", label: "Major analysis modules in one product surface" },
+            { value: "38+", label: "Responsible-AI evaluation cases in the test suite" },
+          ],
+          achievements: [
+            "Functional ownership from requirements through UAT across modules",
+            "Production-minded RAG and prompt design for institutional credit use",
+          ],
+        },
+      },
+    },
+    {
       id: "navigator",
       name: "Navigator — Enterprise Generative AI Knowledge Engine",
       featured: true,
@@ -605,206 +705,6 @@ const experiences = [
           achievements: [
             "Demonstrated across multiple regional readiness forums",
             "Integrated feeds from major weather and geospatial providers",
-          ],
-        },
-      },
-    },
-    {
-      id: "credit-risk-ai",
-      name: "Credit Risk AI — Multi-Module Screening & Document Intelligence",
-      featured: true,
-      description:
-        "An enterprise AI platform that streamlines credit screening by unifying borrower context, market signals, financial spreads, and document-grounded answers — with audit-friendly sourcing and responsible-AI guardrails.",
-      tags: [
-        { name: "RAG", color: "blue-text-gradient" },
-        { name: "Python", color: "green-text-gradient" },
-        { name: "PostgreSQL", color: "pink-text-gradient" },
-      ],
-      image: kpmg,
-      video: null,
-      details: {
-        duration: "2024 – Present",
-        status: "In progress",
-        demoLink: null,
-        tagline: "From fragmented sources to one governed workflow",
-        context:
-          "Delivered in a multi-vendor environment for a global development-finance institution (client and business units anonymised). Focus: regulated credit workflows, not consumer lending.",
-        overview:
-          "Credit teams traditionally juggle many systems — internal loan data, ratings and market data partners, country and sector research, and deal documents. This platform concentrates that work into a modular, conversational experience: structured outputs per analysis stage, explainable field population, and retrieval grounded in approved corpora. Transaction types (e.g. corporate vs. project finance vs. financial institutions) drive different logic and prompts so outputs match how practitioners actually review deals.",
-        keyFeatures: [
-          {
-            title: "Modular analysis workspace",
-            description:
-              "Six coordinated areas — from borrower and peer context to country and industry views, ratings, financial highlights, facility structure, and risk themes — each with clear acceptance criteria.",
-          },
-          {
-            title: "RAG over institutional documents",
-            description:
-              "Semantic search across policy papers, methodologies, and deal files with metadata-aware filtering so answers cite the right slice of the corpus.",
-          },
-          {
-            title: "Pre-retrieval guardrails",
-            description:
-              "Intent classification before tool calls to block out-of-scope requests and reduce misuse of external data APIs.",
-          },
-          {
-            title: "Partner data integrations",
-            description:
-              "Live connectors to ratings and financial-spreading services; spreadsheet-style outputs for covenant and ratio narratives.",
-          },
-          {
-            title: "Responsible AI test harness",
-            description:
-              "Structured cases for safety, scope adherence, and grounding — run in dev and UAT before release candidates.",
-          },
-          {
-            title: "Explainability by design",
-            description:
-              "Key auto-filled fields retain source metadata (document, retrieval path, timestamp) for audit and reviewer trust.",
-          },
-        ],
-        techStack: [
-          "Python",
-          "PostgreSQL",
-          "OpenSearch",
-          "LLM orchestration",
-          "HTML/CSS/JS",
-          "Chart.js",
-          "REST APIs",
-        ],
-        challenges: [
-          {
-            title: "Scope vs. retrieval quality",
-            description:
-              "The model occasionally reframed off-scope questions using retrieved passages as false anchors.",
-            solution:
-              "Tightened system prompts and routing so scope enforcement stays independent of which documents matched.",
-          },
-          {
-            title: "Data quality at scale",
-            description:
-              "Peer groups, industry codes, and FX-normalised financials broke in edge cases.",
-            solution:
-              "Backlog of data-engineering stories with reproducible examples; single sources of truth for FX and taxonomy.",
-          },
-          {
-            title: "Multi-stakeholder delivery",
-            description:
-              "Internal engineering, client data teams, and external data vendors in one release train.",
-            solution:
-              "Shared JIRA conventions, Given/When/Then acceptance criteria, and standard bug templates.",
-          },
-        ],
-        outcome: {
-          description:
-            "Replaced much of the manual tab-hopping in early deal screening with a single governed flow — while preserving the paper trail regulators and credit committees expect.",
-          metrics: [
-            { value: "6", label: "Major analysis modules in one product surface" },
-            { value: "38+", label: "Responsible-AI evaluation cases in the test suite" },
-          ],
-          achievements: [
-            "Functional ownership from requirements through UAT across modules",
-            "Production-minded RAG and prompt design for institutional credit use",
-          ],
-        },
-      },
-    },
-    {
-      id: "exec-assistant",
-      name: "Executive AI Assistant — C-Suite & Board Operating Companion",
-      featured: true,
-      description:
-        "A discreet AI operating companion for C-suite and board members that organises calendars, business trips, and stakeholder context — and generates meeting agendas, talking points, and briefing notes from company-ingested data.",
-      tags: [
-        { name: "Next.js", color: "blue-text-gradient" },
-        { name: "LangChain", color: "green-text-gradient" },
-        { name: "RAG", color: "pink-text-gradient" },
-      ],
-      image: kpmg,
-      video: null,
-      details: {
-        duration: "2025 – Present",
-        status: "In progress",
-        demoLink: null,
-        tagline: "A quiet operating system for leaders who run on judgement, not admin",
-        context:
-          "Designed for senior executives and non-executive directors who juggle multiple boards, portfolios, and travel commitments — without the bandwidth of a chief of staff team.",
-        overview:
-          "The assistant unifies an executive's calendar, business trips, and meeting prep into a single conversational surface. It ingests the company's internal documents, CRM notes, and people data to generate context-rich agendas, talking points, and post-meeting summaries. When a director asks 'who am I meeting tomorrow and what do I need to know?', the assistant assembles a briefing from board packs, prior interactions, and external public profile signals — with sources cited.",
-        keyFeatures: [
-          {
-            title: "Calendar & travel intelligence",
-            description:
-              "Unified view across personal and assistant-managed calendars; flags travel conflicts, time-zone load, and back-to-back meeting risk before the week starts.",
-          },
-          {
-            title: "Auto-generated agendas & talking points",
-            description:
-              "Pulls from prior board minutes, recent updates, and company KPIs to draft meeting agendas and tailored talking points per attendee.",
-          },
-          {
-            title: "Profile search over ingested data",
-            description:
-              "Conversational search across internal CRM, deal flow notes, and board materials — surfaces who the executive has met before, last topics discussed, and current relationship status.",
-          },
-          {
-            title: "Meeting notes & follow-ups",
-            description:
-              "Captures key decisions, action items, and named owners from meetings; routes follow-up reminders into the calendar and a personal action register.",
-          },
-          {
-            title: "Briefing memos on demand",
-            description:
-              "One-tap briefings before each meeting — combining internal context, public company filings, and recent news, with explicit source attribution.",
-          },
-          {
-            title: "Privacy-first deployment",
-            description:
-              "Single-tenant deployment with role-based access, audit logs, and the option to keep ingestion inside the executive's own cloud tenancy.",
-          },
-        ],
-        techStack: [
-          "Next.js",
-          "TypeScript",
-          "LangChain",
-          "OpenAI API",
-          "PostgreSQL",
-          "Pinecone",
-          "Microsoft Graph API",
-        ],
-        challenges: [
-          {
-            title: "Trust at the executive tier",
-            description:
-              "Senior leaders won't tolerate hallucinated names, dates, or commitments in briefings.",
-            solution:
-              "Strict source-grounded responses, mandatory citations on every claim, and a confidence-gated fallback when retrieval is thin.",
-          },
-          {
-            title: "Calendar reasoning beyond scheduling",
-            description:
-              "Off-the-shelf calendar APIs surface events, not meaning — the assistant needs to understand purpose, history, and stakes.",
-            solution:
-              "Layered enrichment that links each event to its CRM record, board agenda, or deal file before producing any narrative output.",
-          },
-          {
-            title: "Sensitive data handling",
-            description:
-              "Board materials, M&A discussions, and personal travel are among the most sensitive corporate data.",
-            solution:
-              "Single-tenant architecture with encryption at rest and in transit, fine-grained access scopes, and a clear data retention policy per workspace.",
-          },
-        ],
-        outcome: {
-          description:
-            "Reduced the cognitive overhead of running multiple board and executive commitments — turning fragmented prep work into a single conversational workflow.",
-          metrics: [
-            { value: "10+", label: "Hours saved per executive each week on prep and follow-up" },
-            { value: "1", label: "Unified surface across calendar, CRM, and board materials" },
-          ],
-          achievements: [
-            "Designed for non-executive directors and C-suite operators",
-            "Privacy-first deployment model suitable for regulated industries",
           ],
         },
       },
