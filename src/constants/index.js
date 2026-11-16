@@ -141,8 +141,13 @@ const experiences = [
         items: [
           {
             label: "Product Delivery",
-            text: "Led requirements, prompts and delivery of a 6-module agentic solution calling 30+ APIs, managing 15+ engineers and 4 vendors across 3 countries. Cut credit screening from weeks to under 1 hour.",
+            text: "Led requirements, prompts and delivery of a 6-module agentic solution with 30+ tool integrations, managing 15+ engineers and 4 vendors across 3 countries.",
             tools: ["Postman"],
+          },
+          {
+            label: "Agentic AI Configuration",
+            text: "Worked with developers to configure the orchestrator layer and the task agents and tools beneath it, building an agentic deal analysis workflow that cut credit screening from weeks to under 1 hour.",
+            tools: ["LangChain", "LangGraph"],
           },
           {
             label: "Sprints, UAT & Responsible AI",
