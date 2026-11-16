@@ -356,18 +356,47 @@ const experiences = [
     icon: stanford,
     iconBg: "#383E56",
     date: "Jan 2020 - Nov 2022",
-    points: [
+    // Collapsed card view
+    highlights: [
       {
-        short: "Co-authored UN-contributed research publication on disaster risk modeling, achieving 81% prediction accuracy.",
-        full: "Initiated and co-authored a UN-contributed research publication developing statistical models to estimate natural disaster risk with 81% accuracy, utilising regression and kriging techniques for spatial data analysis in R and QGIS.",
+        label: "Statistical Modelling",
+        text: "Developed statistical models in R to estimate natural disaster risk with 81% accuracy.",
       },
       {
-        short: "Contributed to multi-hazard disaster risk assessment across 220 scenarios for Pacific resilience planning.",
-        full: "Contributed to a multi-hazard disaster risk assessment spanning 220 hazard scenarios including flooding, tsunami, wind, and seismic risk, supporting vulnerability and exposure analysis for resilience planning.",
+        label: "Spatial Analysis & Visualisation",
+        text: "Simulated floods and storm surge in Delft3D and mapped earthquake risk against population and vulnerability data in QGIS and ArcGIS.",
       },
       {
-        short: "Awarded NTU CY1400 Outstanding Research Award (A grade) for independent research excellence.",
-        full: "Awarded the NTU CY1400 Outstanding Research Award with a grade of A for independent research excellence.",
+        label: "Research Output",
+        text: "Co-authored a UN-contributed paper and won the NTU CY1400 Outstanding Research Award (A grade).",
+      },
+    ],
+    // Expanded "full details" view
+    summary:
+      "Research scholar at Stanford University and NTU, specialising in climate and disaster risk modelling, with a focus on earthquake and flood risk.",
+    groups: [
+      {
+        items: [
+          {
+            label: "Statistical Modelling",
+            text: "Initiated and developed statistical models in R to estimate natural disaster risk with 81% accuracy, using regression and kriging, and benchmarked spatial interpolation methods on 2019 Ridgecrest earthquake data.",
+            tools: ["R"],
+          },
+          {
+            label: "Spatial Data Analysis",
+            text: "Simulated flood and storm surge hazards in Delft3D (Deltares). Built a counterfactual framework estimating probabilistic lives saved by the 2019 Cyclone Fani evacuation.",
+            tools: ["Delft3D"],
+          },
+          {
+            label: "Data Visualisation",
+            text: "Combined earthquake hazard with population and vulnerability data in QGIS and ArcGIS, mapping and validating model outputs to support exposure analysis for resilience planning.",
+            tools: ["QGIS", "ArcGIS"],
+          },
+          {
+            label: "Research Output",
+            text: "Co-authored a research paper contributed to the UN and awarded the NTU CY1400 Outstanding Research Award (A grade) for independent research excellence.",
+          },
+        ],
       },
     ],
   },

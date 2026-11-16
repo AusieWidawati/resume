@@ -22,9 +22,11 @@ import {
   SiOpenai,
   SiPostman,
   SiQgis,
+  SiR,
+  SiArcgis,
 } from "react-icons/si";
 import { VscAzure, VscAzureDevops } from "react-icons/vsc";
-import { TbSql } from "react-icons/tb";
+import { TbRipple, TbSql } from "react-icons/tb";
 import { RiCopilotFill } from "react-icons/ri";
 import { useLockBodyScroll } from "../utils/device";
 
@@ -85,6 +87,10 @@ const TOOL_ICONS = {
   "Microsoft 365": { icon: MicrosoftLogo },
   "Google Workspace": { icon: GoogleLogo },
   Confluence: { icon: SiConfluence, color: "#2684FF" },
+  R: { icon: SiR, color: "#5B9BD5" },
+  ArcGIS: { icon: SiArcgis, color: "#2C7AC3" },
+  // Delft3D (Deltares) has no logo in icon libraries — generic water ripple
+  Delft3D: { icon: TbRipple, color: "#38BDF8" },
   ChatGPT: { icon: SiOpenai, color: "#FFFFFF", ai: true },
 };
 
