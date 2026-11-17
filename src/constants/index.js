@@ -39,10 +39,6 @@ import {
       title: "Investment",
     },
     {
-      id: "community",
-      title: "Community",
-    },
-    {
       id: "research",
       title: "Research",
     },
@@ -414,7 +410,7 @@ const experiences = [
       category: "Agentic AI · Banking",
       featured: true,
       description:
-        "An agentic AI solution that automates credit risk assessment and calculations for investment officers, cutting deal screening from weeks to under an hour with a full audit trail. Financial spreading, credit rating calculations and financial projections moved from Excel into AI.",
+        "Agentic AI that automates credit risk assessment for investment officers. Financial spreading, credit ratings and projections moved from Excel into AI, with a full audit trail.",
       image: kpmg,
       video: `${import.meta.env.BASE_URL}credit-risk-demo.mp4`,
       tools: ["LangGraph", "LangChain", "Python", "SQL", "PostgreSQL", "Databricks", "AWS OpenSearch", "Postman", "Jira", "Confluence"],
@@ -527,7 +523,7 @@ const experiences = [
       category: "Generative AI · RAG",
       featured: true,
       description:
-        "A GenAI knowledge platform that gives bank employees one trusted place to find answers and generate documents, grounded in internal data. Employees report 5x productivity.",
+        "A GenAI platform that gives bank employees one trusted place to find answers and draft documents. Every answer is grounded in and cited to internal data.",
       image: web,
       video: `${import.meta.env.BASE_URL}navigator-demo.mp4`,
       tools: ["Microsoft Foundry", "LangChain", "AWS OpenSearch", "PostgreSQL", "Databricks", "SQL", "Datadog", "Azure DevOps"],
@@ -646,15 +642,14 @@ const experiences = [
       category: "Geospatial AI · Climate",
       featured: true,
       description:
-        "A geospatial AI platform that lets non-experts query climate and disaster risk by voice or text, turning months of modelling into under an hour. Won a KPMG Global ESG Award.",
+        "A geospatial AI platform that lets non-experts query climate and disaster risk by voice or text. It won a KPMG Global ESG Award and led to 3 government MoUs.",
       image: creator,
       video: `${import.meta.env.BASE_URL}climate-full-vid-compressed.mp4`,
       tools: ["LangChain", "GraphQL", "Python", "QGIS", "ArcGIS", "SQL"],
       details: {
         audience: "Climate and policy decision makers, multilateral development bank (APAC)",
         status: "Completed",
-        demoLink:
-          "https://holjnbrlgb237wxe.public.blob.vercel-storage.com/videos/climate-full-vid.mov",
+        demoLink: null,
         tagline: "Climate and disaster intelligence anyone can use, not just GIS specialists.",
         headline: [
           { value: "<1 hr", label: "Risk modelling, down from months" },

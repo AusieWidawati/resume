@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {About, Contact, Experience, Education, Hero, Navbar, Tech, Works, Investment, Community, Research, StarsCanvas} from './components';
+import {About, Contact, Experience, Education, Hero, Navbar, Tech, Works, Investment, Research, StarsCanvas} from './components';
 import ProjectDetail from './components/ProjectDetail';
 import VCDigestPage from './components/VCDigestPage';
 import BootcampPage from './components/BootcampPage';
@@ -23,8 +23,6 @@ const MainContent = () => (
     <Tech />
     <Divider />
     <Investment />
-    <Divider />
-    <Community />
     <Divider />
     <Research />
     <div className="relative z-0">

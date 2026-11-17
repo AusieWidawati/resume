@@ -145,7 +145,7 @@ const ProjectCard = ({
   };
 
   const orderedTools = aiFirst(tools);
-  const toolPreview = orderedTools.slice(0, 5);
+  const toolPreview = orderedTools.slice(0, 4);
   const lead = details?.headline?.[0];
 
   return (
@@ -232,8 +232,8 @@ const ProjectCard = ({
               )}
             </div>
 
-            {/* flex-1 text block pushes metric, tools and button to the same baseline on every card */}
-            <div className="mt-4 sm:mt-5 flex flex-1 flex-col">
+            {/* Fixed title + description heights so the metric box starts at the same line on every card */}
+            <div className="mt-4 sm:mt-5 flex flex-col">
               {category && (
                 <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#c4b5fd]">
                   {category}
@@ -242,7 +242,7 @@ const ProjectCard = ({
               <h3 className="mt-1.5 min-h-[50px] text-[18px] font-bold leading-snug text-white sm:min-h-[55px] sm:text-[20px]">
                 {name}
               </h3>
-              <p className="mt-2 text-[13.5px] leading-[22px] text-secondary sm:text-[14px]">
+              <p className="mt-2 min-h-[110px] lg:min-h-[132px] xl:min-h-[110px] text-[13.5px] leading-[22px] text-secondary sm:text-[14px]">
                 {description}
               </p>
             </div>

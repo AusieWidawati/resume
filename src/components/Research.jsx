@@ -109,8 +109,9 @@ const ResearchCard = ({ item, index, onOpenPoster }) => {
           <span style={{ color: item.accent }}>{item.kicker}</span>
           <span className="h-px flex-1 bg-white/[0.08]" aria-hidden />
         </div>
-        <p className="mt-2 text-[11px] uppercase tracking-wider text-white/40">{item.affiliation}</p>
-        <h3 className="mt-1.5 text-[18px] font-semibold leading-snug text-white sm:text-[20px]">{item.title}</h3>
+        <p className="mt-2 min-h-[33px] text-[11px] uppercase tracking-wider text-white/40 lg:min-h-0">{item.affiliation}</p>
+        {/* Title height reserved (3 lines on narrow cards, 2 on desktop) so collapsed cards line up */}
+        <h3 className="mt-1.5 min-h-[75px] text-[18px] font-semibold leading-snug text-white sm:min-h-[83px] sm:text-[20px] lg:min-h-[55px]">{item.title}</h3>
 
         <p
           className={`mt-2 border-l-2 pl-3 text-[14px] leading-[22px] text-white/60 ${expanded ? "" : "line-clamp-1"}`}
