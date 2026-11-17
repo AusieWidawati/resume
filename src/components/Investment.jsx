@@ -7,122 +7,225 @@ import { investmentProjects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
 
 // ── VC Digest Data ────────────────────────────────────────────────────
+// Weekly update: replace the values below. Every tab, the main-page card
+// and the full page read from these lists; nothing else needs editing.
 
-const DIGEST_DATE = "Week of May 12, 2026";
+const DIGEST_DATE = "Week of November 17, 2026";
 const DIGEST_REGION = "Southeast Asia & Singapore";
+const DIGEST_SOURCES = "DealStreetAsia · KrASIA · e27 · Techloy · TechNode Global · Pulse2";
 
+const DIGEST_SUMMARY =
+  "Singapore keeps consolidating its position as the region's capital magnet, now absorbing over 91% of SEA venture funding, while Vietnam, Thailand, Indonesia and the Philippines produce smaller but strategically meaningful rounds. Three themes stand out this week: deep tech moving from lab to fundable (Staera Semiconductor), consumer wellness gaining traction with ASEAN's middle class (Horizon Group), and debt, strategic and pre-Series A money filling the gap left by scarce growth capital. SEA AI funding hit $4.2B through September 2026, up 121% year on year, but 98% of it sits in just ten rounds.";
+
+// Four tiles: first four also appear on the main-page card preview
 const DIGEST_STATS = [
-  { label: "SG Capital Share", value: "91.5%", sub: "Q1 2026 regional", color: "#915EFF" },
-  { label: "Largest Deal", value: "$2B+", sub: "DayOne Series C", color: "#60a5fa" },
-  { label: "AI Funding (Asia)", value: "$12.5B", sub: "Q1 2026 alone", color: "#34d399" },
-  { label: "Seed Decline", value: "−50%", sub: "H1 2025 vs H2 2024", color: "#f87171" },
+  { label: "SG Capital Share", value: "91%", sub: "of SEA venture funding, 2026", color: "#915EFF" },
+  { label: "SEA AI Funding", value: "+121%", sub: "YoY to Sep 2026 ($4.2B)", color: "#34d399" },
+  { label: "AI in 10 Rounds", value: "98%", sub: "of AI funding, 10 deals", color: "#f87171" },
+  { label: "Largest Financing", value: "$590M+", sub: "Haoyang data centers, TH", color: "#60a5fa" },
 ];
 
+// amountNum (USD M) drives the deal-size chart; 0 = undisclosed (left out of the chart)
 const DIGEST_DEALS = [
   {
-    name: "DayOne Data Centers",
-    amount: "$2B+",
-    stage: "Series C",
-    sector: "Digital Infrastructure",
+    name: "Haoyang Data Center",
+    amount: "$590M+",
+    amountNum: 590,
+    stage: "Infrastructure Financing",
+    type: "debt",
+    sector: "Data Center / AI Infrastructure",
     color: "#60a5fa",
-    lead: "Coatue + INA",
+    investors: "Undisclosed lenders, plus a THB 610M (~$18.8M) facility",
+    country: "TH",
+    insight: "Up to $590M to build data center capacity in Thailand, which is competing with Malaysia's Johor for hyperscaler spend. Microsoft, Google and Amazon have all committed billions to the region.",
+    watch: "AI compute demand now needs sovereign-scale capital. Vietnam is rumoured to be the next major data center market.",
+    tags: ["AI Infrastructure", "Data Centers", "Debt"],
+    announced: "Nov 2026",
+    source: "https://www.techloy.com/week-46-asia-startup-funding-haoyang/",
+    sourceLabel: "Techloy Week 46",
+  },
+  {
+    name: "Roojai",
+    amount: "Up to $35M",
+    amountNum: 35,
+    stage: "Debt Facility",
+    type: "debt",
+    sector: "Insurtech",
+    color: "#ec4899",
+    investors: "Lendable (private credit)",
+    country: "TH",
+    insight: "Thailand's leading digital insurer takes its first institutional debt, structured in Thai baht to remove currency risk. Lendable's asset-backed lending suggests Roojai's motor insurance receivables are clean enough to securitise.",
+    watch: "Debt layered on a recent Series C ($60M, Nov 2025) usually means unit economics are proven and founders want growth without dilution.",
+    tags: ["Insurtech", "Private Credit"],
+    announced: "Nov 17, 2026",
+    source: "https://kr-asia.com/deals-in-brief-vucar-secures-osk-sbi-backing-roojai-lands-new-financing-from-lendable-ten-china-investments-and-more",
+    sourceLabel: "KrASIA",
+  },
+  {
+    name: "Horizon Group / Lunio",
+    amount: "$12.5M",
+    amountNum: 12.5,
+    stage: "Series A",
+    type: "equity",
+    sector: "Consumer Wellness / Sleep Tech",
+    color: "#10b981",
+    investors: "Vertex Ventures SEA & India (sole investor)",
+    country: "TH",
+    insight: "Bangkok-based sleep brand (mattresses, adjustable beds, bedding) selling direct across Thailand, Taiwan, Vietnam and Malaysia, with plans for ergonomic furniture, recovery devices and beauty tech. A solo Vertex cheque signals strong conviction.",
+    watch: "Watch DTC acquisition efficiency, subscription attach rates and expansion into higher-GDP markets like Singapore.",
+    tags: ["Consumer", "DTC", "Wellness"],
+    announced: "Nov 12, 2026",
+    source: "https://kr-asia.com/deals-in-brief-vucar-secures-osk-sbi-backing-roojai-lands-new-financing-from-lendable-ten-china-investments-and-more",
+    sourceLabel: "KrASIA",
+  },
+  {
+    name: "BillEase",
+    amount: "~$7.9M",
+    amountNum: 7.9,
+    stage: "Credit Facility",
+    type: "debt",
+    sector: "Fintech / BNPL",
+    color: "#8b5cf6",
+    investors: "Philippine Bank of Communications (PBCOM)",
+    country: "PH",
+    insight: "A PHP 500M facility from a domestic bank to a BNPL lender for the underbanked. It signals balance-sheet credibility and that BillEase has cleared the central bank's scrutiny to become bankable.",
+    watch: "With ~12% credit card penetration, BNPL growth is structural. A Series B could follow in 12 to 18 months if repayment stays healthy.",
+    tags: ["BNPL", "Consumer Lending"],
+    announced: "Nov 2026",
+    source: "https://www.techloy.com/week-46-asia-startup-funding-haoyang/",
+    sourceLabel: "Techloy Week 46",
+  },
+  {
+    name: "Staera Semiconductor",
+    amount: "$4.6M",
+    amountNum: 4.6,
+    stage: "Pre-Seed",
+    type: "equity",
+    sector: "Deep Tech / Semiconductors",
+    color: "#6366f1",
+    investors: "Openspace Capital (lead), SGInnovate, Black Kite Capital and others",
     country: "SG",
-    insight: "Largest private data-center raise globally; 1GW of customer commitments across SIJORI, Finland, Japan, HK.",
-    tags: ["AI Compute", "Data Centers", "SIJORI"],
-    announced: "Jan 5, 2026",
+    insight: "A SMART (Singapore-MIT) spin-out replacing copper chip interconnects with light, using GaN LEDs and silicon nitride waveguides. Claims under 0.2 pJ per bit against ~5 pJ for rivals, with 98 to 99% yields.",
+    watch: "Product launch targeted for 2030. One customer validation milestone would make it a Series A candidate for hard tech investors.",
+    tags: ["Deep Tech", "Semiconductors", "AI Infrastructure"],
+    announced: "Nov 11, 2026",
+    source: "https://e27.co/copper-is-choking-ai-staera-secures-us4-6m-to-swap-it-for-light-20261111",
+    sourceLabel: "e27",
   },
   {
-    name: "Amity",
-    amount: "$100M",
-    stage: "Series D",
-    sector: "Enterprise AI / GenAI",
-    color: "#915EFF",
-    lead: "EDBI + Asia Partners",
-    country: "TH/SG",
-    insight: "SEA's largest GenAI round to date. 10× revenue growth since 2022. IPO target: 2027.",
-    tags: ["GenAI", "Enterprise SaaS", "IPO-track"],
-    announced: "Mar 25, 2026",
-  },
-  {
-    name: "Silicon Box",
-    amount: "$150M",
-    stage: "Late-Stage",
-    sector: "Semiconductors / Chiplets",
+    name: "Vucar",
+    amount: "Undisclosed",
+    amountNum: 0,
+    stage: "Pre-Series A",
+    type: "equity",
+    sector: "Used Car Marketplace",
     color: "#f59e0b",
-    lead: "EDBI + institutional",
-    country: "SG",
-    insight: "SG's semiconductor unicorn (~$1B val). EDBI entry = national strategic signal. Pre-IPO 2027–28 candidate.",
-    tags: ["Deep Tech", "Semiconductors", "Unicorn"],
-    announced: "~May 4, 2026",
+    investors: "OSK-SBI Venture Partners (lead), Monk's Hill Ventures, Antler",
+    country: "VN",
+    insight: "An inventory-light used-car auction platform for dealers in Vietnam, using AI for vehicle valuation. Follows the Carro, CarDekho and Spinny playbook in a fragmented, largely offline market.",
+    watch: "Carro's planned $3B dual listing would give automotive tech its first public comparable in the region.",
+    tags: ["Automotive", "Marketplace", "Cross-border"],
+    announced: "Nov 17, 2026",
+    source: "https://kr-asia.com/deals-in-brief-vucar-secures-osk-sbi-backing-roojai-lands-new-financing-from-lendable-ten-china-investments-and-more",
+    sourceLabel: "KrASIA",
   },
   {
-    name: "Video Rebirth",
-    amount: "$80M",
-    stage: "Growth",
-    sector: "AI / Generative Video",
-    color: "#34d399",
-    lead: "AMD Ventures + Hyundai",
-    country: "SG",
-    insight: "AMD-backed agentic AI video engine (BACH). Compute infrastructure alignment deal. Competes with Sora, Runway.",
-    tags: ["Agentic AI", "Creative Tech", "Generative Video"],
-    announced: "Mar 18, 2026",
-  },
-  {
-    name: "Sapiens AI",
-    amount: "$20M",
-    stage: "Seed/Early",
-    sector: "AI Foundation Models",
-    color: "#e879f9",
-    lead: "Undisclosed institutional",
-    country: "SG",
-    insight: "Homegrown Asian LLM for Bahasa, Thai, Tagalog, Vietnamese. High-risk, high-upside bet on regional foundational model layer.",
-    tags: ["LLM", "Asian Languages", "Foundation Models"],
-    announced: "Mar 2026",
+    name: "AquaBloom",
+    amount: "Undisclosed",
+    amountNum: 0,
+    stage: "Seed",
+    type: "equity",
+    sector: "Agri Biotech / Climate Tech",
+    color: "#14b8a6",
+    investors: "Spiral Ventures (lead), Potato Impact Partners, Archipelago VC",
+    country: "ID",
+    insight: "Seaweed-based crop biostimulants for smallholder farmers, sourced from Indonesia's seaweed communities: market access for seaweed farmers and better yields for crop farmers.",
+    watch: "Sits where climate, food security and smallholder enablement meet, all priorities for Indonesia and development finance, which opens blended finance options.",
+    tags: ["Climate Tech", "Agri", "Impact"],
+    announced: "Nov 2026",
+    source: "https://kr-asia.com/deals-in-brief-vucar-secures-osk-sbi-backing-roojai-lands-new-financing-from-lendable-ten-china-investments-and-more",
+    sourceLabel: "KrASIA",
   },
 ];
+
+const SECTOR_STATUS = {
+  HOT: { color: "#f87171", bar: 88 },
+  ACTIVE: { color: "#f59e0b", bar: 62 },
+  STABLE: { color: "#60a5fa", bar: 45 },
+  QUIET: { color: "#9ca3af", bar: 18 },
+};
 
 const DIGEST_SECTORS = [
-  { name: "AI / Agentic AI", status: "HOT", statusColor: "#34d399", deals: 13, note: "Agentic systems moving from theory to funded reality. Key: Amity, Video Rebirth, Sapiens AI.", bar: 90 },
-  { name: "Digital Infrastructure", status: "HOT", statusColor: "#34d399", deals: 5, note: "DayOne's $2B anchors a multi-year AI compute buildout across SIJORI corridor.", bar: 85 },
-  { name: "Semiconductors / Deep Tech", status: "HOT", statusColor: "#34d399", deals: 3, note: "SG national strategy: chiplet packaging as AI chip supply chain bottleneck play.", bar: 78 },
-  { name: "Fintech", status: "ACTIVE", statusColor: "#60a5fa", deals: 16, note: "Highest volume sector. SME digital banking, embedded finance, BaaS. SG = 88% of funding.", bar: 65 },
-  { name: "Health Tech", status: "ACTIVE", statusColor: "#60a5fa", deals: 12, note: "Third by deal volume, strongest YoY rebound. Post-COVID infrastructure maturing.", bar: 55 },
-  { name: "Consumer E-commerce", status: "QUIET", statusColor: "#9ca3af", deals: 4, note: "Capital rotating away. Only active where AI/automation provides clear efficiency story.", bar: 25 },
-  { name: "Seed / Early-Stage", status: "RED FLAG", statusColor: "#f87171", deals: 0, note: "Seed funding collapsed 50% H1 2025. Lowest quarterly deal count in 8+ years.", bar: 15 },
+  { name: "Deep Tech & Semiconductors", status: "HOT", note: "Staera's pre-seed is rare for SEA, where VCs avoid long hardware cycles. Singapore's semiconductor initiative, SGInnovate co-investment and AI demand make this a live theme again." },
+  { name: "Consumer Wellness & DTC", status: "HOT", note: "Rising in Thailand and Vietnam. Horizon/Lunio follows the Pomelo and Bluehouse pattern: regional DTC brands building multi-market footprints from Bangkok or Singapore." },
+  { name: "Data Centers & AI Infrastructure", status: "HOT", note: "Haoyang's $590M in Thailand is the signal. Hyperscalers are committing billions across SEA, and software opportunities follow wherever data centers are built." },
+  { name: "Automotive Tech", status: "ACTIVE", note: "Consolidating. Vucar in Vietnam and Carro's Nasdaq + SGX listing plan ($3B valuation) suggest the sector is nearing its exit moment." },
+  { name: "Insurtech", status: "ACTIVE", note: "Roojai layering debt on equity shows a model robust enough for traditional finance. A re-activation signal after a quiet period since 2021–22." },
+  { name: "Agri-Climate Tech (Indonesia)", status: "STABLE", note: "AquaBloom is early, but development priorities and blended finance mean more seaweed, biostimulant and alternative protein deals are likely." },
+  { name: "Enterprise SaaS", status: "QUIET", note: "No notable rounds this week. Ailytics' Series A in late October is the latest data point; still underfunded against US and India benchmarks." },
+  { name: "Edtech & Proptech", status: "QUIET", note: "Largely dormant since mid-2025, with no sign of revival yet." },
 ];
 
-const DIGEST_WATCHLIST = [
-  { company: "Amity", country: "TH/SG", stage: "Series D, pre-IPO", why: "IPO target 2027; SEA's largest GenAI deal", color: "#915EFF" },
-  { company: "Silicon Box", country: "SG", stage: "Late-stage", why: "Semiconductor unicorn; EDBI-backed; IPO candidate 2027–28", color: "#f59e0b" },
-  { company: "Video Rebirth", country: "SG", stage: "Growth", why: "AMD-backed AI video; agentic creative tech play", color: "#34d399" },
-  { company: "Sapiens AI", country: "SG", stage: "Early", why: "Homegrown Asian LLM; high-risk, high-upside", color: "#e879f9" },
-  { company: "DayOne", country: "SG", stage: "Series C", why: "AI infrastructure backbone; 1GW committed compute", color: "#60a5fa" },
-  { company: "Malaysia early-stage", country: "MY", stage: "Seed/Series A", why: "Emerging deal flow uptick; NEXEA pipeline worth tracking", color: "#9ca3af" },
+const DIGEST_INVESTORS = [
+  { name: "Vertex Ventures SEA & India", tag: "Series A/B", note: "Led Horizon Group's $12.5M Series A this week and Hivebotics' $6M Series A in September, writing meaningful cheques across consumer, deep tech and B2B." },
+  { name: "Openspace Capital", tag: "Early Stage", note: "Led Staera's pre-seed while also backing Stryv's Series B: willing to go very early in deep tech and still back consumer scale-ups." },
+  { name: "Tin Men Capital", tag: "B2B AI", note: "Becoming Singapore's go-to Series A investor for B2B AI and industrial tech after leading Ailytics in October." },
+  { name: "OSK-SBI Venture Partners", tag: "Cross-border", note: "A Malaysia-Japan fund leading into Vietnam: cross-border capital flowing beyond the usual Singapore-centric money." },
+  { name: "Lendable", tag: "Private Credit", note: "UK private credit in a Thai insurtech deal shows the line between VC and private credit blurring for growth-stage fintech." },
+  { name: "Orient Corporation / Orico", tag: "Corporate VC", note: "A Japanese consumer credit firm taking a strategic stake in Carro, which usually precedes deeper product integration." },
 ];
 
 const DIGEST_TAKEAWAYS = [
-  { n: "1", title: "Singapore Premium accelerating", body: "91.5% of SEA capital reflects regulatory clarity, talent, and government co-investment infrastructure no other market yet matches." },
-  { n: "2", title: "Government capital is setting terms", body: "EDBI led both Silicon Box and Amity. Singapore isn't passively hosting deals — it's actively shaping which sectors get built." },
-  { n: "3", title: "Agentic AI thesis is investable now", body: "Shift from 'AI as a tool' to 'AI as an agent' is backed by deal flow. Build fluency in enterprise agentic deployments." },
-  { n: "4", title: "Late-stage concentration = valuation risk", body: "Late-stage funding +140%, seed −50%. Current unicorns are well-funded but the pipeline thins. Model exit multiples accordingly." },
-  { n: "5", title: "Governance due diligence is table stakes", body: "eFishery founder sentenced to 9 years. Stricter financial audit requirements across SEA are now table stakes for diligence." },
+  { n: "1", title: "Singapore's 91% share is real, but fragile", body: "Most capital went to Singapore-registered companies with regional or global mandates, and DayOne's $4.5B Series C alone is 62% of H1. Strip out the mega-rounds to see what's happening at the company-building layer." },
+  { n: "2", title: "The growth capital gap is getting worse", body: "Vertex Holdings' CEO called mid-stage funding 'essentially hollow'. Series A median size fell to $8M from $11.6M. A dedicated SEA Series B/C fund would face little competition and strong deal flow." },
+  { n: "3", title: "AI concentration is a risk, not a trophy stat", body: "$4.2B in SEA AI funding, but 10 deals made up 98% and there were only 28 rounds in nine months. For a regional AI portfolio, seed is where the access is." },
+  { n: "4", title: "Japan is the key cross-border investor", body: "Ricoh, Orient/Orico, Asset Management One/Mizuho and OSK-SBI all moved this week. Relationships with Japanese CVCs are an asymmetric advantage." },
+  { n: "5", title: "Semiconductors are back on Singapore's agenda", body: "The EDB/A*STAR semiconductor initiative launched in September 2026, and Staera's round shows it is already pulling in private money. A 10-year thesis with a live early-stage signal." },
 ];
+
+const DIGEST_WATCHLIST = [
+  { company: "Carro", country: "SG", stage: "Pre-IPO", why: "Nasdaq + SGX dual listing at a $3B target: the most consequential SEA exit in years", color: "#f87171" },
+  { company: "Staera Semiconductor", country: "SG", stage: "Pre-Seed", why: "Clear 2030 roadmap; first customer validation would trigger a Series A", color: "#6366f1" },
+  { company: "BillEase", country: "PH", stage: "Growth", why: "Leading Philippine BNPL with fresh debt capacity; Series B likely in 12 to 18 months", color: "#8b5cf6" },
+  { company: "Finfra", country: "ID", stage: "Series A ext.", why: "Lending-as-a-service backed by ADB Ventures, signalling development-impact credibility", color: "#60a5fa" },
+  { company: "AquaBloom and agri-climate", country: "ID", stage: "Seed", why: "Thematic fit plus blended finance means more seaweed and biostimulant deals ahead", color: "#14b8a6" },
+  { company: "SEA AI exits", country: "Region", stage: "Macro", why: "Only one listing and one acquisition in nine months; watch the exit candidates", color: "#9ca3af" },
+  { company: "Data centers TH / ID / VN", country: "Region", stage: "Infrastructure", why: "Where data centers get built, software follows; Vietnam rumoured to be next", color: "#9ca3af" },
+];
+
+const DIGEST_MACRO = [
+  { title: "Singapore's AI push is accelerating", body: "SGD 1B allocated to AI research, and Anthropic opened a Singapore office in October, joining a growing cluster of frontier AI labs." },
+  { title: "No credible local listing venue", body: "Peak XV's Rohit Agarwal calls IPOs 'the only predictable exit path'. Carro's dual listing will test whether SGX can be a real liquidity venue." },
+  { title: "Japan-SEA capital is rising", body: "Japanese institutions are steadily increasing SEA exposure as they look for growth beyond their domestic market: a durable multi-year trend." },
+];
+
+const COUNTRY_NAMES = { SG: "Singapore", TH: "Thailand", VN: "Vietnam", ID: "Indonesia", PH: "Philippines", MY: "Malaysia" };
 
 // ── VC Digest Sub-tabs ────────────────────────────────────────────────
 
 const VC_TABS = ["Market Pulse", "Top Deals", "Sectors", "Watch List"];
 
+const PANEL = { background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", padding: "16px" };
+const PANEL_LABEL = { fontSize: "9px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.3)", marginBottom: "12px" };
+
 const MarketPulseTab = () => {
-  const maxDeal = 2000;
-  const deals = [
-    { name: "DayOne", amount: 2000, color: "#60a5fa" },
-    { name: "Silicon Box", amount: 150, color: "#f59e0b" },
-    { name: "Amity", amount: 100, color: "#915EFF" },
-    { name: "Video Rebirth", amount: 80, color: "#34d399" },
-    { name: "Sapiens AI", amount: 20, color: "#e879f9" },
-  ];
+  // Chart data comes straight from DIGEST_DEALS
+  const sized = DIGEST_DEALS.filter((d) => d.amountNum > 0).sort((a, b) => b.amountNum - a.amountNum);
+  const maxDeal = sized[0]?.amountNum || 1;
+  const undisclosed = DIGEST_DEALS.length - sized.length;
+  const byMarket = Object.entries(
+    DIGEST_DEALS.reduce((acc, d) => ({ ...acc, [d.country]: (acc[d.country] || 0) + 1 }), {})
+  ).sort((a, b) => b[1] - a[1]);
+  const marketColors = ["#915EFF", "#60a5fa", "#34d399", "#f59e0b", "#e879f9", "#9ca3af"];
+
   return (
     <div className="flex flex-col gap-5">
+      {/* This week in one paragraph */}
+      <div style={{ ...PANEL, borderLeft: "3px solid #915EFF" }}>
+        <div style={PANEL_LABEL}>This Week</div>
+        <div className="text-[13px] sm:text-[12px]" style={{ color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>{DIGEST_SUMMARY}</div>
+      </div>
+
       {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {DIGEST_STATS.map((s) => (
@@ -134,58 +237,56 @@ const MarketPulseTab = () => {
         ))}
       </div>
 
-      {/* Capital concentration */}
-      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", padding: "16px" }}>
-        <div style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.3)", marginBottom: "10px" }}>Q1 2026 — Regional Capital Concentration</div>
+      {/* Deals by market */}
+      <div style={PANEL}>
+        <div style={{ ...PANEL_LABEL, marginBottom: "10px" }}>This Week — Deals by Market</div>
         <div className="flex flex-col gap-2.5">
-          {[
-            { label: "Singapore", pct: 91.5, color: "#915EFF" },
-            { label: "Malaysia", pct: 5.5, color: "#60a5fa" },
-            { label: "Indonesia / Others", pct: 3.0, color: "#9ca3af" },
-          ].map((row) => (
-            <div key={row.label} className="flex items-center gap-3">
-              <div className="w-[92px] sm:w-[120px]" style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{row.label}</div>
+          {byMarket.map(([code, count], i) => (
+            <div key={code} className="flex items-center gap-3">
+              <div className="w-[92px] sm:w-[120px]" style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{COUNTRY_NAMES[code] ?? code}</div>
               <div style={{ flex: 1, height: "8px", background: "rgba(255,255,255,0.05)", borderRadius: "99px", overflow: "hidden" }}>
                 <motion.div
-                  style={{ height: "100%", borderRadius: "99px", background: row.color }}
+                  style={{ height: "100%", borderRadius: "99px", background: marketColors[i % marketColors.length] }}
                   initial={{ width: 0 }}
-                  animate={{ width: `${row.pct}%` }}
+                  animate={{ width: `${(count / DIGEST_DEALS.length) * 100}%` }}
                   transition={{ duration: 0.9, ease: "easeOut", delay: 0.15 }}
                 />
               </div>
-              <div style={{ width: "38px", textAlign: "right", fontSize: "11px", fontWeight: 700, color: row.color, flexShrink: 0 }}>{row.pct}%</div>
+              <div style={{ width: "52px", textAlign: "right", fontSize: "11px", fontWeight: 700, color: marketColors[i % marketColors.length], flexShrink: 0 }}>
+                {count} {count === 1 ? "deal" : "deals"}
+              </div>
             </div>
           ))}
         </div>
       </div>
 
       {/* Deal size chart */}
-      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", padding: "16px" }}>
-        <div style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.3)", marginBottom: "12px" }}>Notable Deals — Funding Size (USD M)</div>
+      <div style={PANEL}>
+        <div style={PANEL_LABEL}>Notable Deals — Size (USD M)</div>
         <div className="flex flex-col gap-2">
-          {deals.map((d) => (
+          {sized.map((d) => (
             <div key={d.name} className="flex items-center gap-3">
-              <div className="w-[80px] sm:w-[96px]" style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{d.name}</div>
+              <div className="w-[92px] sm:w-[130px] truncate" style={{ fontSize: "11px", color: "rgba(255,255,255,0.5)", flexShrink: 0 }}>{d.name}</div>
               <div style={{ flex: 1, height: "10px", background: "rgba(255,255,255,0.04)", borderRadius: "99px", overflow: "hidden" }}>
                 <motion.div
-                  style={{ height: "100%", borderRadius: "99px", background: d.color, opacity: 0.85 }}
+                  style={{ height: "100%", borderRadius: "99px", background: d.color, opacity: 0.85, minWidth: "4px" }}
                   initial={{ width: 0 }}
-                  animate={{ width: `${(d.amount / maxDeal) * 100}%` }}
+                  animate={{ width: `${(d.amountNum / maxDeal) * 100}%` }}
                   transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
                 />
               </div>
-              <div style={{ width: "52px", textAlign: "right", fontSize: "11px", fontWeight: 700, color: d.color, flexShrink: 0 }}>${d.amount >= 1000 ? `${d.amount / 1000}B+` : `${d.amount}M`}</div>
+              <div style={{ width: "60px", textAlign: "right", fontSize: "11px", fontWeight: 700, color: d.color, flexShrink: 0 }}>{d.amount.replace(/^Up to /, "")}</div>
             </div>
           ))}
         </div>
-        <div style={{ marginTop: "12px", paddingTop: "10px", borderTop: "1px solid rgba(255,255,255,0.05)", fontSize: "9px", color: "rgba(255,255,255,0.2)" }}>
-          * Bar width scaled to DayOne's $2B anchor deal
+        <div style={{ marginTop: "12px", paddingTop: "10px", borderTop: "1px solid rgba(255,255,255,0.05)", fontSize: "9px", color: "rgba(255,255,255,0.25)" }}>
+          * Bars scaled to the largest deal ({sized[0]?.name}).{undisclosed > 0 && ` ${undisclosed} undisclosed rounds not shown.`}
         </div>
       </div>
 
       {/* Key takeaways */}
-      <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", padding: "16px" }}>
-        <div style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.3)", marginBottom: "12px" }}>Key Analyst Takeaways</div>
+      <div style={PANEL}>
+        <div style={PANEL_LABEL}>Key Analyst Takeaways</div>
         <div className="flex flex-col gap-3">
           {DIGEST_TAKEAWAYS.map((t) => (
             <div key={t.n} className="flex gap-3 items-start">
@@ -212,77 +313,97 @@ const TopDealsTab = () => (
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.2, delay: i * 0.06 }}
-        style={{
-          background: "rgba(255,255,255,0.02)",
-          border: `1px solid rgba(255,255,255,0.06)`,
-          borderLeft: `3px solid ${deal.color}`,
-          borderRadius: "12px",
-          padding: "16px",
-        }}
+        style={{ ...PANEL, borderLeft: `3px solid ${deal.color}` }}
       >
-        <div className="flex items-start justify-between gap-3">
+        {/* Phones: amount stacks above the text; sm+: amount sits on the right */}
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap mb-1">
               <span style={{ fontSize: "15px", fontWeight: 700, color: "#fff" }}>{deal.name}</span>
               <span style={{ fontSize: "9px", padding: "2px 8px", borderRadius: "999px", background: `rgba(${hexToRgb(deal.color)},0.15)`, border: `1px solid ${deal.color}40`, color: deal.color, fontWeight: 600, letterSpacing: "1px", textTransform: "uppercase" }}>{deal.stage}</span>
               <span style={{ fontSize: "9px", padding: "2px 6px", borderRadius: "999px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.4)", letterSpacing: "1px" }}>{deal.country}</span>
             </div>
-            <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginBottom: "8px" }}>{deal.sector} · Lead: {deal.lead} · {deal.announced}</div>
+            <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginBottom: "8px" }}>{deal.sector} · {deal.investors} · {deal.announced}</div>
             <div className="text-[13px] sm:text-[12px]" style={{ color: "rgba(255,255,255,0.55)", lineHeight: 1.65 }}>{deal.insight}</div>
-            <div className="flex flex-wrap gap-1.5 mt-2.5">
+            {deal.watch && (
+              <div className="mt-2 text-[12.5px] sm:text-[11.5px]" style={{ color: "rgba(251,191,36,0.8)", lineHeight: 1.6 }}>
+                <span style={{ fontWeight: 700 }}>Watch: </span>{deal.watch}
+              </div>
+            )}
+            <div className="flex flex-wrap items-center gap-1.5 mt-2.5">
               {deal.tags.map((tag) => (
                 <span key={tag} style={{ fontSize: "9px", padding: "2px 8px", borderRadius: "999px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.3)" }}>{tag}</span>
               ))}
+              {deal.source && (
+                <a href={deal.source} target="_blank" rel="noopener noreferrer" style={{ fontSize: "10px", color: "#60a5fa", marginLeft: "4px", textDecoration: "none" }}>
+                  {deal.sourceLabel} ↗
+                </a>
+              )}
             </div>
           </div>
-          <div style={{ textAlign: "right", flexShrink: 0 }}>
-            <div className="text-[22px] sm:text-[26px]" style={{ fontWeight: 800, color: deal.color, lineHeight: 1 }}>{deal.amount}</div>
-            <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.2)", marginTop: "3px", textTransform: "uppercase", letterSpacing: "1px" }}>raised</div>
+          <div className="order-first flex items-baseline gap-2 sm:order-none sm:block sm:max-w-[40%] sm:shrink-0 sm:text-right">
+            <div className="text-[19px] sm:text-[24px]" style={{ fontWeight: 800, color: deal.color, lineHeight: 1.05 }}>{deal.amount}</div>
+            <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.25)", marginTop: "3px", textTransform: "uppercase", letterSpacing: "1px" }}>
+              {deal.type === "debt" ? "debt / credit" : "equity"}
+            </div>
           </div>
         </div>
       </motion.div>
     ))}
+
+    {/* Investor activity */}
+    <div style={{ ...PANEL, marginTop: "4px" }}>
+      <div style={PANEL_LABEL}>Investor Activity</div>
+      <div className="flex flex-col gap-3">
+        {DIGEST_INVESTORS.map((inv) => (
+          <div key={inv.name} className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-[13px] sm:text-[12px]" style={{ fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{inv.name}</div>
+              <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{inv.note}</div>
+            </div>
+            <span style={{ fontSize: "8.5px", padding: "3px 8px", borderRadius: "999px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.45)", letterSpacing: "1px", textTransform: "uppercase", whiteSpace: "nowrap", flexShrink: 0 }}>{inv.tag}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   </div>
 );
 
 const SectorsTab = () => (
   <div className="flex flex-col gap-3">
-    <div style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.25)", marginBottom: "4px" }}>Sector Heat — Q1 2026 Southeast Asia</div>
-    {DIGEST_SECTORS.map((s, i) => (
-      <motion.div
-        key={s.name}
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.2, delay: i * 0.05 }}
-        style={{
-          background: "rgba(255,255,255,0.02)",
-          border: "1px solid rgba(255,255,255,0.06)",
-          borderRadius: "12px",
-          padding: "14px 16px",
-        }}
-      >
-        <div className="flex items-center gap-3 mb-2 flex-wrap">
-          <span style={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.8)", flex: 1 }}>{s.name}</span>
-          <span style={{ fontSize: "8px", fontWeight: 700, padding: "3px 8px", borderRadius: "999px", background: `${s.statusColor}20`, border: `1px solid ${s.statusColor}50`, color: s.statusColor, letterSpacing: "1.5px", textTransform: "uppercase" }}>{s.status}</span>
-          {s.deals > 0 && <span style={{ fontSize: "9px", color: "rgba(255,255,255,0.3)" }}>{s.deals} deals</span>}
-        </div>
-        <div style={{ height: "5px", background: "rgba(255,255,255,0.05)", borderRadius: "99px", overflow: "hidden", marginBottom: "8px" }}>
-          <motion.div
-            style={{ height: "100%", borderRadius: "99px", background: `linear-gradient(90deg, ${s.statusColor}99, ${s.statusColor})` }}
-            initial={{ width: 0 }}
-            animate={{ width: `${s.bar}%` }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 + i * 0.04 }}
-          />
-        </div>
-        <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{s.note}</div>
-      </motion.div>
-    ))}
+    <div style={{ ...PANEL_LABEL, color: "rgba(255,255,255,0.25)", marginBottom: "4px" }}>Sector Heat — {DIGEST_DATE}</div>
+    {DIGEST_SECTORS.map((s, i) => {
+      const st = SECTOR_STATUS[s.status] ?? SECTOR_STATUS.QUIET;
+      return (
+        <motion.div
+          key={s.name}
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.2, delay: i * 0.05 }}
+          style={{ ...PANEL, padding: "14px 16px" }}
+        >
+          <div className="flex items-center gap-3 mb-2 flex-wrap">
+            <span style={{ fontSize: "13px", fontWeight: 600, color: "rgba(255,255,255,0.8)", flex: 1 }}>{s.name}</span>
+            <span style={{ fontSize: "8px", fontWeight: 700, padding: "3px 8px", borderRadius: "999px", background: `${st.color}20`, border: `1px solid ${st.color}50`, color: st.color, letterSpacing: "1.5px", textTransform: "uppercase" }}>{s.status}</span>
+          </div>
+          <div style={{ height: "5px", background: "rgba(255,255,255,0.05)", borderRadius: "99px", overflow: "hidden", marginBottom: "8px" }}>
+            <motion.div
+              style={{ height: "100%", borderRadius: "99px", background: `linear-gradient(90deg, ${st.color}99, ${st.color})` }}
+              initial={{ width: 0 }}
+              animate={{ width: `${st.bar}%` }}
+              transition={{ duration: 0.7, ease: "easeOut", delay: 0.1 + i * 0.04 }}
+            />
+          </div>
+          <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{s.note}</div>
+        </motion.div>
+      );
+    })}
   </div>
 );
 
 const WatchListTab = () => (
   <div className="flex flex-col gap-3">
-    <div style={{ fontSize: "9px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.25)", marginBottom: "4px" }}>Companies to Watch — Southeast Asia 2026</div>
+    <div style={{ ...PANEL_LABEL, color: "rgba(255,255,255,0.25)", marginBottom: "4px" }}>Companies & Themes to Watch</div>
     <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: "12px", overflow: "hidden" }}>
       {/* Header */}
       <div className="hidden sm:grid grid-cols-[1fr_80px_130px_1fr]" style={{ gap: "12px", padding: "10px 16px", borderBottom: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.02)" }}>
@@ -311,20 +432,18 @@ const WatchListTab = () => (
       ))}
     </div>
 
-    {/* Governance alert */}
-    <div style={{ background: "rgba(248,113,113,0.05)", border: "1px solid rgba(248,113,113,0.2)", borderRadius: "12px", padding: "14px 16px" }}>
-      <div style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}>
-        <div style={{ width: "20px", height: "20px", borderRadius: "50%", background: "rgba(248,113,113,0.15)", border: "1px solid rgba(248,113,113,0.4)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-          <span style={{ fontSize: "10px", fontWeight: 700, color: "#f87171" }}>!</span>
+    {/* Macro context */}
+    <div style={{ ...PANEL_LABEL, color: "rgba(255,255,255,0.25)", margin: "8px 0 0" }}>Macro Context</div>
+    <div className="grid gap-3 md:grid-cols-3">
+      {DIGEST_MACRO.map((m) => (
+        <div key={m.title} style={{ ...PANEL, padding: "14px 16px" }}>
+          <div className="text-[13px] sm:text-[12px]" style={{ fontWeight: 600, color: "rgba(255,255,255,0.8)", marginBottom: "4px" }}>{m.title}</div>
+          <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.6 }}>{m.body}</div>
         </div>
-        <div>
-          <div style={{ fontSize: "11px", fontWeight: 700, color: "#f87171", marginBottom: "4px" }}>Governance Alert — eFishery</div>
-          <div className="text-[12.5px] sm:text-[11px]" style={{ color: "rgba(255,255,255,0.45)", lineHeight: 1.65 }}>
-            Founder Gibran Huzaifah sentenced to <strong style={{ color: "rgba(255,255,255,0.65)" }}>9 years</strong> for inflating financial reports. Once backed by SoftBank & Sequoia, eFishery fabricated revenue. Expect stricter financial audit requirements and more rigorous diligence on SEA growth-stage companies.
-          </div>
-        </div>
-      </div>
+      ))}
     </div>
+
+    <div style={{ fontSize: "9.5px", color: "rgba(255,255,255,0.25)", marginTop: "4px" }}>Sources: {DIGEST_SOURCES}</div>
   </div>
 );
 
@@ -574,15 +693,7 @@ const WorkstreamCard = ({ card, index }) => {
             ))}
           </div>
           <div className="mt-auto flex w-full flex-col gap-2 pt-5">
-            <button
-              type="button"
-              onClick={(e) => { e.stopPropagation(); navigate(card.to); }}
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-white shadow-[0_10px_30px_-12px_rgba(145,94,255,0.7)] transition-shadow duration-300 hover:shadow-[0_14px_36px_-10px_rgba(232,121,249,0.85)] sm:text-[13.5px]"
-              style={{ background: "linear-gradient(120deg, #915EFF 0%, #c026d3 50%, #e879f9 100%)" }}
-            >
-              Open full page
-              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </button>
+            {/* Secondary action first, so "Open full page" sits on the same bottom line on every card */}
             {card.download && (
               <a
                 href={card.download.href}
@@ -594,6 +705,15 @@ const WorkstreamCard = ({ card, index }) => {
                 {card.download.label}
               </a>
             )}
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); navigate(card.to); }}
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-white shadow-[0_10px_30px_-12px_rgba(145,94,255,0.7)] transition-shadow duration-300 hover:shadow-[0_14px_36px_-10px_rgba(232,121,249,0.85)] sm:text-[13.5px]"
+              style={{ background: "linear-gradient(120deg, #915EFF 0%, #c026d3 50%, #e879f9 100%)" }}
+            >
+              Open full page
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </button>
           </div>
         </div>
       </div>

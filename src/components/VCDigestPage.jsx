@@ -39,7 +39,7 @@ const VCDigestPage = () => {
             animate="show"
             className="mt-4 sm:mt-5 max-w-3xl text-[15px] leading-[26px] sm:text-[16px] sm:leading-[30px] text-white/55"
           >
-            Welcome to my weekly intelligence report on venture capital activity, startup funding rounds, and strategic deals across Southeast Asia (with emphasis on Singapore). Curated by me (Ausie) & updated on a weekly basis, credits to Claude Code Cowork. Sources include Moody's Analytics, TechAsia, DealStreetAsia, e27, Crunchbase, Pitchbook, AngelList, LinkedIn and official press releases. Enjoy!
+            Welcome to my weekly intelligence report on venture capital activity, startup funding rounds, and strategic deals across Southeast Asia (with emphasis on Singapore). Curated by me (Ausie) & updated on a weekly basis, credits to Claude Code Cowork. Sources include DealStreetAsia, KrASIA, e27, Techloy, TechNode Global, Pulse2 and official press releases. Enjoy!
           </motion.p>
 
           <motion.div
