@@ -591,7 +591,8 @@ const experiences = [
             text: "Every answer is grounded in and cited to internal documents, reducing the risk of misinformation.",
           },
         ],
-        roleTitle: "Backend Product Manager",
+        roleTitle: "Backend Product Manager & Business Analyst",
+        experienceGroup: { company: "KPMG Digital Village", group: "Enterprise AI Knowledge Navigator (RAG)" },
         role: [
           {
             label: "Ingestion Pipeline",
@@ -710,7 +711,8 @@ const experiences = [
             text: "Won a KPMG Global ESG Award, and the summit showcase secured 60+ partnership leads and 3 government MoUs.",
           },
         ],
-        roleTitle: "Product Data Manager",
+        roleTitle: "Product Data Manager & Lead Business Analyst",
+        experienceGroup: { company: "KPMG Digital Village", group: "Geospatial AI Disaster Risk Platform" },
         role: [
           {
             label: "Spatial Data Analysis",

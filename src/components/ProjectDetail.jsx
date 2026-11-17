@@ -233,7 +233,8 @@ const ProjectDetail = () => {
         .find((e) => e.company_name === details.experienceGroup.company)
         ?.groups?.find((g) => g.title === details.experienceGroup.group)
     : null;
-  const roleItems = linkedGroup?.items ?? details?.role ?? [];
+  // Project-specific bullets win; otherwise mirror the linked Work Experience group
+  const roleItems = details?.role ?? linkedGroup?.items ?? [];
 
   const openInExperience = () =>
     navigate("/", { state: { openExperience: details.experienceGroup } });
