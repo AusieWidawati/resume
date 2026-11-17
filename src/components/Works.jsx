@@ -9,6 +9,7 @@ import { SectionWrapper } from "../hoc";
 import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
 import { useIsTouch, useLockBodyScroll } from "../utils/device";
+import ToolChips, { aiFirst } from "./ToolChips";
 
 // ── Video modal ──────────────────────────────────────────────────────
 
@@ -97,7 +98,8 @@ const ProjectCard = ({
   index,
   name,
   description,
-  tags,
+  category,
+  tools = [],
   image,
   video,
   featured,
@@ -142,14 +144,15 @@ const ProjectCard = ({
     }
   };
 
-  const stackPreview =
-    details?.techStack?.slice(0, 5) || tags.map((t) => t.name);
+  const orderedTools = aiFirst(tools);
+  const toolPreview = orderedTools.slice(0, 5);
+  const lead = details?.headline?.[0];
 
   return (
     <>
       <motion.div
         variants={fadeIn("up", "spring", index * 0.12, 0.75)}
-        className="h-full w-[86%] max-w-[380px] shrink-0 sm:w-full sm:max-w-none"
+        className="flex w-[86%] max-w-[380px] shrink-0 sm:w-full sm:max-w-none"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         animate={{
@@ -162,7 +165,7 @@ const ProjectCard = ({
         style={{ transformOrigin: "center" }}
       >
         <div
-          className="h-full rounded-[22px] p-[1px] transition-shadow duration-300"
+          className="w-full rounded-[22px] p-[1px] transition-shadow duration-300"
           style={{
             background:
               "linear-gradient(135deg, rgba(145,94,255,0.55), rgba(232,121,249,0.35), rgba(0,206,168,0.35), rgba(145,94,255,0.45))",
@@ -229,30 +232,37 @@ const ProjectCard = ({
               )}
             </div>
 
-            <div className="mt-4 sm:mt-5 flex min-h-[104px] sm:min-h-[112px] flex-col">
-              <h3 className="text-[18px] font-bold leading-snug text-white sm:text-[20px] line-clamp-2">
+            {/* flex-1 text block pushes metric, tools and button to the same baseline on every card */}
+            <div className="mt-4 sm:mt-5 flex flex-1 flex-col">
+              {category && (
+                <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#c4b5fd]">
+                  {category}
+                </p>
+              )}
+              <h3 className="mt-1.5 min-h-[50px] text-[18px] font-bold leading-snug text-white sm:min-h-[55px] sm:text-[20px]">
                 {name}
               </h3>
-              <p className="mt-2 line-clamp-3 text-[13.5px] leading-[22px] text-secondary sm:text-[14px]">
+              <p className="mt-2 text-[13.5px] leading-[22px] text-secondary sm:text-[14px]">
                 {description}
               </p>
             </div>
 
-            <div className="mt-4 flex min-h-[56px] flex-wrap content-start gap-1.5">
-              {stackPreview.map((tech) => (
-                <span
-                  key={`${name}-${tech}`}
-                  className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-[#dfd9ff]/90"
-                >
-                  {tech}
+            {lead && (
+              <div className="mt-4 flex min-h-[60px] items-center gap-2.5 rounded-xl border border-[#915EFF]/25 bg-[#915EFF]/[0.08] px-3.5 py-2.5">
+                <span className="shrink-0 text-[20px] font-black leading-none text-transparent bg-clip-text bg-gradient-to-r from-[#c4b5fd] to-[#e879f9]">
+                  {lead.value}
                 </span>
-              ))}
-              {details?.techStack?.length > 5 && (
-                <span className="rounded-md border border-white/10 px-2 py-0.5 text-[11px] text-white/45">
-                  +{details.techStack.length - 5}
+                <span className="text-[12.5px] font-medium leading-snug text-white/75">{lead.label}</span>
+              </div>
+            )}
+
+            <ToolChips tools={toolPreview} className="mt-4 mb-1 min-h-[50px] content-start" size="sm">
+              {orderedTools.length > toolPreview.length && (
+                <span className="rounded-md border border-white/10 px-1.5 py-0.5 text-[11px] text-white/45">
+                  +{orderedTools.length - toolPreview.length}
                 </span>
               )}
-            </div>
+            </ToolChips>
 
             <div className="mt-auto pt-4 border-t border-white/[0.06]">
               <button
@@ -337,10 +347,10 @@ const Works = () => {
           variants={fadeIn("", "", 0.1, 1)}
           className="mt-3 max-w-3xl text-[15px] leading-[26px] text-secondary sm:text-[17px] sm:leading-[30px]"
         >
-          Enterprise AI builds spanning knowledge engines, climate intelligence,
-          regulated credit screening, and executive operating companions. Each
-          card opens a full breakdown of the architecture, challenges, and
-          outcomes.
+          Enterprise AI products I have led as an AI product manager, from
+          agentic credit risk to GenAI knowledge and geospatial climate
+          intelligence. Each card opens the business challenge, solution,
+          value and my role.
         </motion.p>
       </div>
 
@@ -348,7 +358,7 @@ const Works = () => {
       <div
         ref={railRef}
         onScroll={onRailScroll}
-        className="snap-row -mx-5 mt-8 flex items-stretch gap-4 overflow-x-auto scroll-px-5 px-5 pb-2 sm:mx-0 sm:mt-14 sm:grid sm:grid-cols-2 sm:gap-7 sm:overflow-visible sm:px-0 sm:pb-0 xl:grid-cols-4 xl:gap-6 2xl:gap-7 lg:mt-16"
+        className="snap-row -mx-5 mt-8 flex items-stretch gap-4 overflow-x-auto scroll-px-5 px-5 pb-2 sm:mx-0 sm:mt-14 sm:grid sm:auto-rows-fr sm:grid-cols-2 sm:gap-7 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3 lg:gap-6 xl:gap-7 lg:mt-16"
       >
         {projects.map((project, index) => (
           <ProjectCard

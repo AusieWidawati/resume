@@ -403,308 +403,354 @@ const experiences = [
   },
 ];
   
+  /**
+   * Project cards + detail pages. Business first: challenge, solution, value,
+   * then my role, then product and architecture, then product decisions.
+   */
   const projects = [
     {
       id: "credit-risk-ai",
-      name: "Credit Risk AI — Multi-Module Screening & Document Intelligence",
+      name: "Credit Risk Assessment AI",
+      category: "Agentic AI · Banking",
       featured: true,
       description:
-        "An enterprise AI platform that streamlines credit screening by unifying borrower context, market signals, financial spreads, and document-grounded answers — with audit-friendly sourcing and responsible-AI guardrails.",
-      tags: [
-        { name: "RAG", color: "blue-text-gradient" },
-        { name: "Python", color: "green-text-gradient" },
-        { name: "PostgreSQL", color: "pink-text-gradient" },
-      ],
+        "An agentic AI solution that automates credit risk assessment and calculations for investment officers, cutting deal screening from weeks to under an hour with a full audit trail. Financial spreading, credit rating calculations and financial projections moved from Excel into AI.",
       image: kpmg,
       video: null,
+      tools: ["LangGraph", "LangChain", "Python", "SQL", "PostgreSQL", "Databricks", "AWS OpenSearch", "Postman", "Jira", "Confluence"],
       details: {
-        duration: "2024 – Present",
-        status: "In progress",
+        audience: "Investment officers, multilateral development bank (APAC)",
+        status: ["Live in production since mid 2026", "In progress"],
         demoLink: null,
-        tagline: "From fragmented sources to one governed workflow",
-        context:
-          "Delivered in a multi-vendor environment for a global development-finance institution (client and business units anonymised). Focus: regulated credit workflows, not consumer lending.",
-        overview:
-          "Credit teams traditionally juggle many systems — internal loan data, ratings and market data partners, country and sector research, and deal documents. This platform concentrates that work into a modular, conversational experience: structured outputs per analysis stage, explainable field population, and retrieval grounded in approved corpora. Transaction types (e.g. corporate vs. project finance vs. financial institutions) drive different logic and prompts so outputs match how practitioners actually review deals.",
-        keyFeatures: [
+        tagline: "Involving risk officers in deal analysis from day one.",
+        headline: [
+          { value: "<1 hr", label: "Deal screening, down from weeks" },
+          { value: "6", label: "Modules across 5 transaction types" },
+          { value: "30+", label: "API endpoints integrated with a financial analytics provider" },
+        ],
+        challenge: [
           {
-            title: "Modular analysis workspace",
-            description:
-              "Six coordinated areas — from borrower and peer context to country and industry views, ratings, financial highlights, facility structure, and risk themes — each with clear acceptance criteria.",
+            title: "Risk came in too late",
+            text: "Banking and risk officers worked in silos. Risk officers only joined after a banking officer had finished analysing an entity, even when its risk was too high to pursue. Deals were shaped before anyone checked them against the bank's risk appetite.",
           },
           {
-            title: "RAG over institutional documents",
-            description:
-              "Semantic search across policy papers, methodologies, and deal files with metadata-aware filtering so answers cite the right slice of the corpus.",
-          },
-          {
-            title: "Pre-retrieval guardrails",
-            description:
-              "Intent classification before tool calls to block out-of-scope requests and reduce misuse of external data APIs.",
-          },
-          {
-            title: "Partner data integrations",
-            description:
-              "Live connectors to ratings and financial-spreading services; spreadsheet-style outputs for covenant and ratio narratives.",
-          },
-          {
-            title: "Responsible AI test harness",
-            description:
-              "Structured cases for safety, scope adherence, and grounding — run in dev and UAT before release candidates.",
-          },
-          {
-            title: "Explainability by design",
-            description:
-              "Key auto-filled fields retain source metadata (document, retrieval path, timestamp) for audit and reviewer trust.",
+            title: "Manual work crowded out judgement",
+            text: "Officers pulled financial data from third-party providers, then did financial spreading, credit rating calculations, loan structuring and pricing in Excel themselves. None of it was automated.",
           },
         ],
-        techStack: [
-          "Python",
-          "PostgreSQL",
-          "OpenSearch",
-          "LLM orchestration",
-          "HTML/CSS/JS",
-          "Chart.js",
-          "REST APIs",
-        ],
-        challenges: [
-          {
-            title: "Scope vs. retrieval quality",
-            description:
-              "The model occasionally reframed off-scope questions using retrieved passages as false anchors.",
-            solution:
-              "Tightened system prompts and routing so scope enforcement stays independent of which documents matched.",
-          },
-          {
-            title: "Data quality at scale",
-            description:
-              "Peer groups, industry codes, and FX-normalised financials broke in edge cases.",
-            solution:
-              "Backlog of data-engineering stories with reproducible examples; single sources of truth for FX and taxonomy.",
-          },
-          {
-            title: "Multi-stakeholder delivery",
-            description:
-              "Internal engineering, client data teams, and external data vendors in one release train.",
-            solution:
-              "Shared JIRA conventions, Given/When/Then acceptance criteria, and standard bug templates.",
-          },
-        ],
-        outcome: {
-          description:
-            "Replaced much of the manual tab-hopping in early deal screening with a single governed flow — while preserving the paper trail regulators and credit committees expect.",
-          metrics: [
-            { value: "6", label: "Major analysis modules in one product surface" },
-            { value: "38+", label: "Responsible-AI evaluation cases in the test suite" },
+        solution: {
+          summary:
+            "A multi-agent AI orchestrator that brings the banking officer and the risk officer into one governed workflow. An officer names a borrower, country, industry and transaction type, and the platform fills a full credit screening from internal data, documents and a financial analytics provider. Officers stay in control and make every final decision.",
+          modulesLabel: "The 6 modules",
+          modules: [
+            {
+              title: "Context Retrieval",
+              text: "Gathers the data and context for the deal.",
+              items: [
+                { title: "Borrower Profile & Peers", text: "Borrower details and peer tiering from past deals." },
+                { title: "Country & Industry Insights", text: "Country risk, outlook and sector growth." },
+              ],
+            },
+            {
+              title: "Decision Support",
+              text: "Runs the calculations officers used to do in Excel.",
+              items: [
+                { title: "Credit Ratings", text: "Rating engine output, country ceiling and probability of default." },
+                { title: "Financial Highlights", text: "Financial spreading, ratios and USD conversion." },
+                { title: "Loan Structuring", text: "Covenants, tenor, pricing and exposure limits." },
+              ],
+            },
+            {
+              title: "Safeguard",
+              text: "Keeps every output auditable.",
+              items: [
+                { title: "Risks & Mitigants", text: "Key risks, mitigants and waivers from policy documents." },
+              ],
+            },
           ],
-          achievements: [
-            "Functional ownership from requirements through UAT across modules",
-            "Production-minded RAG and prompt design for institutional credit use",
+        },
+        value: [
+          {
+            title: "Faster time to decision",
+            text: "Deal screening went from weeks to under an hour, so risk input arrives while the deal can still change.",
+          },
+          {
+            title: "Excel work automated",
+            text: "Financial spreading, credit rating calculations and financial projections now run in the platform instead of spreadsheets.",
+          },
+          {
+            title: "Auditable by design",
+            text: "Every auto-filled field has an Explain view showing its document, page, query and timestamp, which is what regulators and credit committees need.",
+          },
+          {
+            title: "One source of truth",
+            text: "Banking and risk officers work from the same trusted data instead of separate spreadsheets and subscriptions.",
+          },
+        ],
+        roleTitle: "Lead AI Product Manager & Data Workstream Lead",
+        // My Role mirrors this group in the KPMG Work Experience entry, with a link to it
+        experienceGroup: { company: "KPMG Digital Village", group: "Agentic AI Credit Risk Solution" },
+        architecture: {
+          flow: ["Officer starts a deal", "Query guard", "Supervisor agent", "Internal data, documents & financial APIs", "Module outputs with Explain"],
+          features: [
+            {
+              title: "Financial analytics integration",
+              description:
+                "30+ API endpoints for entity profiles, ratings, probability of default, peers and sector outlooks.",
+            },
+            {
+              title: "Automated financial spreading",
+              description: "Financial statements turned into standard accounts and ratios for the rating engine.",
+            },
+            {
+              title: "RAG over institutional documents",
+              description:
+                "Semantic search across policies, methodologies and deal files, with metadata filters so answers cite the right documents.",
+            },
+            {
+              title: "Query guard",
+              description:
+                "Out-of-scope questions are blocked before any tool or data API is called.",
+            },
+            {
+              title: "Explainability by design",
+              description:
+                "Auto-filled fields keep their source document, page, query and timestamp for audit.",
+            },
           ],
         },
       },
     },
     {
       id: "navigator",
-      name: "Navigator — Enterprise Generative AI Knowledge Engine",
+      name: "GenAI RAG Knowledge Platform",
+      category: "Generative AI · RAG",
       featured: true,
       description:
-        "A secure, enterprise-grade AI knowledge platform built on Retrieval-Augmented Generation (RAG) and agentic reasoning to deliver accurate, contextual answers from internal data sources.",
-      tags: [
-        { name: "Next.js", color: "blue-text-gradient" },
-        { name: "TypeScript", color: "green-text-gradient" },
-        { name: "LangChain", color: "pink-text-gradient" },
-      ],
+        "A GenAI knowledge platform that gives bank employees one trusted place to find answers and generate documents, grounded in internal data. Employees report 5x productivity.",
       image: web,
       video: `${import.meta.env.BASE_URL}navigator-demo-compressed.mp4`,
+      tools: ["Microsoft Foundry", "LangChain", "AWS OpenSearch", "PostgreSQL", "Databricks", "SQL", "Datadog", "Azure DevOps"],
       details: {
-        duration: "Jan 2024 – Sep 2024",
-        status: "Completed",
+        audience: "All employees, multilateral development bank (APAC)",
+        status: "In production",
         demoLink:
           "https://holjnbrlgb237wxe.public.blob.vercel-storage.com/videos/navigator-demo.mov",
-        tagline: "Secure knowledge discovery for enterprises",
-        context:
-          "Built within a Big Four AI innovation programme for financial and consulting clients, with emphasis on compliance, data privacy, and cloud-hosted deployment.",
-        overview:
-          "Navigator is a confidential generative AI engine for enterprises, designed to give teams instant access to organizational intelligence through natural language. It combines RAG, vector search, and agentic task execution so responses stay grounded in verified internal data.",
-        keyFeatures: [
+        tagline: "One trusted place to find, use and act on enterprise knowledge.",
+        headline: [
+          { value: "5x", label: "Productivity gain reported by employees" },
+          { value: "2,500+", label: "Users across 52,000+ queries" },
+          { value: "80%", label: "Faster retrieval time" },
+        ],
+        challenge: [
           {
-            title: "Intelligent RAG pipelines",
-            description:
-              "Multi-layer retrieval using vector stores, metadata filters, and contextual embeddings for accurate, domain-specific answers within governance boundaries.",
+            title: "Employees searched outside",
+            text: "SharePoint search was so poor that staff turned to Google, even for the organisation's own reports.",
           },
           {
-            title: "Agentic task execution",
-            description:
-              "Action-oriented agents that summarize reports, draft terms of reference, and run contextual follow-ups directly from chat.",
+            title: "No knowledge governance",
+            text: "Without a standard taxonomy or metadata, knowledge was hard to find and harder to trust.",
           },
           {
-            title: "Enterprise data connectors",
-            description:
-              "Ingestion pipelines for collaboration platforms, PDFs, and databases — with updates and version-aware document tracking.",
-          },
-          {
-            title: "Governed hybrid search",
-            description:
-              "Private-first retrieval with optional expansion through approved external APIs, aligned to enterprise data policies.",
-          },
-          {
-            title: "Enterprise SSO",
-            description:
-              "Cloud directory authentication with role-based access and multi-tenant support.",
+            title: "Data silos",
+            text: "Information sat across departments and repositories, slowing collaboration and evidence-based decisions.",
           },
         ],
-        techStack: [
-          "Next.js",
-          "TypeScript",
-          "LangChain",
-          "Azure AI Services",
-          "PostgreSQL",
-          "Redis",
-          "OpenAI API",
-        ],
-        challenges: [
-          {
-            title: "Data governance & privacy",
-            description:
-              "Strict privacy across document stores and collaboration sources while meeting enterprise security bar.",
-            solution:
-              "Private networking, encryption in transit and at rest, least-privilege access, and auditable retrieval paths.",
-          },
-          {
-            title: "Vector retrieval at scale",
-            description:
-              "Balancing precision and latency with large embedding corpora and frequent queries.",
-            solution:
-              "Hybrid retrieval, semantic chunking, and caching for hot queries; tuned relevance for domain corpora.",
-          },
-          {
-            title: "Multi-tenant scalability",
-            description:
-              "Isolating data and configuration per client without sacrificing performance.",
-            solution:
-              "Tenant-aware partitioning, isolated indexes, and elastic compute for peak loads.",
-          },
-          {
-            title: "Keeping knowledge current",
-            description:
-              "Documents change often; stale retrieval hurts trust.",
-            solution:
-              "Event-driven re-indexing, incremental updates, and validation hooks on high-churn content.",
-          },
-        ],
-        outcome: {
-          description:
-            "Navigator improved how teams find and act on internal knowledge — cutting time spent hunting documents and drafting first-pass summaries across several engagements.",
-          metrics: [
-            { value: "~40%", label: "Faster turnaround on research & reporting tasks (client teams)" },
-            { value: "0", label: "Security incidents post go-live (pilots)" },
+        solution: {
+          summary:
+            "A secure, multi-agent AI layer over legacy systems. Employees ask questions in plain language and get answers grounded in approved internal documents, with sources. They can then summarise, compare or draft documents in the same conversation. It is set to replace the intranet.",
+          modules: [
+            {
+              title: "Knowledge Discovery",
+              text: "Natural-language search across internal documents, with cited answers.",
+            },
+            {
+              title: "Task Execution",
+              text: "Summarise, compare and polish documents directly from chat.",
+            },
+            {
+              title: "Document Generation",
+              text: "Terms of Reference drafted from compliant templates, with automatic tagging.",
+            },
           ],
-          achievements: [
-            "Featured in an internal AI showcase (Singapore)",
-            "Piloted with finance and consulting stakeholders",
+        },
+        value: [
+          {
+            title: "Productivity",
+            text: "Employees reported 5x productivity gains on research and reporting tasks.",
+          },
+          {
+            title: "Adoption",
+            text: "Available to 5,000 employees, with 2,500+ users and 52,000+ queries across 2 releases.",
+          },
+          {
+            title: "Faster documents",
+            text: "Drafting a Terms of Reference fell from 4 to 6 hours to under 5 minutes, saving 2,000+ hours a year.",
+          },
+          {
+            title: "Trusted answers",
+            text: "Every answer is grounded in and cited to internal documents, reducing the risk of misinformation.",
+          },
+        ],
+        roleTitle: "Backend Product Manager",
+        role: [
+          {
+            label: "Ingestion Pipeline",
+            text: "Owned backend requirements for ingesting SharePoint, website content, board papers and manuals into an AWS OpenSearch vector database, working with data engineers.",
+          },
+          {
+            label: "Metadata Framework",
+            text: "Designed metadata tagging by document type, project, country, circulation date and source, with extraction logic tailored to each document structure.",
+          },
+          {
+            label: "Retrieval Quality",
+            text: "Defined chunking and metadata filtering, and tested keyword, semantic and hybrid search, cutting retrieval time by 80%.",
+          },
+          {
+            label: "Releases",
+            text: "Led 2 releases to 2,500+ users, prioritising fixes from Datadog LLM observability and user feedback.",
+          },
+        ],
+        architecture: {
+          flow: ["SharePoint, web & libraries", "Chunking & metadata extraction", "Vector index", "Metadata filter + hybrid search", "Cited answer or task"],
+          features: [
+            {
+              title: "Metadata-aware retrieval",
+              description:
+                "Filters by document type, country, project and date before ranking, so answers come from the right documents.",
+            },
+            {
+              title: "Hybrid search",
+              description: "Keyword and semantic search combined, catching exact names and codes as well as concepts.",
+            },
+            {
+              title: "Document tasks",
+              description: "Summarise, compare, polish and draft Terms of Reference without leaving the chat.",
+            },
+            {
+              title: "Shareable conversations",
+              description: "Conversations can be shared so teams build on each other's research.",
+            },
+            {
+              title: "Enterprise security",
+              description:
+                "Single sign-on with role-based access, private networking, and encryption in transit and at rest.",
+            },
           ],
         },
       },
     },
     {
       id: "climate-ai",
-      name: "Climate-AI — Real-Time Disaster Intelligence & Visualization",
+      name: "Geospatial AI Disaster Risk Platform",
+      category: "Geospatial AI · Climate",
       featured: true,
       description:
-        "A real-time AI platform merging digital twin concepts, geospatial analytics, and generative reasoning to support disaster awareness and sustainability planning.",
-      tags: [
-        { name: "Next.js", color: "blue-text-gradient" },
-        { name: "TypeScript", color: "green-text-gradient" },
-        { name: "Python", color: "pink-text-gradient" },
-      ],
+        "A geospatial AI platform that lets non-experts query climate and disaster risk by voice or text, turning months of modelling into under an hour. Won a KPMG Global ESG Award.",
       image: creator,
       video: `${import.meta.env.BASE_URL}climate-full-vid-compressed.mp4`,
+      tools: ["LangChain", "GraphQL", "Python", "QGIS", "ArcGIS", "SQL"],
       details: {
-        duration: "Mar 2024 – Aug 2024",
+        audience: "Climate and policy decision makers, multilateral development bank (APAC)",
         status: "Completed",
         demoLink:
           "https://holjnbrlgb237wxe.public.blob.vercel-storage.com/videos/climate-full-vid.mov",
-        tagline: "AI for real-time climate and risk intelligence",
-        context:
-          "Developed as part of an innovation initiative on AI for sustainability and operational resilience.",
-        overview:
-          "Climate-AI provides a generative, map-driven interface for real-time disaster intelligence. It overlays geospatial feeds with predictive and narrative insight powered by LLMs — so analysts can explore scenarios visually and in conversation.",
-        keyFeatures: [
+        tagline: "Climate and disaster intelligence anyone can use, not just GIS specialists.",
+        headline: [
+          { value: "<1 hr", label: "Risk modelling, down from months" },
+          { value: "220+", label: "Datasets from a single prompt" },
+          { value: "3", label: "Government MoUs from the summit showcase" },
+        ],
+        challenge: [
           {
-            title: "Digital twin–style visualization",
-            description:
-              "Layers sensor feeds, map services, and public APIs into cohesive risk overlays and simulations.",
+            title: "Expert-only tools",
+            text: "Digital twins and GIS risk models needed specialists, so insight stayed with a few people.",
           },
           {
-            title: "Voice & chat interaction",
-            description:
-              "Natural-language questions (e.g. flood risk in a region) drive instant map views and summaries.",
+            title: "Slow, fragmented modelling",
+            text: "Each climate or disaster scenario took months of manual work across scattered hazard datasets.",
           },
           {
-            title: "Generative scenario modelling",
-            description:
-              "What-if prompts (e.g. rainfall shocks) to explore knock-on effects on infrastructure and operations.",
-          },
-          {
-            title: "Responsive map dashboards",
-            description:
-              "Live analytics with smooth map interactions for operations and briefing rooms.",
-          },
-          {
-            title: "Enterprise authentication",
-            description:
-              "Directory SSO with role-aware permissions for multi-user deployments.",
+            title: "Investment decisions at stake",
+            text: "The client wanted climate and disaster intelligence to guide resilience planning and investment across APAC.",
           },
         ],
-        techStack: [
-          "Next.js",
-          "TypeScript",
-          "Python",
-          "ArcGIS API",
-          "LangChain",
-          "OpenAI API",
-        ],
-        challenges: [
-          {
-            title: "Multi-source geospatial integration",
-            description:
-              "Different cadences, formats, and projections across data providers.",
-            solution:
-              "Unified ingestion layer, ETL normalisation, and resilient caching with graceful degradation.",
-          },
-          {
-            title: "Map performance",
-            description:
-              "Heavy layers and smooth UX rarely coexist out of the box.",
-            solution:
-              "Progressive loading, level-of-detail tuning, and GPU-friendly rendering paths for large tiles.",
-          },
-          {
-            title: "Trust in AI-generated scenarios",
-            description:
-              "Stakeholders need transparency when models narrate risk.",
-            solution:
-              "Ensemble checks against historical baselines, confidence cues, and human-in-the-loop review hooks.",
-          },
-          {
-            title: "Real-time sync across surfaces",
-            description:
-              "Web dashboards and downstream tools must stay aligned during incidents.",
-            solution:
-              "WebSocket channels, conflict handling, and offline-first patterns with catch-up sync.",
-          },
-        ],
-        outcome: {
-          description:
-            "Helped analysts and response teams visualise risk faster and communicate scenarios with less manual map prep.",
-          metrics: [
-            { value: "~30%", label: "Faster risk visualisation workflows" },
-            { value: "~25%", label: "Lift in scenario consistency vs. ad-hoc baselines" },
+        solution: {
+          summary:
+            "An AI layer over geospatial models that users query by voice or text. It combines generative AI, spatial AI and 3D modelling, so a policy maker can ask about flood risk in a region and see the map, the scenario and the evidence behind it.",
+          modules: [
+            {
+              title: "Economic Loss Scenarios",
+              text: "AI-assisted what-if analysis of losses from floods, storms and other hazards.",
+            },
+            {
+              title: "Digital Twin Simulation",
+              text: "Interactive geospatial layers and 3D views of hazard, exposure and vulnerability.",
+            },
+            {
+              title: "Knowledge Mining",
+              text: "Answers enriched with global research and publications, with sources.",
+            },
           ],
-          achievements: [
-            "Demonstrated across multiple regional readiness forums",
-            "Integrated feeds from major weather and geospatial providers",
+        },
+        value: [
+          {
+            title: "Speed",
+            text: "Climate and disaster risk modelling went from months to under an hour.",
+          },
+          {
+            title: "Access",
+            text: "220+ datasets reachable from a single prompt, with no GIS skills needed.",
+          },
+          {
+            title: "Better investment design",
+            text: "Evidence-based scenarios support country strategy, project design and resilience investment.",
+          },
+          {
+            title: "Recognition & partnerships",
+            text: "Won a KPMG Global ESG Award, and the summit showcase secured 60+ partnership leads and 3 government MoUs.",
+          },
+        ],
+        roleTitle: "Product Data Manager",
+        role: [
+          {
+            label: "Spatial Data Analysis",
+            text: "Analysed and visualised hazard, exposure and vulnerability layers in QGIS, ArcGIS and Python to define what the platform shows.",
+          },
+          {
+            label: "Spatial Agent Configuration",
+            text: "Configured the spatial AI agent with GraphQL so one prompt picks the right dataset API across 220+ datasets.",
+          },
+          {
+            label: "Data Requirements",
+            text: "Defined ingestion, tagging and quality rules for climate hazard datasets and research documents.",
+          },
+          {
+            label: "Summit Showcase",
+            text: "Showcased the platform at a global summit of 5,000+ participants, securing 60+ partnership leads and 3 government MoUs.",
+          },
+        ],
+        architecture: {
+          flow: ["Voice or text question", "Spatial AI agent", "GraphQL dataset APIs", "Map, 3D view & scenario", "Cited insight"],
+          features: [
+            {
+              title: "Voice and chat interaction",
+              description:
+                "Plain-language questions, such as flood risk in a region, drive instant map views and summaries.",
+            },
+            {
+              title: "Generative scenario modelling",
+              description: "What-if prompts explore knock-on effects on infrastructure and operations.",
+            },
+            {
+              title: "Digital twin visualisation",
+              description: "Hazard, exposure and vulnerability layers combined into risk overlays and simulations.",
+            },
+            {
+              title: "Multi-source integration",
+              description:
+                "One ingestion layer normalises data from providers with different formats, cadences and projections.",
+            },
           ],
         },
       },

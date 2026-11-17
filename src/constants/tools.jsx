@@ -25,6 +25,9 @@ import {
   SiHtml5,
   SiJavascript,
   SiTypescript,
+  SiNextdotjs,
+  SiRedis,
+  SiGraphql,
 } from "react-icons/si";
 import { VscAzure, VscAzureDevops } from "react-icons/vsc";
 import { TbRipple, TbSql } from "react-icons/tb";
@@ -89,6 +92,9 @@ export const TOOL_ICONS = {
   // Languages this portfolio is written in
   JavaScript: { icon: SiJavascript, color: "#F7DF1E" },
   TypeScript: { icon: SiTypescript, color: "#4E9BEA" },
+  "Next.js": { icon: SiNextdotjs, color: "#FFFFFF" },
+  Redis: { icon: SiRedis, color: "#FF4438" },
+  GraphQL: { icon: SiGraphql, color: "#E10098" },
   HTML: { icon: SiHtml5, color: "#E34F26" },
   CSS: { icon: SiCss, color: "#9B6BE0" },
 };

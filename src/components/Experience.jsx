@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createPortal } from "react-dom";
 import { VerticalTimeline, VerticalTimelineElement } from "react-vertical-timeline-component/dist-modules";
 import { motion, AnimatePresence, useDragControls, useReducedMotion } from "framer-motion";
@@ -8,8 +9,10 @@ import { styles } from "../styles";
 import { experiences } from "../constants";
 import { SectionWrapper } from "../hoc";
 import { textVariant } from "../utils/motion";
-import { TOOL_ICONS } from "../constants/tools";
+import ToolChips, { aiFirst } from "./ToolChips";
 import { useLockBodyScroll } from "../utils/device";
+
+const groupAnchor = (title) => `exp-group-${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
 const isCurrentRole = (date) => /present/i.test(date || '');
 
@@ -18,23 +21,6 @@ const BulletDot = () => (
     aria-hidden
     className="mt-[7px] block h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-[#915EFF] to-[#e879f9] shadow-[0_0_6px_rgba(145,94,255,0.55)]"
   />
-);
-
-const ToolChips = ({ tools }) => (
-  <span className="mt-2 flex flex-wrap gap-1.5">
-    {tools.map((tool) => {
-      const { icon: Icon, color } = TOOL_ICONS[tool] ?? {};
-      return (
-        <span
-          key={tool}
-          className="inline-flex items-center gap-1.5 rounded-md border border-white/10 bg-white/[0.05] px-2 py-0.5 text-[12px] font-medium text-[#dfd9ff]"
-        >
-          {Icon && <Icon aria-hidden className="h-3.5 w-3.5" style={{ color }} />}
-          {tool}
-        </span>
-      );
-    })}
-  </span>
 );
 
 /** "Label: text" bullet, label emphasised, optional tool chips */
@@ -48,7 +34,7 @@ const LabeledBullet = ({ label, text, tools, className = "" }) => (
   </li>
 );
 
-const Modal = ({ experience, onClose }) => {
+const Modal = ({ experience, onClose, focusGroup }) => {
   const dragControls = useDragControls();
   useLockBodyScroll(true);
 
@@ -57,6 +43,15 @@ const Modal = ({ experience, onClose }) => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
+
+  // Arriving from a project page: scroll the sheet to that project's group
+  useEffect(() => {
+    if (!focusGroup) return undefined;
+    const t = setTimeout(() => {
+      document.getElementById(groupAnchor(focusGroup))?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 450);
+    return () => clearTimeout(t);
+  }, [focusGroup]);
 
   return (
     <motion.div
@@ -120,7 +115,15 @@ const Modal = ({ experience, onClose }) => {
             )}
             <div className="space-y-6">
               {experience.groups.map((group) => (
-                <section key={group.title ?? "details"}>
+                <section
+                  key={group.title ?? "details"}
+                  id={group.title ? groupAnchor(group.title) : undefined}
+                  className={`scroll-mt-4 ${
+                    group.title && group.title === focusGroup
+                      ? "-mx-3 rounded-xl bg-[#915EFF]/[0.08] p-3 ring-1 ring-[#915EFF]/40"
+                      : ""
+                  }`}
+                >
                   {group.title && (
                     <h4 className="mb-2.5 text-[12px] font-bold uppercase tracking-[0.16em] text-[#c4b5fd]">
                       {group.title}
@@ -154,7 +157,20 @@ const Modal = ({ experience, onClose }) => {
 
 const ExperienceCard = ({ experience }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [focusGroup, setFocusGroup] = useState(null);
   const reduceMotion = useReducedMotion();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // A project page can deep-link here: { openExperience: { company, group } }
+  useEffect(() => {
+    const target = location.state?.openExperience;
+    if (!target || target.company !== experience.company_name) return;
+    document.getElementById("experience")?.scrollIntoView({ behavior: "instant", block: "start" });
+    setFocusGroup(target.group);
+    setModalOpen(true);
+    navigate(location.pathname, { replace: true, state: null });
+  }, [location.state, experience.company_name, navigate, location.pathname]);
   const current = isCurrentRole(experience.date);
 
   return (
@@ -255,17 +271,8 @@ const ExperienceCard = ({ experience }) => {
 
           {/* Every tool from the expanded view, once each; AI tools lead the row */}
           {(() => {
-            const unique = [
-              ...new Set(experience.groups?.flatMap((g) => g.items.flatMap((item) => item.tools ?? [])) ?? []),
-            ];
-            // AI tools first, otherwise keep first-appearance order
-            const isAi = (tool) => Boolean(TOOL_ICONS[tool]?.ai);
-            const tools = [...unique.filter(isAi), ...unique.filter((t) => !isAi(t))];
-            return tools.length > 0 ? (
-              <div className="mt-4">
-                <ToolChips tools={tools} />
-              </div>
-            ) : null;
+            const tools = aiFirst(experience.groups?.flatMap((g) => g.items.flatMap((item) => item.tools ?? [])));
+            return tools.length > 0 ? <ToolChips tools={tools} className="mt-6" /> : null;
           })()}
 
           <button
@@ -290,7 +297,14 @@ const ExperienceCard = ({ experience }) => {
       {createPortal(
         <AnimatePresence>
           {modalOpen && (
-            <Modal experience={experience} onClose={() => setModalOpen(false)} />
+            <Modal
+              experience={experience}
+              focusGroup={focusGroup}
+              onClose={() => {
+                setModalOpen(false);
+                setFocusGroup(null);
+              }}
+            />
           )}
         </AnimatePresence>,
         document.body

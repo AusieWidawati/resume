@@ -1,12 +1,29 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { projects } from "../constants";
+import { projects, experiences } from "../constants";
 import { github } from "../assets";
 import Navbar from "./Navbar";
+import ToolChips, { aiFirst } from "./ToolChips";
 
-const challengeAnchorId = (title) =>
-  `challenge-${title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "")}`;
+const SECTIONS = [
+  { id: "challenge", label: "Business Challenge" },
+  { id: "solution", label: "Solution" },
+  { id: "value", label: "Business Value" },
+  { id: "role", label: "My Role" },
+  { id: "architecture", label: "Product & Architecture" },
+];
+
+const BulletDot = () => (
+  <span
+    aria-hidden
+    className="mt-[9px] block h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-[#915EFF] to-[#e879f9]"
+  />
+);
+
+const SubHeading = ({ children }) => (
+  <p className="mb-3 text-[11px] font-bold uppercase tracking-wider text-[#c4b5fd]">{children}</p>
+);
 
 // ── Section heading with left blue bar ──────────────────────────────
 const SectionHeading = ({ children }) => (
@@ -52,16 +69,16 @@ const FeatureCard = ({ title, description }) => {
 // ── Outcome metric card ──────────────────────────────────────────────
 const MetricCard = ({ value, label }) => (
   <div
-    className="rounded-xl p-4 sm:p-6 text-center"
+    className="rounded-xl px-2.5 py-3.5 sm:p-5 text-center"
     style={{
       background: "rgba(59,130,246,0.07)",
       border: "1px solid rgba(59,130,246,0.18)",
     }}
   >
-    <p className="font-bold text-[22px] sm:text-[26px] leading-none mb-2" style={{ color: "#3b82f6" }}>
+    <p className="font-bold text-[20px] sm:text-[28px] leading-none mb-2" style={{ color: "#60a5fa" }}>
       {value}
     </p>
-    <p className="text-gray-300 text-[13px] font-medium leading-snug">{label}</p>
+    <p className="text-gray-300 text-[11.5px] sm:text-[13px] font-medium leading-snug">{label}</p>
   </div>
 );
 
@@ -164,7 +181,7 @@ const TableOfContents = ({ items, activeSection }) => {
 const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState("overview");
+  const [activeSection, setActiveSection] = useState(SECTIONS[0].id);
   const project = projects[parseInt(id)];
 
   // Always land at the top of the subpage (where the hero video sits)
@@ -175,7 +192,7 @@ const ProjectDetail = () => {
 
   useEffect(() => {
     if (!project) return;
-    const ids = ["overview", "keyFeatures", "techStack", "challenges", "outcome"];
+    const ids = SECTIONS.map((sec) => sec.id);
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -208,23 +225,24 @@ const ProjectDetail = () => {
     );
   }
 
-  const { name, tags, image, video, source_code_link, details } = project;
+  const { name, category, tools = [], image, video, source_code_link, details } = project;
 
-  const tocItems = [
-    { id: "overview", label: "Overview" },
-    { id: "keyFeatures", label: "Key Features" },
-    { id: "techStack", label: "Tech Stack" },
-    {
-      id: "challenges",
-      label: "Challenges & Learnings",
-      subItems:
-        details?.challenges?.map((c) => ({
-          id: challengeAnchorId(c.title),
-          label: c.title,
-        })) || [],
-    },
-    { id: "outcome", label: "Outcome" },
-  ];
+  // My Role can mirror a group from the Work Experience entry (single source of truth)
+  const linkedGroup = details?.experienceGroup
+    ? experiences
+        .find((e) => e.company_name === details.experienceGroup.company)
+        ?.groups?.find((g) => g.title === details.experienceGroup.group)
+    : null;
+  const roleItems = linkedGroup?.items ?? details?.role ?? [];
+
+  const openInExperience = () =>
+    navigate("/", { state: { openExperience: details.experienceGroup } });
+
+  const tocItems = SECTIONS.filter(({ id: key }) => {
+    if (key === "role") return roleItems.length > 0;
+    const v = details?.[key];
+    return Array.isArray(v) ? v.length > 0 : Boolean(v);
+  });
 
   return (
     <div className="min-h-[100dvh] text-white" style={{ background: "#0a0a0f" }}>
@@ -262,13 +280,11 @@ const ProjectDetail = () => {
             transition={{ duration: 0.4 }}
             className="mb-6"
           >
-            <div className="flex flex-wrap gap-2 mb-3">
-              {tags.map((tag) => (
-                <span key={tag.name} className={`text-[12px] font-medium ${tag.color}`}>
-                  #{tag.name}
-                </span>
-              ))}
-            </div>
+            {category && (
+              <p className="mb-3 text-[12px] font-bold uppercase tracking-[0.18em] text-[#c4b5fd]">
+                {category}
+              </p>
+            )}
             <h1 className="text-[30px] sm:text-[46px] font-black text-white leading-[1.12] sm:leading-tight">
               {name}
             </h1>
@@ -276,6 +292,32 @@ const ProjectDetail = () => {
               <p className="mt-3 max-w-3xl text-[15px] font-medium leading-relaxed text-[#c4b5fd] sm:text-[16px]">
                 {details.tagline}
               </p>
+            )}
+            <div className="mt-4 flex flex-wrap gap-2 text-[12.5px] font-medium">
+              {details?.audience && (
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-[#915EFF]/15 px-3 py-1 text-[#e9e3ff] ring-1 ring-[#915EFF]/40">
+                  <svg aria-hidden width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                  Built for: {details.audience}
+                </span>
+              )}
+              {[details?.status].flat().filter(Boolean).map((st) => (
+                <span key={st} className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.05] px-3 py-1 text-gray-300 ring-1 ring-white/10">
+                  <span
+                    aria-hidden
+                    className={`h-1.5 w-1.5 rounded-full ${/progress/i.test(st) ? "bg-amber-400" : "bg-[#4ade80]"}`}
+                  />
+                  {st}
+                </span>
+              ))}
+            </div>
+            {details?.headline?.length > 0 && (
+              <div className="mt-6 grid grid-cols-3 gap-2.5 sm:gap-4">
+                {details.headline.map((m) => (
+                  <MetricCard key={m.label} {...m} />
+                ))}
+              </div>
             )}
           </motion.div>
 
@@ -308,62 +350,46 @@ const ProjectDetail = () => {
       </div>
 
       {/* ── Main layout ── */}
-      {/* Phones/tablets: sticky, swipeable section chips (replaces the desktop TOC) */}
-      <div
-        className="lg:hidden sticky z-40 border-b border-white/5 bg-[#0a0a0f]/90 backdrop-blur-md"
-        style={{ top: "calc(64px + env(safe-area-inset-top))" }}
-      >
-        <nav aria-label="On this page" className="no-scrollbar flex gap-2 overflow-x-auto px-5 py-2.5">
-          {tocItems.map((item) => {
-            const isActive =
-              activeSection === item.id || item.subItems?.some((sub) => sub.id === activeSection);
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                className={`shrink-0 min-h-[36px] rounded-full px-3.5 text-[13px] font-medium whitespace-nowrap transition-colors ${
-                  isActive ? "bg-[#3b82f6]/15 text-[#60a5fa] ring-1 ring-[#3b82f6]/40" : "bg-white/[0.04] text-gray-400 ring-1 ring-white/[0.06]"
-                }`}
-              >
-                {item.label}
-              </button>
-            );
-          })}
-        </nav>
-      </div>
-
       <div className="max-w-6xl mx-auto px-5 sm:px-6 py-8 sm:py-12 pb-[calc(2rem+env(safe-area-inset-bottom))]">
         <div className="flex gap-16">
 
           {/* Left: content */}
           <div className="flex-1 min-w-0">
 
-            {/* Meta bar */}
+            {/* Phones/tablets: vertical contents list (desktop uses the sticky TOC on the right) */}
+            <nav
+              aria-label="On this page"
+              className="lg:hidden mb-10 rounded-2xl p-2"
+              style={{ background: "#111118", border: "1px solid rgba(255,255,255,0.06)" }}
+            >
+              <p className="px-3 pb-1 pt-2 text-[11px] font-bold uppercase tracking-widest text-gray-500">
+                On this page
+              </p>
+              <ol className="m-0 list-none p-0">
+                {tocItems.map((item, i) => (
+                  <li key={item.id}>
+                    <button
+                      type="button"
+                      onClick={() => document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                      className="flex min-h-[44px] w-full items-center gap-3 rounded-xl px-3 text-left text-[15px] text-gray-200 active:bg-white/[0.05]"
+                    >
+                      <span className="w-5 text-[12px] font-bold text-[#60a5fa]">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="flex-1">{item.label}</span>
+                      <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-gray-600">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+
+            {/* Actions */}
+            {(details?.demoLink || (source_code_link && source_code_link !== "#")) && (
             <div
               className="flex flex-wrap items-center justify-between gap-4 mb-10 sm:mb-12 pb-6"
               style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}
             >
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[14px]" style={{ color: "#9ca3af" }}>
-                {details?.duration && (
-                  <span className="flex items-center gap-2">
-                    <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                      <line x1="16" y1="2" x2="16" y2="6"/>
-                      <line x1="8" y1="2" x2="8" y2="6"/>
-                      <line x1="3" y1="10" x2="21" y2="10"/>
-                    </svg>
-                    {details.duration}
-                  </span>
-                )}
-                {details?.status && (
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full" style={{ background: "#4ade80" }} />
-                    {details.status}
-                  </span>
-                )}
-              </div>
-
               <div className="flex w-full sm:w-auto gap-3 [&>a]:flex-1 sm:[&>a]:flex-none">
                 {source_code_link && source_code_link !== "#" && (
                   <a
@@ -397,126 +423,164 @@ const ProjectDetail = () => {
                 )}
               </div>
             </div>
-
-            {/* Overview */}
-            {(details?.overview || details?.context) && (
-              <section id="overview" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
-                <SectionHeading>Overview</SectionHeading>
-                {details.context && (
-                  <p className="mb-4 text-[14px] leading-[26px] text-gray-500 italic border-l-2 border-[#915EFF]/40 pl-4">
-                    {details.context}
-                  </p>
-                )}
-                {details.overview && (
-                  <p className="text-[15px] leading-[26px] sm:leading-[28px]" style={{ color: "#9ca3af" }}>
-                    {details.overview}
-                  </p>
-                )}
-              </section>
             )}
 
-            {/* Key Features */}
-            {details?.keyFeatures?.length > 0 && (
-              <section id="keyFeatures" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
-                <SectionHeading>Key Features</SectionHeading>
-                {details.keyFeatures.map((f) => (
-                  <FeatureCard key={f.title} {...f} />
-                ))}
-              </section>
-            )}
-
-            {/* Tech Stack */}
-            {details?.techStack?.length > 0 && (
-              <section id="techStack" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
-                <SectionHeading>Tech Stack</SectionHeading>
-                <div className="flex flex-wrap gap-2">
-                  {details.techStack.map((t) => (
-                    <span
-                      key={t}
-                      className="px-4 py-2 rounded-lg text-[13px] font-medium"
-                      style={{
-                        color: "#d1d5db",
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.08)",
-                      }}
+            {/* Business Challenge */}
+            {details?.challenge?.length > 0 && (
+              <section id="challenge" className="mb-14 scroll-mt-24 lg:scroll-mt-28">
+                <SectionHeading>Business Challenge</SectionHeading>
+                <div className={`grid gap-3 ${details.challenge.length === 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+                  {details.challenge.map((c, i) => (
+                    <div
+                      key={c.title}
+                      className="rounded-xl p-4 sm:p-5"
+                      style={{ background: "#111118", border: "1px solid rgba(255,255,255,0.06)" }}
                     >
-                      {t}
-                    </span>
+                      <p className="text-[12px] font-bold text-[#60a5fa]">0{i + 1}</p>
+                      <h3 className="mt-1 text-[16px] font-semibold leading-snug text-white">{c.title}</h3>
+                      <p className="mt-2 text-[14px] leading-[23px] text-gray-400">{c.text}</p>
+                    </div>
                   ))}
                 </div>
               </section>
             )}
 
-            {/* Challenges & Learnings */}
-            {details?.challenges?.length > 0 && (
-              <section id="challenges" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
-                <SectionHeading>Challenges & Learnings</SectionHeading>
-                {details.challenges.map((c) => (
-                  <div
-                    key={c.title}
-                    id={challengeAnchorId(c.title)}
-                    className="mb-7 scroll-mt-36 lg:scroll-mt-28"
-                  >
-                    <h3 className="text-white font-semibold text-[17px] mb-2">{c.title}</h3>
-                    <p className="text-[14px] leading-[26px]" style={{ color: "#9ca3af" }}>
-                      {c.description}
-                    </p>
-                    {c.solution && (
-                      <div
-                        className="mt-3 rounded-lg border border-[#915EFF]/20 bg-[#915EFF]/[0.06] px-4 py-3"
-                      >
-                        <p className="text-[11px] font-bold uppercase tracking-wider text-[#c4b5fd]">
-                          Approach
-                        </p>
-                        <p className="mt-1 text-[14px] leading-[24px] text-gray-300">
-                          {c.solution}
-                        </p>
+            {/* Solution */}
+            {details?.solution && (
+              <section id="solution" className="mb-14 scroll-mt-24 lg:scroll-mt-28">
+                <SectionHeading>Solution</SectionHeading>
+                <p className="text-[15px] leading-[26px] sm:leading-[28px] text-gray-300">
+                  {details.solution.summary}
+                </p>
+                {details.solution.modules?.length > 0 && (() => {
+                  let n = 0;
+                  return (
+                    <div className="mt-6">
+                      <SubHeading>{details.solution.modulesLabel ?? "Key modules"}</SubHeading>
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        {details.solution.modules.map((m) => (
+                          <div
+                            key={m.title}
+                            className="rounded-xl border border-[#915EFF]/20 bg-[#915EFF]/[0.06] p-4"
+                          >
+                            <h3 className="text-[15px] font-semibold text-white">{m.title}</h3>
+                            <p className="mt-1.5 text-[14px] leading-[22px] text-gray-400">{m.text}</p>
+                            {m.items?.length > 0 && (
+                              <ul className="m-0 mt-3 list-none space-y-2.5 border-t border-white/[0.06] p-0 pt-3">
+                                {m.items.map((it) => {
+                                  n += 1;
+                                  return (
+                                    <li key={it.title} className="flex gap-2.5">
+                                      <span className="mt-[1px] flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-[#3b82f6]/15 text-[11px] font-bold text-[#60a5fa]">
+                                        {n}
+                                      </span>
+                                      <span className="text-[13.5px] leading-[20px] text-gray-400">
+                                        <strong className="font-semibold text-gray-100">{it.title}</strong>
+                                        <br />
+                                        {it.text}
+                                      </span>
+                                    </li>
+                                  );
+                                })}
+                              </ul>
+                            )}
+                          </div>
+                        ))}
                       </div>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  );
+                })()}
               </section>
             )}
 
-            {/* Outcome */}
-            {details?.outcome && (
-              <section id="outcome" className="mb-14 scroll-mt-36 lg:scroll-mt-28">
-                <SectionHeading>Outcome</SectionHeading>
-                {details.outcome.description && (
-                  <p className="text-[15px] leading-[28px] mb-6" style={{ color: "#9ca3af" }}>
-                    {details.outcome.description}
+            {/* Business Value */}
+            {details?.value?.length > 0 && (
+              <section id="value" className="mb-14 scroll-mt-24 lg:scroll-mt-28">
+                <SectionHeading>Business Value</SectionHeading>
+                <ul className="m-0 list-none space-y-3 p-0">
+                  {details.value.map((v) => (
+                    <li key={v.title} className="flex gap-2.5 text-[15px] leading-[26px] text-gray-400">
+                      <BulletDot />
+                      <span>
+                        <strong className="font-semibold text-white">{v.title}:</strong> {v.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* My Role */}
+            {roleItems.length > 0 && (
+              <section id="role" className="mb-14 scroll-mt-24 lg:scroll-mt-28">
+                <SectionHeading>My Role</SectionHeading>
+                {details.roleTitle && (
+                  <p className="-mt-1 mb-5 inline-flex rounded-lg bg-gradient-to-r from-[#915EFF]/20 to-[#e879f9]/10 px-3.5 py-2 text-[14px] font-semibold text-white ring-1 ring-[#915EFF]/35">
+                    {details.roleTitle}
                   </p>
                 )}
-                {details.outcome.metrics?.length > 0 && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                    {details.outcome.metrics.map((m) => (
-                      <MetricCard key={m.label} {...m} />
+                <ul className="m-0 list-none space-y-3 p-0">
+                  {roleItems.map((r) => (
+                    <li key={r.label} className="flex gap-2.5 text-[15px] leading-[26px] text-gray-400">
+                      <BulletDot />
+                      <span>
+                        <strong className="font-semibold text-white">{r.label}:</strong> {r.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                {linkedGroup && (
+                  <button
+                    type="button"
+                    onClick={openInExperience}
+                    className="mt-5 inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[#915EFF]/40 bg-[#915EFF]/10 px-4 text-[14px] font-semibold text-[#e9e3ff] transition-colors hover:bg-[#915EFF]/20 active:bg-[#915EFF]/25"
+                  >
+                    See this role in my Work Experience
+                    <span aria-hidden>→</span>
+                  </button>
+                )}
+              </section>
+            )}
+
+            {/* Product & Architecture */}
+            {details?.architecture && (
+              <section id="architecture" className="mb-14 scroll-mt-24 lg:scroll-mt-28">
+                <SectionHeading>Product & Architecture</SectionHeading>
+                {details.architecture.flow?.length > 0 && (
+                  <div className="mb-7">
+                    <SubHeading>How it works</SubHeading>
+                    <ol className="m-0 flex list-none flex-col gap-1.5 p-0 sm:flex-row sm:flex-wrap sm:items-center sm:gap-2">
+                      {details.architecture.flow.map((step, i) => (
+                        <li key={step} className="flex items-center gap-2 sm:contents">
+                          {i > 0 && (
+                            <span aria-hidden className="hidden text-gray-600 sm:inline">→</span>
+                          )}
+                          <span className="inline-flex items-center gap-2 rounded-lg bg-white/[0.05] px-3 py-1.5 text-[13.5px] text-gray-200 ring-1 ring-white/10">
+                            <span className="text-[11px] font-bold text-[#60a5fa]">{i + 1}</span>
+                            {step}
+                          </span>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                )}
+                {details.architecture.features?.length > 0 && (
+                  <div className="mb-7">
+                    <SubHeading>{details.architecture.featuresLabel ?? "Key features"}</SubHeading>
+                    {details.architecture.features.map((f) => (
+                      <FeatureCard key={f.title} {...f} />
                     ))}
                   </div>
                 )}
-                {details.outcome.achievements?.length > 0 && (
-                  <div className="mt-8">
-                    <p className="mb-3 text-[11px] font-bold uppercase tracking-wider text-[#c4b5fd]">
-                      Highlights
-                    </p>
-                    <ul className="m-0 list-none space-y-2 p-0">
-                      {details.outcome.achievements.map((line) => (
-                        <li
-                          key={line}
-                          className="flex gap-2 text-[14px] leading-[24px] text-gray-400"
-                        >
-                          <span
-                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#3b82f6]"
-                            aria-hidden
-                          />
-                          {line}
-                        </li>
-                      ))}
-                    </ul>
+                {tools.length > 0 && (
+                  <div>
+                    <SubHeading>Tools & tech</SubHeading>
+                    <ToolChips tools={aiFirst(tools)} className="" />
                   </div>
                 )}
               </section>
             )}
+
           </div>
 
           {/* Right: sticky TOC */}
