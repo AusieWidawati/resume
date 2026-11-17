@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import {About, Contact, Experience, Education, Hero, Navbar, Tech, Works, Investment, Research, StarsCanvas} from './components';
 import ProjectDetail from './components/ProjectDetail';
 import VCDigestPage from './components/VCDigestPage';
@@ -10,7 +11,21 @@ const Divider = () => (
   </div>
 );
 
-const MainContent = () => (
+// Lets sub-pages send visitors back to a specific section, e.g. { scrollTo: "investment" }
+const useScrollToSection = () => {
+  const { state } = useLocation();
+  useEffect(() => {
+    if (!state?.scrollTo) return;
+    // wait a frame so the sections have laid out
+    requestAnimationFrame(() =>
+      document.getElementById(state.scrollTo)?.scrollIntoView({ behavior: "instant", block: "start" })
+    );
+  }, [state]);
+};
+
+const MainContent = () => {
+  useScrollToSection();
+  return (
   <div className="relative z-0 bg-primary">
     <div className="bg-hero-pattern bg-cover bg-no-repeat bg-center">
       <Navbar />
@@ -30,7 +45,8 @@ const MainContent = () => (
       <StarsCanvas />
     </div>
   </div>
-);
+  );
+};
 
 const App = () => {
   return (

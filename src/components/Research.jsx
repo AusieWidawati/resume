@@ -15,9 +15,9 @@ const RESEARCH_ITEMS = [
   {
     kicker: "Project 01",
     affiliation: "NTU × Stanford · CN Yang Scholars Programme",
-    title: "Spatial interpolation under varying uncertainty",
+    title: "Predicting earthquake intensity when data quality varies",
     lede:
-      "Comparison of Invariant-Sill Kriging (ISK) and Conditional Multivariate Normal (MVN) for predicting earthquake intensity when data uncertainty varies in space.",
+      "I compared two geostatistical methods, Invariant-Sill Kriging and Conditional Multivariate Normal, on how well they predict earthquake intensity when data uncertainty differs across locations.",
     body: (
       <>
         <p>
@@ -40,9 +40,9 @@ const RESEARCH_ITEMS = [
   {
     kicker: "Project 02",
     affiliation: "NTU · CN Yang Scholars Programme",
-    title: "Probabilistic lives saved from risk reduction — Cyclone Fani",
+    title: "Estimating lives saved by evacuation: Cyclone Fani",
     lede:
-      "A counterfactual framework to quantify how many lives India’s evacuation likely spared during Tropical Cyclone Fani (Odisha, May 2019).",
+      "A counterfactual framework that estimates how many lives India’s evacuation likely saved during Tropical Cyclone Fani (Odisha, May 2019).",
     body: (
       <>
         <p>
@@ -164,7 +164,7 @@ const ResearchCard = ({ item, index, onOpenPoster }) => {
           className="mt-auto -mx-2 inline-flex min-h-[44px] items-center gap-1.5 self-start rounded-lg px-2 pt-3 text-[13.5px] font-semibold transition-opacity hover:opacity-85 active:bg-white/5"
           style={{ color: item.accent }}
         >
-          {expanded ? "Show less" : "Read more"}
+          {expanded ? "Show less" : "Read the summary"}
           <svg
             width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden
             className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
@@ -208,7 +208,7 @@ const Research = () => {
   return (
     <>
       <motion.div variants={textVariant()}>
-        <p className={`${styles.sectionSubText}`}>Geospatial statistics & disaster risk.</p>
+        <p className={`${styles.sectionSubText}`}>Geospatial statistics & disaster risk</p>
         <h2 className={`${styles.sectionHeadText}`}>Research.</h2>
       </motion.div>
 
@@ -216,8 +216,7 @@ const Research = () => {
         variants={fadeIn("", "", 0.08, 1)}
         className="mt-4 max-w-3xl text-[15px] leading-[26px] text-white/65 sm:text-[17px] sm:leading-[30px]"
       >
-        Two CN Yang Scholars projects connecting rigorous{" "}
-        <span className="text-white/85">spatial modelling</span> to questions policymakers actually care about.
+        Two CN Yang Scholars projects I embarked on, focusing on geospatial statistical analysis.
       </motion.p>
 
       {/* Phones: swipe rail (same pattern as Projects). md+: side-by-side grid. */}

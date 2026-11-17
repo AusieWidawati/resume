@@ -225,7 +225,7 @@ const ProjectDetail = () => {
     );
   }
 
-  const { name, category, tools = [], image, video, source_code_link, details } = project;
+  const { name, category, tools = [], image, video, videoHd, source_code_link, details } = project;
 
   // My Role can mirror a group from the Work Experience entry (single source of truth)
   const linkedGroup = details?.experienceGroup
@@ -330,13 +330,14 @@ const ProjectDetail = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             {video ? (
+              // Full frame (no cropping), sharper file when one exists
               <video
-                src={video}
+                src={videoHd ?? video}
                 controls
-                className="w-full block"
+                className="block w-full bg-black"
                 playsInline
                 preload="metadata"
-                style={{ maxHeight: "min(520px, 60svh)", objectFit: "cover" }}
+                style={{ maxHeight: "80svh", objectFit: "contain" }}
               />
             ) : (
               <img

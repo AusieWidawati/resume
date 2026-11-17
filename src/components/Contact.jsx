@@ -15,11 +15,10 @@ const ContactPage = () => {
         variants={slideIn("left", "tween", 0.2, 1)}
         className="flex-[0.75] bg-black-100 p-5 sm:p-8 rounded-2xl"
       >
-        <p className={styles.sectionSubText}>Let's get in touch</p>
-        <h3 className={styles.sectionHeadText}>Contact Me.</h3>
+        <p className={styles.sectionSubText}>Get in touch</p>
+        <h3 className={styles.sectionHeadText}>Let&apos;s talk.</h3>
         <p className="mt-3 text-secondary text-[15px] sm:text-[17px] max-w-3xl leading-[26px] sm:leading-[30px] mb-5">
-          Whether it's a product build, a partnership, or a role where you need someone who ships end-to-end and thinks in impact — I'm
-          excited to hear what you're working on and how I can add value. Reach out and we'll make the next step concrete.
+          Are you hiring, building cool AI products, or curious about my tech community? Drop me a note.
         </p>
         <a
           className="cursor-pointer -mx-2 px-2 min-h-[48px] hover:bg-secondary hover:bg-opacity-50 active:bg-white/10 rounded-lg flex items-center w-fit max-w-full text-[15px] sm:text-[16px]"

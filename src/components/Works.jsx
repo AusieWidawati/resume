@@ -347,10 +347,9 @@ const Works = () => {
           variants={fadeIn("", "", 0.1, 1)}
           className="mt-3 max-w-3xl text-[15px] leading-[26px] text-secondary sm:text-[17px] sm:leading-[30px]"
         >
-          Enterprise AI products I have led as an AI product manager, from
-          agentic credit risk to GenAI knowledge and geospatial climate
-          intelligence. Each card opens the business challenge, solution,
-          value and my role.
+          I&apos;ve been shipping AI since the early GenAI days, and now we&apos;re
+          in agentic territory. Check out every enterprise AI product I&apos;ve
+          shipped below!
         </motion.p>
       </div>
 

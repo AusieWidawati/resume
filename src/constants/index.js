@@ -412,7 +412,8 @@ const experiences = [
       description:
         "Agentic AI that automates credit risk assessment for investment officers. Financial spreading, credit ratings and projections moved from Excel into AI, with a full audit trail.",
       image: kpmg,
-      video: `${import.meta.env.BASE_URL}credit-risk-demo.mp4`,
+      video: `${import.meta.env.BASE_URL}credit-risk-demo.mp4`, // 720p, card preview
+      videoHd: `${import.meta.env.BASE_URL}credit-risk-demo-hd.mp4`, // 1080p, project page
       tools: ["LangGraph", "LangChain", "Python", "SQL", "PostgreSQL", "Databricks", "AWS OpenSearch", "Postman", "Jira", "Confluence"],
       details: {
         audience: "Investment officers, multilateral development bank (APAC)",
@@ -755,9 +756,9 @@ const experiences = [
   
   const investmentProjects = [
     {
-      name: "BB Deals & Valuing Innovation — Tesla Battery Recycling",
+      name: "Tesla acquires a battery-recycling company: my LBO and pitch deck",
       description:
-        "Applied capital budgeting, DCF, EVA, comparable multiples, and LBO modelling in the BB Deals & Valuing Innovation Bootcamp — culminating in a buy-side pitch deck for how Tesla should acquire a US$6M EV battery-recycling target. Use the links to open the Excel DCF / LBO workbook and the pitch deck when shared.",
+        "At INSEAD's BBB Deals & Valuation bootcamp, I learned LBO modelling and valuation. For my final project, I modelled Tesla acquiring a US$6M EV battery-recycling target and pitched the deal in a final deck.",
       tags: [
         { name: "dcf", color: "blue-text-gradient" },
         { name: "lbo", color: "green-text-gradient" },
@@ -765,7 +766,7 @@ const experiences = [
       ],
       image: web,
       source_code_link: "#",
-      deck_link: "#",
+      deck_link: `${import.meta.env.BASE_URL}tesla-acquisition-pitch-deck.pdf`,
     },
   ];
 

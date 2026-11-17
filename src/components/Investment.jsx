@@ -486,7 +486,7 @@ const WORKSTREAM_META = [
     typeColor: "#f59e0b",
     activeBorder: "rgba(245,158,11,0.6)",
     meta: "BB Deals & Valuing Innovation Bootcamp",
-    subtitle: "Capital budgeting, DCF, EVA, multiples & LBO — buy-side pitch for Tesla acquiring a US$6M EV battery-recycling target",
+    subtitle: "INSEAD Valuation bootcamp · EV battery recycling · ~US$6M target",
     breadcrumbSub: "Tesla M&A · Battery Recycling",
     Preview: BootcampDealPreview,
     metrics: [
@@ -496,72 +496,6 @@ const WORKSTREAM_META = [
     ],
   },
 ];
-
-// ── Bootcamp detail pane (rendered on its own page) ──────────────────
-
-const BootcampPane = () => {
-  const active = WORKSTREAM_META[0];
-  const project = investmentProjects[0];
-  const Preview = active.Preview;
-  const links = [
-    project.source_code_link !== "#" && { label: "Model", title: "Open financial model", href: project.source_code_link },
-    project.deck_link && project.deck_link !== "#" && { label: "Deck", title: "Open pitch deck", href: project.deck_link },
-  ].filter(Boolean);
-
-  return (
-    <div className="flex flex-1 flex-col gap-5 p-4 sm:px-8 sm:py-7">
-      <div style={{ fontSize: "10px", textTransform: "uppercase", letterSpacing: "2px", color: "rgba(255,255,255,0.25)" }}>
-        Investment Thinking / <span style={{ color: active.typeColor }}>{active.breadcrumbSub}</span>
-      </div>
-
-      <div className="flex flex-col items-start justify-between gap-3 sm:flex-row">
-        <h3 className="text-[19px] font-semibold leading-tight text-white sm:text-[22px]">{project.name}</h3>
-        {links.length > 0 && (
-          <div className="flex shrink-0 gap-2">
-            {links.map((l) => (
-              <a
-                key={l.label}
-                href={l.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={l.title}
-                className="flex min-h-[40px] items-center rounded-lg border border-white/10 bg-white/[0.04] px-3 text-[12px] text-white/60 hover:text-white"
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <p className="text-[13px] leading-[1.6] text-white/40 sm:text-[12.5px]">{active.subtitle}</p>
-
-      <div className="flex flex-col gap-5 md:flex-row md:items-start md:gap-6">
-        <div className="w-full md:h-[190px] md:w-[260px] md:shrink-0">
-          <Preview />
-        </div>
-        <div className="flex min-w-0 flex-1 flex-col gap-4">
-          <p className="text-[14.5px] leading-[1.75] text-white/55 sm:text-[13.5px]">{project.description}</p>
-          <div className="grid grid-cols-3 gap-2.5">
-            {active.metrics.map(({ label, value }) => (
-              <div key={label} className="rounded-[10px] border border-white/[0.06] bg-white/[0.03] px-2 py-3 text-center">
-                <div className="text-[15px] font-bold leading-tight sm:text-[18px]" style={{ color: active.typeColor }}>{value}</div>
-                <div className="mt-1 text-[9px] uppercase tracking-[1px] text-white/30">{label}</div>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag) => (
-              <span key={tag.name} className="rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 py-0.5 text-[10.5px] text-white/40">
-                {tag.name}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // ── Card preview for the VC digest ───────────────────────────────────
 
@@ -590,19 +524,20 @@ const VCDigestPreview = () => (
 const WORKSTREAM_CARDS = [
   {
     to: "/investment/bootcamp",
-    type: "Bootcamp",
+    type: WORKSTREAM_META[0].subtitle,
     color: "#f59e0b",
     title: investmentProjects[0].name,
-    blurb: WORKSTREAM_META[0].subtitle,
+    blurb: investmentProjects[0].description,
     chips: ["DCF", "LBO", "M&A"],
     Preview: BootcampDealPreview,
+    download: { href: investmentProjects[0].deck_link, label: "Download pitch deck (PDF)" },
   },
   {
     to: "/vc-digest",
     type: "Digest",
     color: "#60a5fa",
-    title: "VC & Startup Intelligence",
-    blurb: `${DIGEST_REGION} · weekly deal flow, sector heat and companies to watch.`,
+    title: "Southeast Asia VC Weekly",
+    blurb: "A weekly tracker I built for myself to see how VC investment is moving in Singapore and Southeast Asia: deals, hot sectors and companies I'm watching.",
     chips: ["Market Pulse", "Top Deals", "Watch List"],
     Preview: VCDigestPreview,
   },
@@ -618,10 +553,10 @@ const WorkstreamCard = ({ card, index }) => {
         className="h-full rounded-[22px] p-[1px]"
         style={{ background: `linear-gradient(135deg, ${card.color}88, rgba(145,94,255,0.35), ${card.color}55)` }}
       >
-        <button
-          type="button"
+        {/* Whole card opens the page; the download link stops propagation so it only downloads */}
+        <div
           onClick={() => navigate(card.to)}
-          className="group flex h-full w-full flex-col rounded-[21px] bg-tertiary p-4 text-left shadow-card transition-transform duration-300 active:scale-[0.99] sm:p-5 [@media(hover:hover)]:hover:-translate-y-1"
+          className="group flex h-full w-full cursor-pointer flex-col rounded-[21px] bg-tertiary p-4 text-left shadow-card transition-transform duration-300 active:scale-[0.99] sm:p-5 [@media(hover:hover)]:hover:-translate-y-1"
         >
           <div className="pointer-events-none h-[215px] w-full shrink-0 overflow-hidden rounded-xl sm:h-[210px]">
             <Preview />
@@ -630,7 +565,7 @@ const WorkstreamCard = ({ card, index }) => {
             {card.type}
           </span>
           <h3 className="mt-1 text-[18px] font-bold leading-snug text-white sm:text-[20px]">{card.title}</h3>
-          <p className="mt-2 line-clamp-2 text-[14px] leading-[22px] text-secondary">{card.blurb}</p>
+          <p className="mt-2 text-[14px] leading-[22px] text-secondary">{card.blurb}</p>
           <div className="mt-3 flex flex-wrap gap-1.5">
             {card.chips.map((c) => (
               <span key={c} className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] font-medium text-[#dfd9ff]/90">
@@ -638,16 +573,29 @@ const WorkstreamCard = ({ card, index }) => {
               </span>
             ))}
           </div>
-          <span className="mt-auto block w-full pt-5">
-            <span
-              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-white sm:text-[13.5px]"
-              style={{ background: `linear-gradient(120deg, ${card.color}, #915EFF)` }}
+          <div className="mt-auto flex w-full flex-col gap-2 pt-5">
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); navigate(card.to); }}
+              className="flex min-h-[48px] w-full items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-white shadow-[0_10px_30px_-12px_rgba(145,94,255,0.7)] transition-shadow duration-300 hover:shadow-[0_14px_36px_-10px_rgba(232,121,249,0.85)] sm:text-[13.5px]"
+              style={{ background: "linear-gradient(120deg, #915EFF 0%, #c026d3 50%, #e879f9 100%)" }}
             >
               Open full page
               <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-1">→</span>
-            </span>
-          </span>
-        </button>
+            </button>
+            {card.download && (
+              <a
+                href={card.download.href}
+                download
+                onClick={(e) => e.stopPropagation()}
+                className="flex min-h-[44px] w-full items-center justify-center gap-2 rounded-xl border border-[#915EFF]/40 bg-[#915EFF]/10 text-[14px] font-semibold text-[#e9e3ff] transition-colors hover:bg-[#915EFF]/20 sm:text-[13px]"
+              >
+                <svg aria-hidden width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16" /></svg>
+                {card.download.label}
+              </a>
+            )}
+          </div>
+        </div>
       </div>
     </motion.div>
   );
@@ -656,7 +604,7 @@ const WorkstreamCard = ({ card, index }) => {
 const Investment = () => (
   <>
     <motion.div variants={textVariant()}>
-      <p className={styles.sectionSubText}>Where analytical rigor meets market intuition.</p>
+      <p className={styles.sectionSubText}>Learning the deal side</p>
       <h2 className={styles.sectionHeadText}>Investment Thinking.</h2>
     </motion.div>
 
@@ -664,11 +612,8 @@ const Investment = () => (
       variants={fadeIn("", "", 0.1, 1)}
       className="mt-4 sm:mt-5 text-white/55 text-[15px] sm:text-[16px] max-w-3xl leading-[26px] sm:leading-[30px]"
     >
-      My investment interest sits at the overlap of{" "}
-      <span className="text-white/80">AI infrastructure</span>,{" "}
-      <span className="text-white/80">climate tech</span>, and{" "}
-      <span className="text-white/80">emerging market enterprise software</span> — sectors I've worked in directly.
-      Below: a valuation bootcamp deliverable (DCF / LBO / deck) plus a living digest of regional VC & startup intelligence.
+      I&apos;ve gotten really curious about deal financing and startup community, so I learn by building. Here&apos;s a deal
+      evaluation pitch deck I built at INSEAD, plus a weekly tracker I made to follow VC in Singapore and Southeast Asia.
     </motion.p>
 
     <div className="mt-8 grid grid-cols-1 items-stretch gap-5 sm:mt-12 md:grid-cols-2 md:gap-7">
@@ -687,5 +632,5 @@ function hexToRgb(hex) {
   return `${r},${g},${b}`;
 }
 
-export { VCDigestPane, BootcampPane };
+export { VCDigestPane };
 export default SectionWrapper(Investment, "investment");

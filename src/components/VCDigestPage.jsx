@@ -19,10 +19,11 @@ const VCDigestPage = () => {
         <div className={`${styles.paddingX} pt-[calc(1rem+env(safe-area-inset-top))] sm:pt-10`}>
           <Link
             to="/"
+            state={{ scrollTo: "investment" }}
             className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-[14px] sm:text-[12px] active:bg-white/10 font-medium text-white/75 transition-colors duration-200 hover:text-white"
           >
             <span aria-hidden="true">←</span>
-            Back to portfolio
+            Back to Investment Thinking
           </Link>
         </div>
 
