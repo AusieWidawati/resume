@@ -416,7 +416,7 @@ const experiences = [
       description:
         "An agentic AI solution that automates credit risk assessment and calculations for investment officers, cutting deal screening from weeks to under an hour with a full audit trail. Financial spreading, credit rating calculations and financial projections moved from Excel into AI.",
       image: kpmg,
-      video: null,
+      video: `${import.meta.env.BASE_URL}credit-risk-demo.mp4`,
       tools: ["LangGraph", "LangChain", "Python", "SQL", "PostgreSQL", "Databricks", "AWS OpenSearch", "Postman", "Jira", "Confluence"],
       details: {
         audience: "Investment officers, multilateral development bank (APAC)",
@@ -529,13 +529,12 @@ const experiences = [
       description:
         "A GenAI knowledge platform that gives bank employees one trusted place to find answers and generate documents, grounded in internal data. Employees report 5x productivity.",
       image: web,
-      video: `${import.meta.env.BASE_URL}navigator-demo-compressed.mp4`,
+      video: `${import.meta.env.BASE_URL}navigator-demo.mp4`,
       tools: ["Microsoft Foundry", "LangChain", "AWS OpenSearch", "PostgreSQL", "Databricks", "SQL", "Datadog", "Azure DevOps"],
       details: {
         audience: "All employees, multilateral development bank (APAC)",
         status: "In production",
-        demoLink:
-          "https://holjnbrlgb237wxe.public.blob.vercel-storage.com/videos/navigator-demo.mov",
+        demoLink: null,
         tagline: "One trusted place to find, use and act on enterprise knowledge.",
         headline: [
           { value: "5x", label: "Productivity gain reported by employees" },

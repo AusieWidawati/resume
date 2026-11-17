@@ -4,3 +4,6 @@ dist/
 *.local
 node_modules
 node_modules
+
+# Raw demo recordings (too large for GitHub; compressed copies live in public/)
+Newer Demo Videos/
