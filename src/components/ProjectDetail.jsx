@@ -61,7 +61,8 @@ const ProjectDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(SECTIONS[0].id);
-  const project = projects[parseInt(id)];
+  // Find by permanent slug; numeric ids are old links and are redirected in App.jsx
+  const project = projects.find((p) => p.id === id);
 
   // Always land at the top of the subpage (where the hero video sits)
   // when the route opens, regardless of the parent page's scroll position.

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { styles } from "../styles";
 import { SectionWrapper } from "../hoc";
 import { investmentProjects } from "../constants";
+import { INVESTMENT_PATHS } from "../constants/routes";
 import { fadeIn, textVariant } from "../utils/motion";
 
 // ── VC Digest Data ────────────────────────────────────────────────────
@@ -470,7 +471,7 @@ const VCDigestPane = ({ showFullPageLink = false }) => {
             <div style={{ display: "flex", gap: "8px", alignItems: "center", flexShrink: 0, flexWrap: "wrap", justifyContent: "flex-end" }}>
               {showFullPageLink && (
                 <Link
-                  to="/vc-digest"
+                  to={INVESTMENT_PATHS.vcWeekly}
                   className="text-[12px] sm:text-[10px]"
                   style={{
                     letterSpacing: "0.5px",
@@ -642,7 +643,7 @@ const VCDigestPreview = () => (
 
 const WORKSTREAM_CARDS = [
   {
-    to: "/investment/bootcamp",
+    to: INVESTMENT_PATHS.valuation,
     type: WORKSTREAM_META[0].subtitle,
     color: "#f59e0b",
     title: investmentProjects[0].name,
@@ -652,7 +653,7 @@ const WORKSTREAM_CARDS = [
     download: { href: investmentProjects[0].deck_link, label: "Download pitch deck (PDF)" },
   },
   {
-    to: "/vc-digest",
+    to: INVESTMENT_PATHS.vcWeekly,
     type: "Digest",
     color: "#60a5fa",
     title: "Southeast Asia VC Weekly",

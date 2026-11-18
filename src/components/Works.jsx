@@ -10,6 +10,7 @@ import { projects } from "../constants";
 import { fadeIn, textVariant } from "../utils/motion";
 import { useIsTouch, useLockBodyScroll } from "../utils/device";
 import ToolChips, { aiFirst } from "./ToolChips";
+import { projectPath } from "../constants/routes";
 
 // ── Video modal ──────────────────────────────────────────────────────
 
@@ -96,6 +97,7 @@ const VideoModal = ({ video, name, onClose }) => {
 
 const ProjectCard = ({
   index,
+  id,
   name,
   description,
   category,
@@ -267,7 +269,7 @@ const ProjectCard = ({
             <div className="mt-auto pt-4 border-t border-white/[0.06]">
               <button
                 type="button"
-                onClick={() => navigate(`/project/${index}`)}
+                onClick={() => navigate(projectPath(id))}
                 className="group/btn relative inline-flex min-h-[48px] w-full items-center justify-center gap-2 overflow-hidden rounded-xl px-4 py-2.5 text-[15px] sm:text-[13.5px] active:scale-[0.98] font-bold text-white shadow-[0_10px_30px_-12px_rgba(145,94,255,0.7)] transition-all duration-300 hover:shadow-[0_14px_36px_-10px_rgba(232,121,249,0.85)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#e879f9]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-tertiary"
                 style={{
                   background:

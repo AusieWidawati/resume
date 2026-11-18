@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { INVESTMENT_PATHS, LEGACY_REDIRECTS } from './constants/routes';
 import {About, Contact, Experience, Education, Hero, Navbar, Tech, Works, Investment, Research, StarsCanvas} from './components';
 import ProjectDetail from './components/ProjectDetail';
 import VCDigestPage from './components/VCDigestPage';
@@ -54,8 +55,13 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MainContent />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
-        <Route path="/vc-digest" element={<VCDigestPage />} />
-        <Route path="/investment/bootcamp" element={<BootcampPage />} />
+        <Route path={INVESTMENT_PATHS.valuation} element={<BootcampPage />} />
+        <Route path={INVESTMENT_PATHS.vcWeekly} element={<VCDigestPage />} />
+        {/* Old addresses keep working (static paths outrank /project/:id) */}
+        {Object.entries(LEGACY_REDIRECTS).map(([from, to]) => (
+          <Route key={from} path={from} element={<Navigate to={to} replace />} />
+        ))}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

@@ -20,6 +20,7 @@ import {
     shopee,
     anacle,
   } from "../assets";
+  import { PROJECT_SLUGS } from "./routes";
   
   export const navLinks = [
     {
@@ -405,7 +406,7 @@ const experiences = [
    */
   const projects = [
     {
-      id: "credit-risk-ai",
+      id: PROJECT_SLUGS.creditRisk, // URL: /project/credit-risk-ai
       name: "Credit Risk Assessment AI",
       category: "Agentic AI · Banking",
       featured: true,
@@ -519,7 +520,7 @@ const experiences = [
       },
     },
     {
-      id: "navigator",
+      id: PROJECT_SLUGS.knowledge, // URL: /project/genai-rag-knowledge-platform
       name: "GenAI RAG Knowledge Platform",
       category: "Generative AI · RAG",
       featured: true,
@@ -638,7 +639,7 @@ const experiences = [
       },
     },
     {
-      id: "climate-ai",
+      id: PROJECT_SLUGS.geospatial, // URL: /project/geospatial-ai-disaster-risk
       name: "Geospatial AI Disaster Risk Platform",
       category: "Geospatial AI · Climate",
       featured: true,
